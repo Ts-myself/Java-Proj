@@ -1,7 +1,6 @@
 package view;
 
 import controller.GameController;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -34,6 +33,7 @@ public class ChessGameFrame extends JFrame {
         addLabel();
         addHelloButton();
         addLoadButton();
+        addReatartButton();
     }
 
 
@@ -89,8 +89,19 @@ public class ChessGameFrame extends JFrame {
             String path = JOptionPane.showInputDialog(this, "Input Path here");
             gameController.loadGameFromFile(path);
         });
-
-
     }
 
+        private void addReatartButton(){
+            JButton button = new JButton("Restart");
+            button.setLocation(WIDTH * 3 / 5, HEIGHT / 10 + 360);
+            button.setSize(180, 60);
+            button.setFont(new Font("Rockwell", Font.BOLD, 20));
+            button.setBackground(Color.RED);
+            add(button);
+
+            button.addActionListener(e -> {
+                System.out.println("Restarting Game!");
+                gameController.restartGame();
+            });
+        }
 }

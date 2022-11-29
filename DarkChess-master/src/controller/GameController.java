@@ -30,4 +30,7 @@ public class GameController {
         return null;
     }
 
+    public void restartGame(){
+        chessboard.initAllChessOnBoard();
+    }
 }

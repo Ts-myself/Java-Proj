@@ -90,7 +90,7 @@ public class Chessboard extends JComponent {
 
 
     //FIXME:   Initialize chessboard for testing only.
-    private void initAllChessOnBoard() {
+    public void initAllChessOnBoard() {
         Random random = new Random();
         for (int i = 0; i < squareComponents.length; i++) {
             for (int j = 0; j < squareComponents[i].length; j++) {
@@ -105,7 +105,7 @@ public class Chessboard extends JComponent {
                 putChessOnBoard(squareComponent);
             }
         }
-
+        repaint();
     }
 
     /**
@@ -133,7 +133,13 @@ public class Chessboard extends JComponent {
      * 通过GameController调用该方法
      * @param chessData
      */
+
     public void loadGame(List<String> chessData) {
         chessData.forEach(System.out::println);
+        for (String line : chessData){
+            for (int i=0;i<line.length();i++){
+
+            }
+        }
     }
 }
