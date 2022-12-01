@@ -10,6 +10,7 @@ import java.awt.*;
  * 表示棋盘上非空棋子的格子，是所有非空棋子的父类
  */
 public class ChessComponent extends SquareComponent{
+    //炮：0 兵：1 马：2 车：3 象：4 士：5 将：6
     protected String name;// 棋子名字：例如 兵，卒，士等
 
     protected ChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size) {

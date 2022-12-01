@@ -116,10 +116,35 @@ public abstract class SquareComponent extends JComponent {
      */
     //todo: Override this method for Cannon
     public boolean canMoveTo(SquareComponent[][] chessboard, ChessboardPoint destination) {
-        SquareComponent destinationChess = chessboard[destination.getX()][destination.getY()];
-        return destinationChess.isReversal|| destinationChess instanceof EmptySlotComponent;
         //todo: complete this method
-    }
+        SquareComponent destinationChess = chessboard[destination.getX()][destination.getY()];
+        // ？？？？
+        return destinationChess.isReversal() || destinationChess instanceof EmptySlotComponent;
+        /*if (!destinationChess.isReversal && !(destinationChess instanceof EmptySlotComponent)){
+            return false;
+        }
+        ChessboardPoint fromChess=this.chessboardPoint;
+        boolean ifCanMove=false;
+        if (fromChess.getX()==destinationChess.getX()){
+            if (fromChess.getY()==destinationChess.getY()+1 || fromChess.getY()==destinationChess.getY()-1){
+                ifCanMove=true;
+                System.out.println("\n");
+            }
+        }
+        else if (fromChess.getY()==destinationChess.getY()){
+            if (fromChess.getX()==destinationChess.getX()+1 || fromChess.getX()==destinationChess.getX()-1){
+                ifCanMove=true;
+                System.out.println("\n");
+            }
+        }
+        //todo: 比较棋子战斗力
+        if (ifCanMove) {
+            System.out.printf("From (%d,%d) to (%d,%d)\n", destination.getX(), destination.getY(), fromChess.getX(), fromChess.getY());
+            return true;
+        }
+        else return false;
+        */
+}
 
 
     @Override

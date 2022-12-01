@@ -1,10 +1,7 @@
 package view;
 
 
-import chessComponent.ChariotChessComponent;
-import chessComponent.EmptySlotComponent;
-import chessComponent.SoldierChessComponent;
-import chessComponent.SquareComponent;
+import chessComponent.*;
 import model.*;
 import controller.ClickController;
 
@@ -56,7 +53,6 @@ public class Chessboard extends JComponent {
 
     /**
      * 将SquareComponent 放置在 ChessBoard上。里面包含移除原有的component及放置新的component
-     * @param squareComponent
      */
     public void putChessOnBoard(SquareComponent squareComponent) {
         int row = squareComponent.getChessboardPoint().getX(), col = squareComponent.getChessboardPoint().getY();
@@ -68,8 +64,6 @@ public class Chessboard extends JComponent {
 
     /**
      * 交换chess1 chess2的位置
-     * @param chess1
-     * @param chess2
      */
     public void swapChessComponents(SquareComponent chess1, SquareComponent chess2) {
         // Note that chess1 has higher priority, 'destroys' chess2 if exists.
@@ -91,16 +85,20 @@ public class Chessboard extends JComponent {
 
     //FIXME:   Initialize chessboard for testing only.
     public void initAllChessOnBoard() {
-        Random random = new Random();
-        for (int i = 0; i < squareComponents.length; i++) {
-            for (int j = 0; j < squareComponents[i].length; j++) {
-                ChessColor color = random.nextInt(2) == 0 ? ChessColor.RED : ChessColor.BLACK;
-                SquareComponent squareComponent;
-                if (random.nextInt(2) == 0) {
-                    squareComponent = new ChariotChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE);
-                } else {
-                    squareComponent = new SoldierChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE);
-                }
+        int[][] board = Chessboard.randomIntBoard();
+        for (int i = 0; i < ROW_SIZE; i++) {
+            for (int j = 0; j < COL_SIZE; j++) {
+                int component = board[i][j];
+                ChessColor color = component/10 == 1 ? ChessColor.RED : ChessColor.BLACK;
+                SquareComponent squareComponent = null;
+                     if (component%10 == 6) squareComponent = new GeneralChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE);
+                else if (component%10 == 5) squareComponent = new AdvisorChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE);
+                else if (component%10 == 4) squareComponent = new MinisterChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE);
+                else if (component%10 == 3) squareComponent = new ChariotChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE);
+                else if (component%10 == 2) squareComponent = new HorseChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE);
+                else if (component%10 == 1) squareComponent = new SoldierChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE);
+                else if (component%10 == 0) squareComponent = new CannonChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE);
+                assert squareComponent != null;
                 squareComponent.setVisible(true);
                 putChessOnBoard(squareComponent);
             }
@@ -110,7 +108,6 @@ public class Chessboard extends JComponent {
 
     /**
      * 绘制棋盘格子
-     * @param g
      */
     @Override
     protected void paintComponent(Graphics g) {
@@ -121,9 +118,6 @@ public class Chessboard extends JComponent {
 
     /**
      * 将棋盘上行列坐标映射成Swing组件的Point
-     * @param row 棋盘上的行
-     * @param col 棋盘上的列
-     * @return
      */
     private Point calculatePoint(int row, int col) {
         return new Point(col * CHESS_SIZE + 3, row * CHESS_SIZE + 3);
@@ -131,15 +125,84 @@ public class Chessboard extends JComponent {
 
     /**
      * 通过GameController调用该方法
-     * @param chessData
      */
 
     public void loadGame(List<String> chessData) {
         chessData.forEach(System.out::println);
+        /*
         for (String line : chessData){
             for (int i=0;i<line.length();i++){
-
+                //todo: load in;
             }
         }
+         */
+    }
+
+    public static int[][] randomIntBoard(){
+        //十位 0:空 1:红（未翻） 2:黑（未翻） 3:红 4:黑
+        //个位/炮：0 兵：1 马：2 车：3 象：4 士：5 将：6
+        Random random = new Random();
+        int[][] chessboard = new int[8][4];
+        int red=0;
+        //add same random color
+        //todo: random bug here
+        while (red<16){
+            int site = random.nextInt(32)+1;
+            int col=site%4;  int row=(site-col)/4;
+            if (chessboard[row][col]==0){
+                chessboard[row][col]=1;
+                red++;
+            }
+        }
+        for (int i=0;i<8;i++){
+            for (int j=0;j<4;j++){
+                if (chessboard[i][j]==0) chessboard[i][j]=2;
+                chessboard[i][j]*=10;
+            }
+        }
+        //add chess type
+        int[] redPosition = new int[16];
+        boolean[] isValid = new boolean[16];
+        int[] blackPosition = new int[16];
+        for (int i = 0; i < 16; i++) {isValid[i]=false;}
+        for (int i = 0; i < 16; ) {
+            int position = random.nextInt(0, 16);
+            if (!isValid[position]) {
+                redPosition[i] = position;
+                i++;
+                isValid[position] = true;
+            }
+        }
+        for (int i = 0; i < 16; i++) {isValid[i]=false;}
+        for (int i = 0; i < 16; ) {
+            int position = random.nextInt(0, 16);
+            if (!isValid[position]) {
+                blackPosition[i] = position;
+                i++;
+                isValid[position] = true;
+            }
+        }
+        int i_red = 0, i_black = 0;
+        for (int i=0;i<8;i++){
+            for (int j=0;j<4;j++){
+                if (chessboard[i][j] == 10) {
+                    chessboard[i][j] +=chessValue(redPosition[i_red++]);
+                }
+                if (chessboard[i][j] == 20) {
+                    chessboard[i][j] +=chessValue(blackPosition[i_black++]);
+                }
+            }
+        }
+            return chessboard;
+    }
+    public static int chessValue(int i) {
+        if(i==0) return 6;
+        if(i>=1 && i<=2) return 5;
+        if(i>=3 && i<=4) return 4;
+        if(i>=5 && i<=6) return 3;
+        if(i>=7 && i<=8) return 2;
+        if(i>=9 && i<=13) return 1;
+        if(i>=14 && i<=15) return 0;
+        return 0;
     }
 }

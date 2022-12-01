@@ -9,7 +9,7 @@ import view.Chessboard;
 
 public class ClickController {
     private final Chessboard chessboard;
-    private SquareComponent first;
+    public SquareComponent first;
 
     public ClickController(Chessboard chessboard) {
         this.chessboard = chessboard;
@@ -23,7 +23,8 @@ public class ClickController {
                 first = squareComponent;
                 first.repaint();
             }
-        } else {
+        }
+        else {
             if (first == squareComponent) { // 再次点击取消选取
                 squareComponent.setSelected(false);
                 SquareComponent recordFirst = first;
@@ -71,6 +72,7 @@ public class ClickController {
                 return false;
             }
         }
+
         return squareComponent.getChessColor() != chessboard.getCurrentColor() &&
                 first.canMoveTo(chessboard.getChessComponents(), squareComponent.getChessboardPoint());
     }
