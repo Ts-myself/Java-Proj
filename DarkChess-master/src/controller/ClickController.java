@@ -65,6 +65,7 @@ public class ClickController {
 
     private boolean handleSecond(SquareComponent squareComponent) {
 
+        //todo: 炮可以吃没翻开的棋子
         //没翻开或空棋子，进入if
         if (!squareComponent.isReversal()) {
             //没翻开且非空棋子不能走
@@ -74,7 +75,7 @@ public class ClickController {
         }
 
         return squareComponent.getChessColor() != chessboard.getCurrentColor() &&
-                first.canMoveTo(chessboard.getChessComponents(), squareComponent.getChessboardPoint());
+                first.canMoveTo(chessboard.getChessComponents(), squareComponent.getChessboardPoint(), chessboard);
     }
 
     public void swapPlayer() {
