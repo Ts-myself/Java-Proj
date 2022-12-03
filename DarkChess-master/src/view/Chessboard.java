@@ -147,7 +147,7 @@ public class Chessboard extends JComponent {
         //add same random color
         //todo: random bug here
         while (red<16){
-            int site = random.nextInt(32)+1;
+            int site = random.nextInt(0,32); //1~32
             int col=site%4;  int row=(site-col)/4;
             if (chessboard[row][col]==0){
                 chessboard[row][col]=1;
