@@ -1,5 +1,7 @@
 package controller;
 
+import chessComponent.SquareComponent;
+import model.ChessColor;
 import view.Chessboard;
 
 import java.io.IOException;
@@ -29,6 +31,7 @@ public class GameController {
         }
         return null;
     }
+
 
     public void restartGame(){
         chessboard.initAllChessOnBoard();

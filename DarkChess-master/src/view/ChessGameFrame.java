@@ -16,7 +16,8 @@ public class ChessGameFrame extends JFrame {
     public final int CHESSBOARD_SIZE;
     private GameController gameController;
     private static JLabel statusLabel;
-
+    private static JLabel blackScore;
+    private static JLabel redScore;
     public ChessGameFrame(int width, int height) {
         setTitle("2022 CS109 Project Demo"); //设置标题
         this.WIDTH = width;
@@ -31,6 +32,7 @@ public class ChessGameFrame extends JFrame {
 
         addChessboard();
         addLabel();
+        addScore();
         addHelloButton();
         addLoadButton();
         addReatartButton();
@@ -56,10 +58,35 @@ public class ChessGameFrame extends JFrame {
         add(statusLabel);
     }
 
+    private void addScore() {
+        blackScore = new JLabel("Black's Score: 0");
+        blackScore.setLocation(WIDTH / 4 - WIDTH / 6, HEIGHT / 40);
+        blackScore.setSize(150,50);
+        blackScore.setFont(new Font("Rockwell", 1, 18));
+        add(blackScore);
+        redScore = new JLabel("Red's Score: 0");
+        redScore.setLocation(WIDTH / 2 - WIDTH / 7, HEIGHT / 40);
+        redScore.setSize(150,50);
+        redScore.setFont(new Font("Rockwell",1, 18));
+        add(redScore);
+    }
+
     public static JLabel getStatusLabel() {
         return statusLabel;
     }
+    public static JLabel getBlackScore() {
+        return blackScore;
+    }
+    public static JLabel getRedScore() {
+        return redScore;
+    }
 
+    //todo:fix this method
+    public static void restartLabels() {
+        statusLabel.setText("BLACK's TURN");
+        blackScore.setText("Black's Score: 0");
+        redScore.setText("Red's Score: 0");
+    }
     /**
      * 在游戏窗体中增加一个按钮，如果按下的话就会显示Hello, world!
      */

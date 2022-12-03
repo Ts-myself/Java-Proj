@@ -10,7 +10,6 @@ import view.Chessboard;
 public class ClickController {
     private final Chessboard chessboard;
     public SquareComponent first;
-
     public ClickController(Chessboard chessboard) {
         this.chessboard = chessboard;
     }
@@ -34,6 +33,7 @@ public class ClickController {
                 //repaint in swap chess method.
                 chessboard.swapChessComponents(first, squareComponent);
                 chessboard.clickController.swapPlayer();
+                ScoreChange(first,squareComponent);
 
                 first.setSelected(false);
                 first = null;
@@ -80,5 +80,16 @@ public class ClickController {
     public void swapPlayer() {
         chessboard.setCurrentColor(chessboard.getCurrentColor() == ChessColor.BLACK ? ChessColor.RED : ChessColor.BLACK);
         ChessGameFrame.getStatusLabel().setText(String.format("%s's TURN", chessboard.getCurrentColor().getName()));
+    }
+
+    public void ScoreChange(SquareComponent first, SquareComponent squareComponent) {
+        if (first.getChessColor() != squareComponent.getChessColor()) {
+            chessboard.ScoreRecorder(first);
+            if (first.getChessColor() == ChessColor.BLACK) {
+                ChessGameFrame.getRedScore().setText(String.format("Red's Score: %d", chessboard.getRedScore()));
+            } else {
+                ChessGameFrame.getBlackScore().setText(String.format("Black's Score: %d", chessboard.getBlackScore()));
+            }
+        }
     }
 }

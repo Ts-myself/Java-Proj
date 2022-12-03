@@ -16,8 +16,4 @@ public class CannonChessComponent extends ChessComponent {
             name = "p";
         }
     }
-    public boolean canMoveTo (SquareComponent[][] chessboard, ChessboardPoint destination) {
-        //todo: Override this;
-        return false;
-    }
 }

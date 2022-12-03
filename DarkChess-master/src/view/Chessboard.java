@@ -2,6 +2,7 @@ package view;
 
 
 import chessComponent.*;
+import controller.GameController;
 import model.*;
 import controller.ClickController;
 
@@ -27,7 +28,25 @@ public class Chessboard extends JComponent {
     //all chessComponents in this chessboard are shared only one model controller
     public final ClickController clickController = new ClickController(this);
     private final int CHESS_SIZE;
+    //记录红黑双方分数
+    private int blackScore;
+    private int redScore;
+    public int getBlackScore() {
+        return blackScore;
+    }
+    public void setBlackScore(int blackScore) {
+        this.blackScore = blackScore;
+    }
+    public int getRedScore() {
+        return redScore;
+    }
+    public void setRedScore(int redScore) {
+        this.redScore = redScore;
+    }
 
+    public SquareComponent[][] getSquareComponents() {
+        return squareComponents;
+    }
 
     public Chessboard(int width, int height) {
         setLayout(null); // Use absolute layout.
@@ -103,6 +122,10 @@ public class Chessboard extends JComponent {
                 putChessOnBoard(squareComponent);
             }
         }
+        blackScore = 0;
+        redScore = 0;
+        currentColor = ChessColor.BLACK;
+        //ChessGameFrame.restartLabels();
         repaint();
     }
 
@@ -203,6 +226,24 @@ public class Chessboard extends JComponent {
         if(i>=7 && i<=8) return 2;
         if(i>=9 && i<=13) return 1;
         if(i>=14 && i<=15) return 0;
+        return 0;
+    }
+
+    public void ScoreRecorder(SquareComponent eaten) {
+        if (eaten.getChessColor() == ChessColor.BLACK) {
+            redScore += chessValue(eaten);
+        } else {
+            blackScore += chessValue(eaten);
+        }
+    }
+    public int chessValue(SquareComponent eaten) {
+        if (eaten.type == 6) {return 30;}
+        if (eaten.type == 5) {return 10;}
+        if (eaten.type == 4) {return 5;}
+        if (eaten.type == 3) {return 5;}
+        if (eaten.type == 2) {return 5;}
+        if (eaten.type == 1) {return 5;}
+        if (eaten.type == 0) {return 1;}
         return 0;
     }
 }
