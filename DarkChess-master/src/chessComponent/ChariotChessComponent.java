@@ -10,9 +10,9 @@ import java.awt.*;
  * 表示黑红车
  */
 public class ChariotChessComponent extends ChessComponent {
-    //public int type = 3;
-    public ChariotChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size) {
-        super(chessboardPoint, location, chessColor, clickController, size);
+    public int type = 3;
+    public ChariotChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size, int type) {
+        super(chessboardPoint, location, chessColor, clickController, size, type);
         if (this.getChessColor() == ChessColor.RED) {
             name = "C";
         } else {

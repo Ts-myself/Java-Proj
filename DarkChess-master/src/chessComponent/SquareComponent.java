@@ -16,7 +16,7 @@ import java.awt.event.MouseEvent;
  */
 public abstract class SquareComponent extends JComponent {
 
-    private static final Color squareColor = new Color(250, 220, 190);
+    private static final Color squareColor = new Color(203, 112, 20);
     protected static int spacingLength;
     protected static final Font CHESS_FONT = new Font("Rockwell", Font.BOLD, 36);
 
@@ -30,13 +30,13 @@ public abstract class SquareComponent extends JComponent {
     protected final ChessColor chessColor;
     protected boolean isReversal;
     private boolean selected;
-
+    public int type;
     /**
      * handle click event
      */
     private final ClickController clickController;
 
-    protected SquareComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size) {
+    protected SquareComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size, int type) {
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
         setLocation(location);
         setSize(size, size);
@@ -45,6 +45,7 @@ public abstract class SquareComponent extends JComponent {
         this.selected = false;
         this.clickController = clickController;
         this.isReversal = false;
+        this.type = type;
     }
 
     public boolean isReversal() {
@@ -118,32 +119,25 @@ public abstract class SquareComponent extends JComponent {
     public boolean canMoveTo(SquareComponent[][] chessboard, ChessboardPoint destination) {
         //todo: complete this method
         SquareComponent destinationChess = chessboard[destination.getX()][destination.getY()];
-        // ？？？？
-        return destinationChess.isReversal() || destinationChess instanceof EmptySlotComponent;
-        /*if (!destinationChess.isReversal && !(destinationChess instanceof EmptySlotComponent)){
-            return false;
-        }
-        ChessboardPoint fromChess=this.chessboardPoint;
-        boolean ifCanMove=false;
-        if (fromChess.getX()==destinationChess.getX()){
-            if (fromChess.getY()==destinationChess.getY()+1 || fromChess.getY()==destinationChess.getY()-1){
-                ifCanMove=true;
-                System.out.println("\n");
+        //return destinationChess.isReversal() || destinationChess instanceof EmptySlotComponent;
+        ChessboardPoint from =this.chessboardPoint;
+        System.out.printf("From (%d,%d) to (%d,%d)\n", destination.getX(), destination.getY(), from.getX(), from.getY());
+        if ((from.getX()==destination.getX()+1&&from.getY()==destination.getY()) || (from.getX()==destination.getX()-1&&from.getY()==destination.getY()) || (from.getX()==destination.getX()&&from.getY()==destination.getY()+1) || (from.getX()==destination.getX()&&from.getY()==destination.getY()-1)){
+            if (destinationChess instanceof EmptySlotComponent) {
+                System.out.printf("From (%d,%d) to (%d,%d)\n", destination.getX(), destination.getY(), from.getX(), from.getY());
+                return true;
             }
+            else if (destinationChess.isReversal()){
+                    int tyoeTo=destinationChess.type;
+                    int typeFrom=this.type;
+                    if (tyoeTo<=typeFrom || (tyoeTo==6&&typeFrom==0)) {
+                        System.out.printf("From (%d,%d) to (%d,%d)\n", destination.getX(), destination.getY(), from.getX(), from.getY());
+                        return true;
+                    }
+                    else return false;
+                }
         }
-        else if (fromChess.getY()==destinationChess.getY()){
-            if (fromChess.getX()==destinationChess.getX()+1 || fromChess.getX()==destinationChess.getX()-1){
-                ifCanMove=true;
-                System.out.println("\n");
-            }
-        }
-        //todo: 比较棋子战斗力
-        if (ifCanMove) {
-            System.out.printf("From (%d,%d) to (%d,%d)\n", destination.getX(), destination.getY(), fromChess.getX(), fromChess.getY());
-            return true;
-        }
-        else return false;
-        */
+        return false;
 }
 
 

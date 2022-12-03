@@ -35,8 +35,6 @@ public class ChessGameFrame extends JFrame {
         addLoadButton();
         addReatartButton();
     }
-
-
     /**
      * 在游戏窗体中添加棋盘
      */

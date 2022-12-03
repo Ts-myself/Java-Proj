@@ -11,10 +11,11 @@ import java.awt.*;
  */
 public class ChessComponent extends SquareComponent{
     //炮：0 兵：1 马：2 车：3 象：4 士：5 将：6
+    public int type;
     protected String name;// 棋子名字：例如 兵，卒，士等
 
-    protected ChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size) {
-        super(chessboardPoint, location, chessColor, clickController, size);
+    protected ChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size, int type) {
+        super(chessboardPoint, location, chessColor, clickController, size, type);
     }
     @Override
     protected void paintComponent(Graphics g) {
