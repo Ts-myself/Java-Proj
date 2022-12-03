@@ -3,6 +3,7 @@ package chessComponent;
 import controller.ClickController;
 import model.ChessColor;
 import model.ChessboardPoint;
+import view.Chessboard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -115,23 +116,19 @@ public abstract class SquareComponent extends JComponent {
      * <br>
      * 这个方法主要是检查移动的合法性，如果合法就返回true，反之是false。
      */
-    //todo: Override this method for Cannon
-    public boolean canMoveTo(SquareComponent[][] chessboard, ChessboardPoint destination) {
-        //todo: complete this method
+    public boolean canMoveTo(SquareComponent[][] chessboard, ChessboardPoint destination, Chessboard CB) {
         SquareComponent destinationChess = chessboard[destination.getX()][destination.getY()];
-        //return destinationChess.isReversal() || destinationChess instanceof EmptySlotComponent;
         ChessboardPoint from =this.chessboardPoint;
-        System.out.printf("From (%d,%d) to (%d,%d)\n", destination.getX(), destination.getY(), from.getX(), from.getY());
         if ((from.getX()==destination.getX()+1&&from.getY()==destination.getY()) || (from.getX()==destination.getX()-1&&from.getY()==destination.getY()) || (from.getX()==destination.getX()&&from.getY()==destination.getY()+1) || (from.getX()==destination.getX()&&from.getY()==destination.getY()-1)){
             if (destinationChess instanceof EmptySlotComponent) {
-                System.out.printf("From (%d,%d) to (%d,%d)\n", destination.getX(), destination.getY(), from.getX(), from.getY());
+                System.out.printf("From (%d,%d) to (%d,%d)\n", from.getX(), from.getY(), destination.getX(), destination.getY());
                 return true;
             }
             else if (destinationChess.isReversal()){
                     int tyoeTo=destinationChess.type;
                     int typeFrom=this.type;
                     if (tyoeTo<=typeFrom || (tyoeTo==6&&typeFrom==0)) {
-                        System.out.printf("From (%d,%d) to (%d,%d)\n", destination.getX(), destination.getY(), from.getX(), from.getY());
+                        System.out.printf("From (%d,%d) to (%d,%d)\n", from.getX(), from.getY(), destination.getX(), destination.getY());
                         return true;
                     }
                     else return false;
