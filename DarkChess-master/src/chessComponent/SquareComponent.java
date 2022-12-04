@@ -31,6 +31,7 @@ public abstract class SquareComponent extends JComponent {
     protected final ChessColor chessColor;
     protected boolean isReversal;
     private boolean selected;
+
     public int type;
     /**
      * handle click event

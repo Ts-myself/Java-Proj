@@ -19,17 +19,14 @@ public class ClickController {
         if (first == null) {
             if (handleFirst(squareComponent)) {
                 squareComponent.setSelected(true);
+                //get canGo
+                //paint
                 first = squareComponent;
                 first.repaint();
             }
         }
         else {
-            if (first == squareComponent) { // 再次点击取消选取
-                squareComponent.setSelected(false);
-                SquareComponent recordFirst = first;
-                first = null;
-                recordFirst.repaint();
-            } else if (handleSecond(squareComponent)) {
+            if (handleSecond(squareComponent)) {
                 //repaint in swap chess method.
                 chessboard.swapChessComponents(first, squareComponent);
                 chessboard.clickController.swapPlayer();
@@ -37,6 +34,11 @@ public class ClickController {
 
                 first.setSelected(false);
                 first = null;
+            } else {
+                first.setSelected(false);
+                SquareComponent recordFirst = first;
+                first = null;
+                recordFirst.repaint();
             }
         }
     }
@@ -65,9 +67,8 @@ public class ClickController {
 
     private boolean handleSecond(SquareComponent squareComponent) {
 
-        //todo: 炮可以吃没翻开的棋子
         //没翻开或空棋子，进入if
-        if (!squareComponent.isReversal()) {
+        if (!squareComponent.isReversal() && first.type!=1) {
             //没翻开且非空棋子不能走
             if (!(squareComponent instanceof EmptySlotComponent)) {
                 return false;

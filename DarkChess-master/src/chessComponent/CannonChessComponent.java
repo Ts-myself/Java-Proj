@@ -28,7 +28,7 @@ public class CannonChessComponent extends ChessComponent {
             boolean jump = false;
             while ((x>=0&&x<8) && (y>=0&&y<4)){
                 if (jump && chessboard[x][y].getChessColor() == CB.getCurrentColor()) break;
-                if (jump) {
+                if (jump && !(chessboard[x][y] instanceof EmptySlotComponent)) {
                     ChessboardPoint jumpToHere = new ChessboardPoint(x, y);
                     canGo.add(jumpToHere);
                     break;
