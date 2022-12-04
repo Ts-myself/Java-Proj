@@ -25,6 +25,11 @@ public class ClickController {
                 first = squareComponent;
                 //get canGo
                 ArrayList<ChessboardPoint> canGo = first.whereCanGo(chessboard.getChessComponents(), chessboard);
+                System.out.printf("this point can go to:");
+                for (int i=0;i<canGo.size();i++){
+                    System.out.printf("(%d,%d) ",canGo.get(i).getX()+1,canGo.get(i).getY()+1);
+                }
+                System.out.printf("\n");
                 //paint
                 for (ChessboardPoint point : canGo) {
                     chessboard.getSquareComponents()[point.getX()][point.getY()].setReachable(true);

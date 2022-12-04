@@ -152,8 +152,10 @@ public abstract class SquareComponent extends JComponent {
         int nowY = this.chessboardPoint.getY();
         for (int i=0;i<4;i++){
             int x = nowX+dir[i][0], y = nowY+dir[i][1];
-            if (chessboard[x][y] instanceof EmptySlotComponent || (chessboard[x][y].isReversal()&&chessboard[x][y].getChessColor()!=CB.getCurrentColor()&&(chessboard[x][y].type<=this.type || (chessboard[x][y].type==6&&this.type==0)))){
-                canGo.add(new ChessboardPoint(x,y));
+            if ((x>=0&&x<8) && (y>=0&&y<4)) {
+                if (chessboard[x][y] instanceof EmptySlotComponent || (chessboard[x][y].isReversal() && chessboard[x][y].getChessColor() != CB.getCurrentColor() && (chessboard[x][y].type <= this.type || (chessboard[x][y].type == 6 && this.type == 0)))) {
+                    canGo.add(new ChessboardPoint(x, y));
+                }
             }
         }
         return canGo;
