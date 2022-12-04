@@ -26,6 +26,7 @@ public abstract class SquareComponent extends JComponent {
      * chessboardPoint: 表示8*4棋盘中，当前棋子在棋格对应的位置，如(0, 0), (1, 0)等等
      * chessColor: 表示这个棋子的颜色，有红色，黑色，无色三种
      * isReversal: 表示是否翻转
+     * reachable: 表示被选中棋子是否可以到达
      * selected: 表示这个棋子是否被选中
      */
     private ChessboardPoint chessboardPoint;

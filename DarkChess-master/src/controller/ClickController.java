@@ -23,22 +23,31 @@ public class ClickController {
             if (handleFirst(squareComponent)) {
                 squareComponent.setSelected(true);
                 first = squareComponent;
+
                 //get canGo
                 ArrayList<ChessboardPoint> canGo = first.whereCanGo(chessboard.getChessComponents(), chessboard);
-                System.out.printf("this point can go to:");
-                for (int i=0;i<canGo.size();i++){
-                    System.out.printf("(%d,%d) ",canGo.get(i).getX()+1,canGo.get(i).getY()+1);
-                }
-                System.out.printf("\n");
+                System.out.print("this point can go to:");
+                for (ChessboardPoint go : canGo) {System.out.printf("(%d,%d) ", go.getX() + 1, go.getY() + 1);}
+                System.out.print("\n");
                 //paint
                 for (ChessboardPoint point : canGo) {
                     chessboard.getSquareComponents()[point.getX()][point.getY()].setReachable(true);
                     chessboard.getSquareComponents()[point.getX()][point.getY()].repaint();
                 }
+
                 first.repaint();
             }
         }
         else {
+            ArrayList<ChessboardPoint> canGo = first.whereCanGo(chessboard.getChessComponents(), chessboard);
+            System.out.print("this point can go to:");
+            for (ChessboardPoint go : canGo) {System.out.printf("(%d,%d) ", go.getX() + 1, go.getY() + 1);}
+            System.out.print("\n");
+            //paint
+            for (ChessboardPoint point : canGo) {
+                chessboard.getSquareComponents()[point.getX()][point.getY()].setReachable(false);
+                chessboard.getSquareComponents()[point.getX()][point.getY()].repaint();
+            }
             if (handleSecond(squareComponent)) {
                 //repaint in swap chess method.
                 chessboard.swapChessComponents(first, squareComponent);
@@ -53,6 +62,7 @@ public class ClickController {
                 first = null;
                 recordFirst.repaint();
             }
+            //get canGo
         }
     }
 
