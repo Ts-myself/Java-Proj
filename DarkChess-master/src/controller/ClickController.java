@@ -98,7 +98,7 @@ public class ClickController {
             }
         }
 
-        return squareComponent.getChessColor() != chessboard.getCurrentColor() &&
+        return (squareComponent.getChessColor() != chessboard.getCurrentColor() || first.type==1) &&
                 first.canMoveTo(chessboard.getChessComponents(), squareComponent.getChessboardPoint(), chessboard);
     }
 

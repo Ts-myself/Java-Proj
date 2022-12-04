@@ -3,6 +3,10 @@ package view;
 import controller.GameController;
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * 这个类表示游戏窗体，窗体上包含：
@@ -35,7 +39,12 @@ public class ChessGameFrame extends JFrame {
         addScore();
         addHelloButton();
         addLoadButton();
-        addReatartButton();
+        addRestartButton();
+        try {
+            addSavaButton();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     /**
      * 在游戏窗体中添加棋盘
@@ -62,12 +71,12 @@ public class ChessGameFrame extends JFrame {
         blackScore = new JLabel("Black's Score: 0");
         blackScore.setLocation(WIDTH / 4 - WIDTH / 6, HEIGHT / 40);
         blackScore.setSize(150,50);
-        blackScore.setFont(new Font("Rockwell", 1, 18));
+        blackScore.setFont(new Font("Rockwell", Font.BOLD, 18));
         add(blackScore);
         redScore = new JLabel("Red's Score: 0");
         redScore.setLocation(WIDTH / 2 - WIDTH / 7, HEIGHT / 40);
         redScore.setSize(150,50);
-        redScore.setFont(new Font("Rockwell",1, 18));
+        redScore.setFont(new Font("Rockwell", Font.BOLD, 18));
         add(redScore);
     }
 
@@ -116,9 +125,9 @@ public class ChessGameFrame extends JFrame {
         });
     }
 
-        private void addReatartButton(){
+        private void addRestartButton(){
             JButton button = new JButton("Restart");
-            button.setLocation(WIDTH * 3 / 5, HEIGHT / 10 + 360);
+            button.setLocation(WIDTH * 3 / 5, HEIGHT / 10 + 480);
             button.setSize(180, 60);
             button.setFont(new Font("Rockwell", Font.BOLD, 20));
             button.setBackground(Color.RED);
@@ -128,5 +137,29 @@ public class ChessGameFrame extends JFrame {
                 System.out.println("Restarting Game!");
                 gameController.restartGame();
             });
+        }
+
+        private void addSavaButton() throws IOException {
+            JButton button = new JButton("Save Game");
+            button.setLocation(WIDTH * 3 / 5, HEIGHT / 10 + 360);
+            button.setSize(180, 60);
+            button.setFont(new Font("Rockwell", Font.BOLD, 20));
+            button.setBackground(Color.LIGHT_GRAY);
+            add(button);
+
+            //todo: find a way to edit txt file
+            File file = new File("chessboard.txt");
+            if (!file.exists()) file.createNewFile();
+            try(FileWriter fileWriter = new FileWriter((file));
+                BufferedWriter bufferedWriter= new BufferedWriter(fileWriter)){
+                bufferedWriter.write("hello world!");
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+
+                //todo: shen me yi si?
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
 }

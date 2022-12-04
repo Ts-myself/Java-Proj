@@ -4,6 +4,13 @@ import javax.swing.*;
 
 
 public class Main {
+    /* todo list
+        1.save and load function ！！！
+        2.游戏界面设计
+        3.棋子贴图
+        4.偷看棋子功能
+        5.开始时翻出的第一个颜色为先手玩家的阵营 ！！！
+     */
     public static void main(String[] args) {
 /*
         int[][] board = Chessboard.randomIntBoard();
