@@ -60,7 +60,7 @@ public class ChessGameFrame extends JFrame {
      * 在游戏窗体中添加标签
      */
     private void addLabel() {
-        statusLabel = new JLabel("BLACK's TURN");
+        statusLabel = new JLabel("The First TURN");
         statusLabel.setLocation(WIDTH * 3 / 5, HEIGHT / 10);
         statusLabel.setSize(200, 60);
         statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
@@ -92,7 +92,7 @@ public class ChessGameFrame extends JFrame {
 
     //todo:fix this method
     public static void restartLabels() {
-        statusLabel.setText("BLACK's TURN");
+        statusLabel.setText("The First Turn");
         blackScore.setText("Black's Score: 0");
         redScore.setText("Red's Score: 0");
     }
