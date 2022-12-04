@@ -27,7 +27,7 @@ public class CannonChessComponent extends ChessComponent {
             int x = nowX+dir[i][0], y = nowY+dir[i][1];
             boolean jump = false;
             while ((x>=0&&x<8) && (y>=0&&y<4)){
-                if (jump && chessboard[x][y].getChessColor() == CB.getCurrentColor()) break;
+                if (jump && chessboard[x][y].getChessColor() == CB.getCurrentColor()&&chessboard[x][y].isReversal) break;
                 if (jump && !(chessboard[x][y] instanceof EmptySlotComponent)) {
                     ChessboardPoint jumpToHere = new ChessboardPoint(x, y);
                     canGo.add(jumpToHere);
@@ -53,7 +53,7 @@ public class CannonChessComponent extends ChessComponent {
             int x = nowX+dir[i][0], y = nowY+dir[i][1];
             boolean jump = false;
             while ((x>=0&&x<8) && (y>=0&&y<4)){
-                if (jump && chessboard[x][y].getChessColor() == CB.getCurrentColor()) break;
+                if (jump && chessboard[x][y].getChessColor() == CB.getCurrentColor() && chessboard[x][y].isReversal) break;
                 if (jump && !(chessboard[x][y] instanceof EmptySlotComponent)) {
                     ChessboardPoint jumpToHere = new ChessboardPoint(x, y);
                     canGo.add(jumpToHere);

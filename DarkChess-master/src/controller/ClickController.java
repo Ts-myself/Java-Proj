@@ -22,10 +22,10 @@ public class ClickController {
         if (first == null) {
             if (handleFirst(squareComponent)) {
                 squareComponent.setSelected(true);
-                //get canGo
-                ArrayList<ChessboardPoint> canGo = first.whereCanGo(chessboard.getChessComponents(), chessboard);
-                //paint
                 first = squareComponent;
+                //get canGo
+                //ArrayList<ChessboardPoint> canGo = first.whereCanGo(chessboard.getChessComponents(), chessboard);
+                //paint
                 first.repaint();
             }
         }
@@ -79,7 +79,7 @@ public class ClickController {
             }
         }
 
-        return squareComponent.getChessColor() != chessboard.getCurrentColor() &&
+        return (squareComponent.getChessColor() != chessboard.getCurrentColor() || !squareComponent.isReversal())&&
                 first.canMoveTo(chessboard.getChessComponents(), squareComponent.getChessboardPoint(), chessboard);
     }
 
