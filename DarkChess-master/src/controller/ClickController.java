@@ -20,7 +20,12 @@ public class ClickController {
     public void onClick(SquareComponent squareComponent) {
         //判断第一次点击
         if (first == null) {
-            if (handleFirst(squareComponent)) {
+            if (chessboard.getCurrentColor() == ChessColor.NONE) {
+                chessboard.setCurrentColor(squareComponent.getChessColor());
+                squareComponent.setReversal(true);
+                ChessGameFrame.getStatusLabel().setText(String.format("%s's Turn",squareComponent.getChessColor()));
+                squareComponent.repaint();
+            } else if (handleFirst(squareComponent)) {
                 squareComponent.setSelected(true);
                 first = squareComponent;
 
@@ -48,11 +53,12 @@ public class ClickController {
                 chessboard.getSquareComponents()[point.getX()][point.getY()].setReachable(false);
                 chessboard.getSquareComponents()[point.getX()][point.getY()].repaint();
             }
+
             if (handleSecond(squareComponent)) {
                 //repaint in swap chess method.
                 chessboard.swapChessComponents(first, squareComponent);
                 chessboard.clickController.swapPlayer();
-                ScoreChange(first,squareComponent);
+                ScoreChange(first);
 
                 first.setSelected(false);
                 first = null;
@@ -107,14 +113,12 @@ public class ClickController {
         ChessGameFrame.getStatusLabel().setText(String.format("%s's TURN", chessboard.getCurrentColor().getName()));
     }
 
-    public void ScoreChange(SquareComponent first, SquareComponent squareComponent) {
-        if (first.getChessColor() != squareComponent.getChessColor()) {
-            chessboard.ScoreRecorder(first);
-            if (first.getChessColor() == ChessColor.BLACK) {
-                ChessGameFrame.getRedScore().setText(String.format("Red's Score: %d", chessboard.getRedScore()));
-            } else {
-                ChessGameFrame.getBlackScore().setText(String.format("Black's Score: %d", chessboard.getBlackScore()));
-            }
+    public void ScoreChange(SquareComponent first) {
+        chessboard.ScoreRecorder(first);
+        if (first.getChessColor() == ChessColor.BLACK) {
+            ChessGameFrame.getRedScore().setText(String.format("Red's Score: %d", chessboard.getRedScore()));
+        } else {
+            ChessGameFrame.getBlackScore().setText(String.format("Black's Score: %d", chessboard.getBlackScore()));
         }
     }
 }
