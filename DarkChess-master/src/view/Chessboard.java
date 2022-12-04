@@ -125,7 +125,7 @@ public class Chessboard extends JComponent {
         blackScore = 0;
         redScore = 0;
         currentColor = ChessColor.BLACK;
-        //ChessGameFrame.restartLabels();
+        ChessGameFrame.restartLabels();
         repaint();
     }
 

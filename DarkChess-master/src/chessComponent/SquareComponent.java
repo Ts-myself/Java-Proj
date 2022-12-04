@@ -30,6 +30,7 @@ public abstract class SquareComponent extends JComponent {
     private ChessboardPoint chessboardPoint;
     protected final ChessColor chessColor;
     protected boolean isReversal;
+    protected boolean Reachable;
     private boolean selected;
 
     public int type;
@@ -57,6 +58,10 @@ public abstract class SquareComponent extends JComponent {
     public void setReversal(boolean reversal) {
         isReversal = reversal;
     }
+
+    public boolean isReachable() {return Reachable;}
+
+    public void setReachable(boolean reachable) {Reachable = reachable;}
 
     public static void setSpacingLength(int spacingLength) {
         SquareComponent.spacingLength = spacingLength;

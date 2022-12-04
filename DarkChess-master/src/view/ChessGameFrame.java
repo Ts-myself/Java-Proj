@@ -15,9 +15,9 @@ public class ChessGameFrame extends JFrame {
     private final int HEIGHT;
     public final int CHESSBOARD_SIZE;
     private GameController gameController;
-    private static JLabel statusLabel;
-    private static JLabel blackScore;
-    private static JLabel redScore;
+    private static JLabel statusLabel = new JLabel();
+    private static JLabel blackScore = new JLabel();
+    private static JLabel redScore = new JLabel();
     public ChessGameFrame(int width, int height) {
         setTitle("2022 CS109 Project Demo"); //设置标题
         this.WIDTH = width;
