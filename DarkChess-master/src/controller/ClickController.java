@@ -4,8 +4,11 @@ package controller;
 import chessComponent.SquareComponent;
 import chessComponent.EmptySlotComponent;
 import model.ChessColor;
+import model.ChessboardPoint;
 import view.ChessGameFrame;
 import view.Chessboard;
+
+import java.util.ArrayList;
 
 public class ClickController {
     private final Chessboard chessboard;
@@ -20,6 +23,7 @@ public class ClickController {
             if (handleFirst(squareComponent)) {
                 squareComponent.setSelected(true);
                 //get canGo
+                ArrayList<ChessboardPoint> canGo = first.whereCanGo(chessboard.getChessComponents(), chessboard);
                 //paint
                 first = squareComponent;
                 first.repaint();

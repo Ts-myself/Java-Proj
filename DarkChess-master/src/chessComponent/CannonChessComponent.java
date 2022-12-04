@@ -44,4 +44,27 @@ public class CannonChessComponent extends ChessComponent {
         }
         return false;
     }
+    public ArrayList<ChessboardPoint> whereCanGo (SquareComponent[][] chessboard, Chessboard CB){
+        int nowX = super.getChessboardPoint().getX();
+        int nowY = super.getChessboardPoint().getY();
+        ArrayList<ChessboardPoint> canGo = new ArrayList<>();
+        int[][] dir = {{1,0},{-1,0},{0,1},{0,-1}};
+        for (int i=0;i<4;i++){
+            int x = nowX+dir[i][0], y = nowY+dir[i][1];
+            boolean jump = false;
+            while ((x>=0&&x<8) && (y>=0&&y<4)){
+                if (jump && chessboard[x][y].getChessColor() == CB.getCurrentColor()) break;
+                if (jump && !(chessboard[x][y] instanceof EmptySlotComponent)) {
+                    ChessboardPoint jumpToHere = new ChessboardPoint(x, y);
+                    canGo.add(jumpToHere);
+                    break;
+                }
+                if (! (chessboard[x][y] instanceof EmptySlotComponent)){
+                    jump = true;
+                }
+                x+=dir[i][0]; y+=dir[i][1];
+            }
+        }
+        return canGo;
+    }
 }

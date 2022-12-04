@@ -8,6 +8,7 @@ import view.Chessboard;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 /**
  * 这个类是一个抽象类，主要表示8*4棋盘上每个格子的棋子情况。
@@ -30,7 +31,7 @@ public abstract class SquareComponent extends JComponent {
     private ChessboardPoint chessboardPoint;
     protected final ChessColor chessColor;
     protected boolean isReversal;
-    protected boolean Reachable;
+    protected boolean reachable;
     private boolean selected;
 
     public int type;
@@ -59,9 +60,10 @@ public abstract class SquareComponent extends JComponent {
         isReversal = reversal;
     }
 
-    public boolean isReachable() {return Reachable;}
+    public boolean isReachable() {return reachable;}
 
-    public void setReachable(boolean reachable) {Reachable = reachable;}
+    public void setReachable(boolean reachable) {
+        this.reachable = reachable;}
 
     public static void setSpacingLength(int spacingLength) {
         SquareComponent.spacingLength = spacingLength;
@@ -143,7 +145,19 @@ public abstract class SquareComponent extends JComponent {
         return false;
 }
 
-
+    public ArrayList<ChessboardPoint> whereCanGo (SquareComponent[][] chessboard, Chessboard CB){
+        int[][] dir = {{1,0},{-1,0},{0,1},{0,-1}};
+        ArrayList<ChessboardPoint> canGo = new ArrayList<>();
+        int nowX = this.chessboardPoint.getX();
+        int nowY = this.chessboardPoint.getY();
+        for (int i=0;i<4;i++){
+            int x = nowX+dir[i][0], y = nowY+dir[i][1];
+            if (chessboard[x][y] instanceof EmptySlotComponent || (chessboard[x][y].isReversal()&&chessboard[x][y].getChessColor()!=CB.getCurrentColor()&&(chessboard[x][y].type<=this.type || (chessboard[x][y].type==6&&this.type==0)))){
+                canGo.add(new ChessboardPoint(x,y));
+            }
+        }
+        return canGo;
+    }
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponents(g);
