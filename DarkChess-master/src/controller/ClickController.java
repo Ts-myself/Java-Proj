@@ -20,6 +20,7 @@ public class ClickController {
     public void onClick(SquareComponent squareComponent) {
         //判断第一次点击
         if (first == null) {
+            // 初始化棋手方
             if (chessboard.getCurrentColor() == ChessColor.NONE) {
                 chessboard.setCurrentColor(squareComponent.getChessColor());
                 squareComponent.setReversal(true);
@@ -58,7 +59,7 @@ public class ClickController {
                 //repaint in swap chess method.
                 chessboard.swapChessComponents(first, squareComponent);
                 chessboard.clickController.swapPlayer();
-                ScoreChange(first);
+                ScoreChange(squareComponent);
 
                 first.setSelected(false);
                 first = null;
