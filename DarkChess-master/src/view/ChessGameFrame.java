@@ -148,7 +148,7 @@ public class ChessGameFrame extends JFrame {
             add(button);
 
             //todo: find a way to edit txt file
-            File file = new File("chessboard.txt");
+            File file = new File("resources/save.txt");
             if (!file.exists()) file.createNewFile();
             try(FileWriter fileWriter = new FileWriter((file));
                 BufferedWriter bufferedWriter= new BufferedWriter(fileWriter)){

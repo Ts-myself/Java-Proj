@@ -11,9 +11,9 @@ public class HorseChessComponent extends ChessComponent {
     public HorseChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size, int type){
         super(chessboardPoint, location, chessColor, clickController, size, type);
         if (this.getChessColor() == ChessColor.RED){
-            name = "M";
+            name = "傌";
         } else {
-            name = "m";
+            name = "马";
         }
     }
 }

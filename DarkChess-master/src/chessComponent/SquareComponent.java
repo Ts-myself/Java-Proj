@@ -18,9 +18,9 @@ import java.util.ArrayList;
  */
 public abstract class SquareComponent extends JComponent {
 
-    private static final Color squareColor = new Color(227, 245, 6);
+    private static final Color squareColor = new Color(255, 5, 243);
     protected static int spacingLength;
-    protected static final Font CHESS_FONT = new Font("Rockwell", Font.BOLD, 36);
+    protected static final Font CHESS_FONT = new Font("楷体", Font.BOLD, 38);
 
     /**
      * chessboardPoint: 表示8*4棋盘中，当前棋子在棋格对应的位置，如(0, 0), (1, 0)等等
