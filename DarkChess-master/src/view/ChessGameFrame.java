@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedWriter;
@@ -76,7 +77,8 @@ public class ChessGameFrame extends JFrame {
         redScore = new JLabel("Red's Score: 0");
         redScore.setLocation(WIDTH / 2 - WIDTH / 7, HEIGHT / 40);
         redScore.setSize(150,50);
-        redScore.setFont(new Font("Rockwell", Font.BOLD, 18));
+        redScore.setFont(new Font("Rockwell",Font.BOLD, 18));
+        redScore.setForeground(new Color(255,10,10));
         add(redScore);
     }
 
@@ -90,7 +92,6 @@ public class ChessGameFrame extends JFrame {
         return redScore;
     }
 
-    //todo:fix this method
     public static void restartLabels() {
         statusLabel.setText("The First Turn");
         blackScore.setText("Black's Score: 0");
@@ -162,4 +163,6 @@ public class ChessGameFrame extends JFrame {
             }
 
         }
+
+
 }

@@ -2,7 +2,6 @@ package view;
 
 
 import chessComponent.*;
-import controller.GameController;
 import model.*;
 import controller.ClickController;
 
@@ -22,7 +21,6 @@ public class Chessboard extends JComponent {
     private static final int COL_SIZE = 4;
 
     private final SquareComponent[][] squareComponents = new SquareComponent[ROW_SIZE][COL_SIZE];
-    //todo: you can change the initial player
     private ChessColor currentColor = ChessColor.NONE;
 
     //all chessComponents in this chessboard are shared only one model controller
@@ -99,10 +97,17 @@ public class Chessboard extends JComponent {
         //只重新绘制chess1 chess2，其他不变
         chess1.repaint();
         chess2.repaint();
+
+        //todo:fix the method for ending
+        /*if (blackScore >= 60 || redScore >= 60) {
+            JLabel end = new JLabel(String.format("%s Win", blackScore >= 60 ? "Black" : "Red"));
+            end.setLocation(ChessGameFrame.getCHESSBOARD_SIZE() / 10, CHESSBOARD_SIZE / 10);
+            end.setSize(CHESSBOARD_SIZE / 100, CHESSBOARD_SIZE / 100);
+            end.setFont(new Font("Rockwell", Font.BOLD,40));
+            end.setForeground(Color.LIGHT_GRAY);
+        }*/
     }
 
-
-    //FIXME:   Initialize chessboard for testing only.
     public void initAllChessOnBoard() {
         int[][] board = Chessboard.randomIntBoard();
         for (int i = 0; i < ROW_SIZE; i++) {
@@ -168,7 +173,6 @@ public class Chessboard extends JComponent {
         int[][] chessboard = new int[8][4];
         int red=0;
         //add same random color
-        //todo: random bug here
         while (red<16){
             int site = random.nextInt(0,32); //1~32
             int col=site%4;  int row=(site-col)/4;
@@ -209,16 +213,16 @@ public class Chessboard extends JComponent {
         for (int i=0;i<8;i++){
             for (int j=0;j<4;j++){
                 if (chessboard[i][j] == 10) {
-                    chessboard[i][j] +=chessValue(redPosition[i_red++]);
+                    chessboard[i][j] += eatenChessValue(redPosition[i_red++]);
                 }
                 if (chessboard[i][j] == 20) {
-                    chessboard[i][j] +=chessValue(blackPosition[i_black++]);
+                    chessboard[i][j] += eatenChessValue(blackPosition[i_black++]);
                 }
             }
         }
             return chessboard;
     }
-    public static int chessValue(int i) {
+    public static int eatenChessValue(int i) {
         if(i==0) return 6;
         if(i>=1 && i<=2) return 5;
         if(i>=3 && i<=4) return 4;
@@ -231,12 +235,12 @@ public class Chessboard extends JComponent {
 
     public void ScoreRecorder(SquareComponent eaten) {
         if (eaten.getChessColor() == ChessColor.BLACK) {
-            redScore += chessValue(eaten);
+            redScore += eatenChessValue(eaten);
         } else {
-            blackScore += chessValue(eaten);
+            blackScore += eatenChessValue(eaten);
         }
     }
-    public int chessValue(SquareComponent eaten) {
+    public int eatenChessValue(SquareComponent eaten) {
         if (eaten.type == 6) {return 30;}
         if (eaten.type == 5) {return 10;}
         if (eaten.type == 4) {return 5;}
