@@ -35,6 +35,7 @@ public class ClickController {
                 System.out.print("this point can go to:");
                 for (ChessboardPoint go : canGo) {System.out.printf("(%d,%d) ", go.getX() + 1, go.getY() + 1);}
                 System.out.print("\n");
+
                 //paint
                 for (ChessboardPoint point : canGo) {
                     chessboard.getSquareComponents()[point.getX()][point.getY()].setReachable(true);
@@ -69,7 +70,6 @@ public class ClickController {
                 first = null;
                 recordFirst.repaint();
             }
-            //get canGo
         }
     }
 
@@ -80,7 +80,7 @@ public class ClickController {
      */
 
     private boolean handleFirst(SquareComponent squareComponent) {
-        if (!squareComponent.isReversal()) {
+        if (!squareComponent.isReversal() && !(squareComponent instanceof EmptySlotComponent)) {
             squareComponent.setReversal(true);
             System.out.printf("onClick to reverse a chess [%d,%d]\n", squareComponent.getChessboardPoint().getX(), squareComponent.getChessboardPoint().getY());
             squareComponent.repaint();

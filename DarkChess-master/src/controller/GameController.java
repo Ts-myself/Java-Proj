@@ -20,18 +20,16 @@ public class GameController {
         this.chessboard = chessboard;
     }
 
-    public List<String> loadGameFromFile(String path) {
+    public void loadGameFromFile(String path) {
         try {
             List<String> chessData = Files.readAllLines(Path.of(path));
-            chessboard.loadGame(chessData);
-            return chessData;
+            chessboard.initAllChessOnBoard (chessData);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     public void restartGame(){
-        chessboard.initAllChessOnBoard();
+        chessboard.initAllChessOnBoard(null);
     }
 }

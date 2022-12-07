@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameController;
+import model.ChessColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -92,10 +93,10 @@ public class ChessGameFrame extends JFrame {
         return redScore;
     }
 
-    public static void restartLabels() {
-        statusLabel.setText("The First Turn");
-        blackScore.setText("Black's Score: 0");
-        redScore.setText("Red's Score: 0");
+    public static void restartLabels(ChessColor color, int R, int B) {
+        statusLabel.setText("The " +color+ " Turn");
+        blackScore.setText(("Black's Score: "+B));
+        redScore.setText("Red's Score: "+R);
     }
     /**
      * 在游戏窗体中增加一个按钮，如果按下的话就会显示Hello, world!
