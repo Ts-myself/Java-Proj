@@ -156,9 +156,11 @@ public class Chessboard extends JComponent {
                         squareComponent.setReversal(true);
                     }
                     squareComponent.setVisible(true);
-                    putChessOnBoard(squareComponent);
+                    putChessOnBoard (squareComponent);
+                } else {
+                    squareComponent = new EmptySlotComponent(new ChessboardPoint(i, j), calculatePoint(i, j), clickController, CHESS_SIZE, -1);
+                    putChessOnBoard (squareComponent);
                 }
-
             }
         }
         ChessGameFrame.restartLabels(getCurrentColor(),getRedScore(),getBlackScore());
@@ -181,22 +183,6 @@ public class Chessboard extends JComponent {
     private Point calculatePoint(int row, int col) {
         return new Point(col * CHESS_SIZE + 3, row * CHESS_SIZE + 3);
     }
-
-    /**
-     * 通过GameController调用该方法
-     */
-
-    /*
-    public int[][] loadGame(List<String> chessData) {
-        chessData.forEach(System.out::println);
-        /*
-        for (String line : chessData){
-            for (int i=0;i<line.length();i++){
-                //todo: load in;
-            }
-        }
-    }
-    */
 
     public static int[][] randomIntBoard(){
         //十位 0:空 1:红（未翻） 2:黑（未翻） 3:红 4:黑

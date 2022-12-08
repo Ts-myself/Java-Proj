@@ -3,6 +3,7 @@ package controller;
 
 import view.Chessboard;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,7 +29,10 @@ public class GameController {
             e.printStackTrace();
         }
     }
-
+    public  void saveGameInFile(String path) {
+        File file = new File(path);
+        //todo: finish save method
+    }
     public void restartGame(){
         chessboard.initAllChessOnBoard(null);
     }

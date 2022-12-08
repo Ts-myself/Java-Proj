@@ -5,10 +5,6 @@ import model.ChessColor;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  * 这个类表示游戏窗体，窗体上包含：
@@ -42,11 +38,7 @@ public class ChessGameFrame extends JFrame {
         addHelloButton();
         addLoadButton();
         addRestartButton();
-        try {
-            addSavaButton();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        addSavaButton();
     }
     /**
      * 在游戏窗体中添加棋盘
@@ -111,7 +103,19 @@ public class ChessGameFrame extends JFrame {
         add(button);
     }
 
+    private void addRestartButton(){
+       JButton button = new JButton("Restart");
+       button.setLocation(WIDTH * 3 / 5, HEIGHT / 10 + 480);
+       button.setSize(180, 60);
+       button.setFont(new Font("Rockwell", Font.BOLD, 20));
+       button.setBackground(Color.RED);
+       add(button);
 
+       button.addActionListener(e -> {
+           System.out.println("Restarting Game!");
+           gameController.restartGame();
+       });
+    }
     private void addLoadButton() {
         JButton button = new JButton("Load");
         button.setLocation(WIDTH * 3 / 5, HEIGHT / 10 + 240);
@@ -122,26 +126,11 @@ public class ChessGameFrame extends JFrame {
 
         button.addActionListener(e -> {
             System.out.println("Click load");
-            String path = JOptionPane.showInputDialog(this, "Input Path here");
-            gameController.loadGameFromFile(path);
+            SaveAndLoadFrame saveAndLoadFrame = new SaveAndLoadFrame(gameController,false);
+            saveAndLoadFrame.setVisible(true);
         });
     }
-
-        private void addRestartButton(){
-            JButton button = new JButton("Restart");
-            button.setLocation(WIDTH * 3 / 5, HEIGHT / 10 + 480);
-            button.setSize(180, 60);
-            button.setFont(new Font("Rockwell", Font.BOLD, 20));
-            button.setBackground(Color.RED);
-            add(button);
-
-            button.addActionListener(e -> {
-                System.out.println("Restarting Game!");
-                gameController.restartGame();
-            });
-        }
-
-        private void addSavaButton() throws IOException {
+        private void addSavaButton(){
             JButton button = new JButton("Save Game");
             button.setLocation(WIDTH * 3 / 5, HEIGHT / 10 + 360);
             button.setSize(180, 60);
@@ -149,19 +138,12 @@ public class ChessGameFrame extends JFrame {
             button.setBackground(Color.LIGHT_GRAY);
             add(button);
 
-            //todo: find a way to edit txt file
-            File file = new File("resources/save.txt");
-            if (!file.exists()) file.createNewFile();
-            try(FileWriter fileWriter = new FileWriter((file));
-                BufferedWriter bufferedWriter= new BufferedWriter(fileWriter)){
-                bufferedWriter.write("hello world!");
-                bufferedWriter.newLine();
-                bufferedWriter.flush();
+            button.addActionListener(e -> {
+                System.out.println("Saving game");
+                SaveAndLoadFrame saveAndLoadFrame = new SaveAndLoadFrame(gameController,true);
+                saveAndLoadFrame.setVisible(true);
+            });
 
-                //todo: shen me yi si?
-            } catch (Exception e){
-                e.printStackTrace();
-            }
 
         }
 
