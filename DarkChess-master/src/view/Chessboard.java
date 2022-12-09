@@ -7,8 +7,11 @@ import controller.ClickController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static model.ChessColor.RED;
 
 /**
  * 这个类表示棋盘组建，其包含：
@@ -133,10 +136,14 @@ public class Chessboard extends JComponent {
         }
         for (int i = 0; i < ROW_SIZE; i++) {
             for (int j = 0; j < COL_SIZE; j++) {
-                int component = board[i][j];
-                ChessColor color = component/10 == 1 ? ChessColor.RED : ChessColor.BLACK;
                 SquareComponent squareComponent = null;
-                if (component/10 != 0) {
+                int component = board[i][j];
+                if (component / 10 == 0){
+                    squareComponent = new EmptySlotComponent(new ChessboardPoint(i, j), calculatePoint(i, j), clickController, CHESS_SIZE, -1);
+                    putChessOnBoard (squareComponent);
+                }
+                else {
+                    ChessColor color = component/10 == 1 ? RED : ChessColor.BLACK;
                     if (component % 10 == 6)
                         squareComponent = new GeneralChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 6);
                     else if (component % 10 == 5)
@@ -156,9 +163,6 @@ public class Chessboard extends JComponent {
                         squareComponent.setReversal(true);
                     }
                     squareComponent.setVisible(true);
-                    putChessOnBoard (squareComponent);
-                } else {
-                    squareComponent = new EmptySlotComponent(new ChessboardPoint(i, j), calculatePoint(i, j), clickController, CHESS_SIZE, -1);
                     putChessOnBoard (squareComponent);
                 }
             }
@@ -268,4 +272,27 @@ public class Chessboard extends JComponent {
         if (eaten.type == 0) {return 1;}
         return 0;
     }
+     public List<String> pauseToInt (){
+        List<String> lines = new ArrayList<>();
+        lines.add(this.getCurrentColor()+" "+this.getRedScore()+" "+this.getBlackScore());
+        for (int i=1;i<=8;i++){
+            char[] string = new char[12];
+            for (int j=0;j<4;j++){
+                SquareComponent component = squareComponents[i-1][j];
+                int kind, type;
+                if (component instanceof EmptySlotComponent) {
+                    type = 0; kind = 0;
+                }
+                else{
+                    type = component.type;
+                    if (component.getChessColor() == RED) kind = 1;
+                    else kind = 2;
+                    if (component.isReversal()) kind += 2;
+                }
+                string[3*j] = (char)(kind+'0'); string[3*j+1] = (char)(type+'0'); string[3*j+2] = ' ';
+            }
+            lines.add(String.valueOf(string));
+        }
+        return lines;
+     }
 }

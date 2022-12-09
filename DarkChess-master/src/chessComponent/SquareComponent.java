@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public abstract class SquareComponent extends JComponent {
 
-    private static final Color squareColor = new Color(255, 5, 243);
+    private static final Color squareColor = new Color(203, 112, 20);
     protected static int spacingLength;
     protected static final Font CHESS_FONT = new Font("楷体", Font.BOLD, 38);
 
