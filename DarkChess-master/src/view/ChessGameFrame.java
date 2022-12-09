@@ -35,7 +35,7 @@ public class ChessGameFrame extends JFrame {
         addChessboard();
         addLabel();
         addScore();
-        addHelloButton();
+        addCheatButton();
         addLoadButton();
         addRestartButton();
         addSavaButton();
@@ -94,13 +94,18 @@ public class ChessGameFrame extends JFrame {
      * 在游戏窗体中增加一个按钮，如果按下的话就会显示Hello, world!
      */
 
-    private void addHelloButton() {
-        JButton button = new JButton("Show Hello Here");
-        button.addActionListener((e) -> JOptionPane.showMessageDialog(this, "Hello, world!"));
+    private void addCheatButton() {
+        JButton button = new JButton("Cheat");
+        button.addActionListener((e) -> JOptionPane.showMessageDialog(this, "Cheating mode is opened!\npause SPACE to sneak"));
         button.setLocation(WIDTH * 3 / 5, HEIGHT / 10 + 120);
         button.setSize(180, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
+
+        button.addActionListener(e -> {
+            //todo:cheat
+
+        });
     }
 
     private void addRestartButton(){

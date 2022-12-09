@@ -5,7 +5,6 @@ import javax.swing.*;
 
 public class Main {
     /* todo list
-        1.save and load function ！！！
         2.游戏界面设计
         3.棋子贴图
         4.偷看棋子功能

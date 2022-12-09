@@ -86,7 +86,6 @@ public class Chessboard extends JComponent {
      * 交换chess1 chess2的位置
      */
     public void swapChessComponents(SquareComponent chess1, SquareComponent chess2) {
-        // Note that chess1 has higher priority, 'destroys' chess2 if exists.
         if (!(chess2 instanceof EmptySlotComponent)) {
             remove(chess2);
             add(chess2 = new EmptySlotComponent(chess2.getChessboardPoint(), chess2.getLocation(), clickController, CHESS_SIZE,-1));
