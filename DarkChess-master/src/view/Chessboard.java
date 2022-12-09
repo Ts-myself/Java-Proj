@@ -143,7 +143,7 @@ public class Chessboard extends JComponent {
                     putChessOnBoard (squareComponent);
                 }
                 else {
-                    ChessColor color = component/10 == 1 ? RED : ChessColor.BLACK;
+                    ChessColor color = (component/10==1||component/10==3) ? ChessColor.RED : ChessColor.BLACK;
                     if (component % 10 == 6)
                         squareComponent = new GeneralChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 6);
                     else if (component % 10 == 5)
