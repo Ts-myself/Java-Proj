@@ -27,24 +27,26 @@ public class ChessComponent extends SquareComponent{
         g.setColor(Color.DARK_GRAY);
         g.drawOval(spacingLength, spacingLength, getWidth() - 2 * spacingLength, getHeight() - 2 * spacingLength);
 
-
-
         if (isReversal || currentReversal) {
-            //绘制棋子文字
-            g.setColor(this.getChessColor().getColor());
-            g.setFont(CHESS_FONT);
-            g.drawString(this.name, this.getWidth() / 4, this.getHeight() * 2 / 3);
-
             //绘制棋子被选中时状态
             if (isSelected()) {
                 g.setColor(Color.RED);
                 Graphics2D g2 = (Graphics2D) g;
-                g2.setStroke(new BasicStroke(4f));
+                g2.setStroke(new BasicStroke(6f));
                 g2.drawOval(spacingLength, spacingLength, getWidth() - 2 * spacingLength, getHeight() - 2 * spacingLength);
+                //绘制棋子文字
+                g.setColor(this.getChessColor().getColor());
+                g.setFont(new Font("楷体", Font.BOLD, 45));
+                g.drawString(this.name, this.getWidth() / 4 - 4, this.getHeight() * 2 / 3 + 4);
+            }
+            else{
+
+                g.setColor(this.getChessColor().getColor());
+                g.setFont(CHESS_FONT);
+                g.drawString(this.name, this.getWidth() / 4 - 1, this.getHeight() * 2 / 3);
             }
 
         }
-
         if (isReachable()) {
             g.setColor(Color.BLUE);
             Graphics2D g2 = (Graphics2D) g;

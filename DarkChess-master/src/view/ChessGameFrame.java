@@ -38,22 +38,34 @@ public class ChessGameFrame extends JFrame {
 
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null); // Center the window.
-        getContentPane().setBackground(Color.WHITE);
+
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
         setLayout(null);
 
         initialUI();
+
+        /*
+        Image image = Toolkit.getDefaultToolkit().getImage("resources/image-chess-1/chess-bishop-black.png").getScaledInstance(100, 100, Image.SCALE_FAST);
+        JComponent imageComponent = new ImageComponent(image);// create an instance of ImageComponent
+        imageComponent.setSize(100, 100);
+        imageComponent.setLocation(50, 50); // set absolute location
+        this.add(imageComponent);// add Jcomponent into Jframe
+         */
     }
 
     private void initialUI() {
+
+
         JLabel gameName= new JLabel("DARK CHESS");
         JButton aiModeButton = new JButton("AI Mode");
         JButton classicModeButton = new JButton("Classic Mode");
+
 
         gameName.setLocation(WIDTH  / 5, HEIGHT / 8 - HEIGHT /20);
         gameName.setSize(WIDTH* 3/ 5, HEIGHT / 6);
         gameName.setFont(new Font("Colonna MT", Font.BOLD,70));
         add(gameName);
+
 
         classicModeButton.setLocation(WIDTH / 3, HEIGHT * 2 / 8 - HEIGHT / 30);
         classicModeButton.setSize(WIDTH / 3, HEIGHT / 8);
@@ -77,6 +89,9 @@ public class ChessGameFrame extends JFrame {
             repaint();
         });
 
+        gameName.setVisible(true);
+        classicModeButton.setVisible(true);
+        aiModeButton.setVisible(true);
     }
 
 
@@ -84,18 +99,22 @@ public class ChessGameFrame extends JFrame {
     /**
      * 在游戏窗体中添加棋盘
      */
-    private void classicMode() {
+    public void classicMode() {
         addChessboard();
         addLabel();
         addScore();
-        addLoadButton();
-        addRestartButton();
-        addSavaButton();
+        addMenuButton();
         addMusic();
+
+
+        Container ct = this.getContentPane();
+        BackgroundPanel backGround = new BackgroundPanel(new ImageIcon("resources/pictures/background.jpg").getImage());
+        backGround.setBounds(0,0,WIDTH,HEIGHT);
+        ct.add(backGround);
     }
     private void addChessboard() {
         gameController = new GameController(chessboard);
-        chessboard.setLocation(HEIGHT / 10, HEIGHT / 10);
+        chessboard.setLocation(210, HEIGHT / 10);
         add(chessboard);
     }
     /**
@@ -103,9 +122,9 @@ public class ChessGameFrame extends JFrame {
      */
     private void addLabel() {
         statusLabel = new JLabel("The First TURN");
-        statusLabel.setLocation(WIDTH * 3 / 5, HEIGHT / 10);
-        statusLabel.setSize(200, 60);
-        statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
+        statusLabel.setLocation(290, HEIGHT / 50);
+        statusLabel.setSize(400, 60);
+        statusLabel.setFont(new Font("Rockwell", Font.BOLD, 30));
         add(statusLabel);
     }
     /**
@@ -129,14 +148,14 @@ public class ChessGameFrame extends JFrame {
 
     private void addScore() {
         blackScore = new JLabel("Black's Score: 0");
-        blackScore.setLocation(WIDTH / 4 - WIDTH / 6, HEIGHT / 40);
-        blackScore.setSize(150,50);
-        blackScore.setFont(new Font("Rockwell", Font.BOLD, 18));
+        blackScore.setLocation(50, HEIGHT / 40);
+        blackScore.setSize(250,50);
+        blackScore.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(blackScore);
         redScore = new JLabel("Red's Score: 0");
-        redScore.setLocation(WIDTH / 2 - WIDTH / 7, HEIGHT / 40);
-        redScore.setSize(150,50);
-        redScore.setFont(new Font("Rockwell",Font.BOLD, 18));
+        redScore.setLocation(580, HEIGHT / 40);
+        redScore.setSize(250,50);
+        redScore.setFont(new Font("Rockwell",Font.BOLD, 20));
         redScore.setForeground(new Color(255,10,10));
         add(redScore);
     }
@@ -156,46 +175,18 @@ public class ChessGameFrame extends JFrame {
         blackScore.setText(("Black's Score: "+B));
         redScore.setText("Red's Score: "+R);
     }
-    private void addRestartButton(){
-       JButton button = new JButton("Restart");
-       button.setLocation(WIDTH * 3 / 5, HEIGHT / 10 + 480);
-       button.setSize(180, 60);
-       button.setFont(new Font("Rockwell", Font.BOLD, 20));
-       button.setBackground(Color.RED);
-       add(button);
-
-       button.addActionListener(e -> {
-           System.out.println("Restarting Game!");
-           gameController.restartGame();
-       });
-    }
-    private void addLoadButton() {
-        JButton button = new JButton("Load");
-        button.setLocation(WIDTH * 3 / 5, HEIGHT / 10 + 240);
-        button.setSize(180, 60);
+    private void addMenuButton(){
+        JButton button = new JButton("...");
+        button.setLocation(WIDTH - 100, HEIGHT - 100);
+        button.setSize(60, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        button.setBackground(Color.LIGHT_GRAY);
+        button.setBackground(Color.RED);
         add(button);
 
         button.addActionListener(e -> {
-            System.out.println("Click load");
-            SaveAndLoadFrame saveAndLoadFrame = new SaveAndLoadFrame(gameController,false);
-            saveAndLoadFrame.setVisible(true);
+            MenuFrame menuFrame = new MenuFrame(gameController);
+            menuFrame.setVisible(true);
         });
     }
-    private void addSavaButton(){
-            JButton button = new JButton("Save Game");
-            button.setLocation(WIDTH * 3 / 5, HEIGHT / 10 + 360);
-            button.setSize(180, 60);
-            button.setFont(new Font("Rockwell", Font.BOLD, 20));
-            button.setBackground(Color.LIGHT_GRAY);
-            add(button);
-
-            button.addActionListener(e -> {
-                System.out.println("Saving game");
-                SaveAndLoadFrame saveAndLoadFrame = new SaveAndLoadFrame(gameController,true);
-                saveAndLoadFrame.setVisible(true);
-            });
-        }
 
 }

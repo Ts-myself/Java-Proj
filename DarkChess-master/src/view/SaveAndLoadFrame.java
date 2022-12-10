@@ -20,14 +20,14 @@ public class SaveAndLoadFrame extends JFrame {
         setLayout(null);
 
         addSaveAndLoadChoice("resources/saveFiles/save1.txt",30,10,1);
-        addSaveAndLoadChoice("DarkChess-master/resources/saveFiles/save2.txt",30,50,2);
-        addSaveAndLoadChoice("DarkChess-master/resources/saveFiles/save3.txt",30,90,3);
-        addSaveAndLoadChoice("DarkChess-master/resources/saveFiles/save4.txt",30,130,4);
-        addSaveAndLoadChoice("DarkChess-master/resources/saveFiles/save5.txt",30,170,5);
-        addSaveAndLoadChoice("DarkChess-master/resources/saveFiles/save6.txt",30,210,6);
-        addSaveAndLoadChoice("DarkChess-master/resources/saveFiles/save7.txt",30,250,7);
-        addSaveAndLoadChoice("DarkChess-master/resources/saveFiles/save8.txt",30,290,8);
-        addSaveAndLoadChoice("DarkChess-master/resources/saveFiles/save9.txt",30,330,9);
+        addSaveAndLoadChoice("resources/saveFiles/save2.txt",30,50,2);
+        addSaveAndLoadChoice("resources/saveFiles/save3.txt",30,90,3);
+        addSaveAndLoadChoice("resources/saveFiles/save4.txt",30,130,4);
+        addSaveAndLoadChoice("resources/saveFiles/save5.txt",30,170,5);
+        addSaveAndLoadChoice("resources/saveFiles/save6.txt",30,210,6);
+        addSaveAndLoadChoice("resources/saveFiles/save7.txt",30,250,7);
+        addSaveAndLoadChoice("resources/saveFiles/save8.txt",30,290,8);
+        addSaveAndLoadChoice("resources/saveFiles/save9.txt",30,330,9);
     }
     public void addSaveAndLoadChoice(String path, int x, int y, int n){
         File file = new File(path);
@@ -45,5 +45,4 @@ public class SaveAndLoadFrame extends JFrame {
             this.dispose();
         });
     }
-
 }

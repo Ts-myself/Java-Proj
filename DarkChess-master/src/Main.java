@@ -6,10 +6,8 @@ import javax.swing.*;
 public class Main {
     /* todo list
         2.游戏界面设计
-        3.棋子贴图
-        4.偷看棋子功能
+        3.棋子贴图 ——>被吃棋子摆在一旁
         6.ai模式
-        7.被吃棋子摆在一旁
         8.背景和音乐
      */
     public static void main(String[] args) {
@@ -25,7 +23,7 @@ public class Main {
         */
 
         SwingUtilities.invokeLater(() -> {
-            ChessGameFrame mainFrame = new ChessGameFrame(720, 720);
+            ChessGameFrame mainFrame = new ChessGameFrame(800, 850);
             mainFrame.setVisible(true);
         });
     }
