@@ -1,15 +1,15 @@
 package view;
 
-import chessComponent.SquareComponent;
 import controller.GameController;
 import model.ChessColor;
-import org.w3c.dom.events.Event;
-
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.security.Key;
+import java.io.File;
+import java.lang.reflect.MalformedParametersException;
+
 
 /**
  * 这个类表示游戏窗体，窗体上包含：
@@ -27,7 +27,7 @@ public class ChessGameFrame extends JFrame {
     private static JLabel redScore = new JLabel();
     Chessboard chessboard;
     public ChessGameFrame(int width, int height) {
-        setTitle("2022 CS109 Project Demo"); //设置标题
+        setTitle("Dark Chess");
         this.WIDTH = width;
         this.HEIGHT = height;
         this.CHESSBOARD_SIZE = HEIGHT * 4 / 5;
@@ -72,7 +72,7 @@ public class ChessGameFrame extends JFrame {
             remove(gameName);remove(classicModeButton);
             repaint();
         });
-        
+
     }
 
 
@@ -87,6 +87,7 @@ public class ChessGameFrame extends JFrame {
         addLoadButton();
         addRestartButton();
         addSavaButton();
+        addMusic();
     }
     private void addChessboard() {
         gameController = new GameController(chessboard);
@@ -102,6 +103,24 @@ public class ChessGameFrame extends JFrame {
         statusLabel.setSize(200, 60);
         statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(statusLabel);
+    }
+    /**
+     * 在游戏窗体中播放音乐
+     */
+    public void addMusic() throws MalformedParametersException {
+        try
+        {
+            File musicPath = new File("resources/music/Gymnopedies No.1.wav");
+            AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInput);
+            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     private void addScore() {

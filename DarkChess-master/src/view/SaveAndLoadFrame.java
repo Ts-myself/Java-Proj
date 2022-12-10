@@ -19,8 +19,7 @@ public class SaveAndLoadFrame extends JFrame {
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
 
-        //System.setProperty("user.dir","C:\\Users");6
-        addSaveAndLoadChoice("DarkChess-master/resources/saveFiles/save1.txt",30,10,1);
+        addSaveAndLoadChoice("resources/saveFiles/save1.txt",30,10,1);
         addSaveAndLoadChoice("DarkChess-master/resources/saveFiles/save2.txt",30,50,2);
         addSaveAndLoadChoice("DarkChess-master/resources/saveFiles/save3.txt",30,90,3);
         addSaveAndLoadChoice("DarkChess-master/resources/saveFiles/save4.txt",30,130,4);
