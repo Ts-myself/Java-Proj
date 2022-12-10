@@ -1,16 +1,12 @@
 package view;
 
-import chessComponent.SquareComponent;
+
 import controller.GameController;
 import model.ChessColor;
-import org.w3c.dom.events.Event;
+
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.security.Key;
-
 /**
  * 这个类表示游戏窗体，窗体上包含：
  * 1 Chessboard: 棋盘
@@ -44,12 +40,14 @@ public class ChessGameFrame extends JFrame {
 
     private void initialUI() {
         JLabel gameName= new JLabel("DARK CHESS");
+        JButton aiModeButton = new JButton("AI Mode");
+        JButton classicModeButton = new JButton("Classic Mode");
+
         gameName.setLocation(WIDTH  / 5, HEIGHT / 8 - HEIGHT /20);
         gameName.setSize(WIDTH* 3/ 5, HEIGHT / 6);
         gameName.setFont(new Font("Colonna MT", Font.BOLD,70));
         add(gameName);
 
-        JButton classicModeButton = new JButton("Classic Mode");
         classicModeButton.setLocation(WIDTH / 3, HEIGHT * 2 / 8 - HEIGHT / 30);
         classicModeButton.setSize(WIDTH / 3, HEIGHT / 8);
         classicModeButton.setFont(new Font("Colonna MT", Font.BOLD,30));
@@ -57,11 +55,10 @@ public class ChessGameFrame extends JFrame {
         classicModeButton.addActionListener(e -> {
             System.out.println("Start Classic Mode");
             classicMode();
-            remove(gameName);remove(classicModeButton);
+            remove(gameName);remove(classicModeButton);remove(aiModeButton);
             repaint();
         });
 
-        JButton aiModeButton = new JButton("AI Mode");
         aiModeButton.setLocation(WIDTH / 3, HEIGHT * 3 / 8);
         aiModeButton.setSize(WIDTH / 3, HEIGHT / 8);
         aiModeButton.setFont(new Font("Colonna MT", Font.BOLD,30));
@@ -69,10 +66,10 @@ public class ChessGameFrame extends JFrame {
         aiModeButton.addActionListener(e -> {
             System.out.println("Start AI Mode");
             classicMode();
-            remove(gameName);remove(classicModeButton);
+            remove(gameName);remove(classicModeButton);remove(aiModeButton);
             repaint();
         });
-        
+
     }
 
 
