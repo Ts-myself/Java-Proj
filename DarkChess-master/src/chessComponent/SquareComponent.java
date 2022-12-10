@@ -32,6 +32,7 @@ public abstract class SquareComponent extends JComponent {
     private ChessboardPoint chessboardPoint;
     protected final ChessColor chessColor;
     protected boolean isReversal;
+    protected boolean currentReversal;
     protected boolean reachable;
     private boolean selected;
 
@@ -59,6 +60,10 @@ public abstract class SquareComponent extends JComponent {
 
     public void setReversal(boolean reversal) {
         isReversal = reversal;
+    }
+
+    public void setCurrentReversal(boolean currentReversal) {
+        this.currentReversal = currentReversal;
     }
 
     public boolean isReachable() {return reachable;}

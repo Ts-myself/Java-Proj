@@ -29,7 +29,7 @@ public class ChessComponent extends SquareComponent{
 
 
 
-        if (isReversal) {
+        if (isReversal || currentReversal) {
             //绘制棋子文字
             g.setColor(this.getChessColor().getColor());
             g.setFont(CHESS_FONT);

@@ -108,13 +108,14 @@ public class Chessboard extends JComponent{
         chess2.repaint();
 
         //todo:fix the method for ending
-        /*if (blackScore >= 60 || redScore >= 60) {
+        if (blackScore >= 1 || redScore >= 1) {
             JLabel end = new JLabel(String.format("%s Win", blackScore >= 60 ? "Black" : "Red"));
-            end.setLocation(ChessGameFrame.getCHESSBOARD_SIZE() / 10, CHESSBOARD_SIZE / 10);
-            end.setSize(CHESSBOARD_SIZE / 100, CHESSBOARD_SIZE / 100);
+            end.setLocation(WIDTH / 10, HEIGHT / 10);
+            end.setSize(WIDTH / 50, HEIGHT / 50);
             end.setFont(new Font("Rockwell", Font.BOLD,40));
             end.setForeground(Color.LIGHT_GRAY);
-        }*/
+            repaint();
+        }
     }
 
     public void initAllChessOnBoard(List<String> chessData) {
@@ -312,7 +313,7 @@ public class Chessboard extends JComponent{
                 if (keyCode == KeyEvent.VK_SPACE) {
                     for (SquareComponent[] squareComponent : squareComponents) {
                         for (SquareComponent squareComponent1 : squareComponent) {
-                            squareComponent1.setReversal(true);
+                            squareComponent1.setCurrentReversal(true);
                             squareComponent1.repaint();
                         }
                     }
@@ -325,7 +326,7 @@ public class Chessboard extends JComponent{
                     if (keyCode == KeyEvent.VK_SPACE) {
                         for (SquareComponent[] squareComponent : getSquareComponents()) {
                             for (SquareComponent squareComponent1 : squareComponent) {
-                                squareComponent1.setReversal(false);
+                                squareComponent1.setCurrentReversal(false);
                                 squareComponent1.repaint();
                             }
                         }

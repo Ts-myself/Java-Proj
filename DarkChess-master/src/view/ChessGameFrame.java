@@ -25,11 +25,13 @@ public class ChessGameFrame extends JFrame {
     private static JLabel statusLabel = new JLabel();
     private static JLabel blackScore = new JLabel();
     private static JLabel redScore = new JLabel();
+    Chessboard chessboard;
     public ChessGameFrame(int width, int height) {
         setTitle("2022 CS109 Project Demo"); //设置标题
         this.WIDTH = width;
         this.HEIGHT = height;
         this.CHESSBOARD_SIZE = HEIGHT * 4 / 5;
+        chessboard = new Chessboard(CHESSBOARD_SIZE / 2, CHESSBOARD_SIZE);
 
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null); // Center the window.
@@ -37,6 +39,48 @@ public class ChessGameFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
         setLayout(null);
 
+        initialUI();
+    }
+
+    private void initialUI() {
+        JLabel gameName= new JLabel("DARK CHESS");
+        gameName.setLocation(WIDTH  / 5, HEIGHT / 8 - HEIGHT /20);
+        gameName.setSize(WIDTH* 3/ 5, HEIGHT / 6);
+        gameName.setFont(new Font("Colonna MT", Font.BOLD,70));
+        add(gameName);
+
+        JButton classicModeButton = new JButton("Classic Mode");
+        classicModeButton.setLocation(WIDTH / 3, HEIGHT * 2 / 8 - HEIGHT / 30);
+        classicModeButton.setSize(WIDTH / 3, HEIGHT / 8);
+        classicModeButton.setFont(new Font("Colonna MT", Font.BOLD,30));
+        add(classicModeButton);
+        classicModeButton.addActionListener(e -> {
+            System.out.println("Start Classic Mode");
+            classicMode();
+            remove(gameName);remove(classicModeButton);
+            repaint();
+        });
+
+        JButton aiModeButton = new JButton("AI Mode");
+        aiModeButton.setLocation(WIDTH / 3, HEIGHT * 3 / 8);
+        aiModeButton.setSize(WIDTH / 3, HEIGHT / 8);
+        aiModeButton.setFont(new Font("Colonna MT", Font.BOLD,30));
+        add(aiModeButton);
+        aiModeButton.addActionListener(e -> {
+            System.out.println("Start AI Mode");
+            classicMode();
+            remove(gameName);remove(classicModeButton);
+            repaint();
+        });
+        
+    }
+
+
+
+    /**
+     * 在游戏窗体中添加棋盘
+     */
+    private void classicMode() {
         addChessboard();
         addLabel();
         addScore();
@@ -44,16 +88,11 @@ public class ChessGameFrame extends JFrame {
         addRestartButton();
         addSavaButton();
     }
-    /**
-     * 在游戏窗体中添加棋盘
-     */
     private void addChessboard() {
-        Chessboard chessboard = new Chessboard(CHESSBOARD_SIZE / 2, CHESSBOARD_SIZE);
         gameController = new GameController(chessboard);
         chessboard.setLocation(HEIGHT / 10, HEIGHT / 10);
         add(chessboard);
     }
-
     /**
      * 在游戏窗体中添加标签
      */
@@ -94,12 +133,6 @@ public class ChessGameFrame extends JFrame {
         blackScore.setText(("Black's Score: "+B));
         redScore.setText("Red's Score: "+R);
     }
-    /**
-     * 在游戏窗体中增加一个按钮，如果按下的话就会显示Hello, world!
-     */
-
-
-
     private void addRestartButton(){
        JButton button = new JButton("Restart");
        button.setLocation(WIDTH * 3 / 5, HEIGHT / 10 + 480);
@@ -127,7 +160,7 @@ public class ChessGameFrame extends JFrame {
             saveAndLoadFrame.setVisible(true);
         });
     }
-        private void addSavaButton(){
+    private void addSavaButton(){
             JButton button = new JButton("Save Game");
             button.setLocation(WIDTH * 3 / 5, HEIGHT / 10 + 360);
             button.setSize(180, 60);
@@ -140,8 +173,6 @@ public class ChessGameFrame extends JFrame {
                 SaveAndLoadFrame saveAndLoadFrame = new SaveAndLoadFrame(gameController,true);
                 saveAndLoadFrame.setVisible(true);
             });
-
-
         }
 
 }
