@@ -123,34 +123,6 @@ public abstract class SquareComponent extends JComponent {
         }
     }
 
-    /**
-     * @param chessboard  棋盘
-     * @param destination 目标位置，如(0, 0), (0, 1)等等
-     * @return this棋子对象的移动规则和当前位置(chessboardPoint)能否到达目标位置
-     * <br>
-     * 这个方法主要是检查移动的合法性，如果合法就返回true，反之是false。
-     */
-    public boolean canMoveTo(SquareComponent[][] chessboard, ChessboardPoint destination, Chessboard CB) {
-        SquareComponent destinationChess = chessboard[destination.getX()][destination.getY()];
-        ChessboardPoint from =this.chessboardPoint;
-        if ((from.getX()==destination.getX()+1&&from.getY()==destination.getY()) || (from.getX()==destination.getX()-1&&from.getY()==destination.getY()) || (from.getX()==destination.getX()&&from.getY()==destination.getY()+1) || (from.getX()==destination.getX()&&from.getY()==destination.getY()-1)){
-            if (destinationChess instanceof EmptySlotComponent) {
-                System.out.printf("From (%d,%d) to (%d,%d)\n", from.getX(), from.getY(), destination.getX(), destination.getY());
-                return true;
-            }
-            else if (destinationChess.isReversal()){
-                    int tyoeTo=destinationChess.type;
-                    int typeFrom=this.type;
-                    if (tyoeTo<=typeFrom || (tyoeTo==6&&typeFrom==0)) {
-                        System.out.printf("From (%d,%d) to (%d,%d)\n", from.getX(), from.getY(), destination.getX(), destination.getY());
-                        return true;
-                    }
-                    else return false;
-                }
-        }
-        return false;
-}
-
     public ArrayList<ChessboardPoint> whereCanGo (SquareComponent[][] chessboard, Chessboard CB){
         int[][] dir = {{1,0},{-1,0},{0,1},{0,-1}};
         ArrayList<ChessboardPoint> canGo = new ArrayList<>();

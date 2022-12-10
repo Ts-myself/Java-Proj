@@ -33,11 +33,6 @@ public class ClickController {
 
                 //get canGo
                 ArrayList<ChessboardPoint> canGo = first.whereCanGo(chessboard.getChessComponents(), chessboard);
-                System.out.print("this point can go to:");
-                for (ChessboardPoint go : canGo) {
-                    System.out.printf("(%d,%d) ", go.getX() + 1, go.getY() + 1);
-                }
-                System.out.print("\n");
 
                 //paint
                 for (ChessboardPoint point : canGo) {
@@ -49,18 +44,14 @@ public class ClickController {
             }
         } else {
             ArrayList<ChessboardPoint> canGo = first.whereCanGo(chessboard.getChessComponents(), chessboard);
-            System.out.print("this point can go to:");
-            for (ChessboardPoint go : canGo) {
-                System.out.printf("(%d,%d) ", go.getX() + 1, go.getY() + 1);
-            }
-            System.out.print("\n");
+
             //paint
             for (ChessboardPoint point : canGo) {
                 chessboard.getSquareComponents()[point.getX()][point.getY()].setReachable(false);
                 chessboard.getSquareComponents()[point.getX()][point.getY()].repaint();
             }
 
-            if (handleSecond(squareComponent)) {
+            if (handleSecond(squareComponent, canGo)) {
                 //repaint in swap chess method.
                 chessboard.swapChessComponents(first, squareComponent);
                 chessboard.clickController.swapPlayer();
@@ -99,18 +90,16 @@ public class ClickController {
      * @return first棋子是否能够移动到second棋子位置
      */
 
-    private boolean handleSecond(SquareComponent squareComponent) {
-
-        //没翻开或空棋子，进入if
-        if (!squareComponent.isReversal() && first.type != 1) {
-            //没翻开且非空棋子不能走
-            if (!(squareComponent instanceof EmptySlotComponent)) {
-                return false;
+    private boolean handleSecond(SquareComponent squareComponent, ArrayList<ChessboardPoint> canGo) {
+        //非空且未翻且不是炮不能走
+        if (!squareComponent.isReversal() && first.type != 1 && !(squareComponent instanceof EmptySlotComponent)) return false;
+        //在canGo里能走
+        for (ChessboardPoint point : canGo) {
+            if (point.getX() == squareComponent.getChessboardPoint().getX() && point.getY() == squareComponent.getChessboardPoint().getY()) {
+                return (squareComponent.getChessColor() != chessboard.getCurrentColor() || first.type == 1);
             }
         }
-
-        return (squareComponent.getChessColor() != chessboard.getCurrentColor() || first.type == 1) &&
-                first.canMoveTo(chessboard.getChessComponents(), squareComponent.getChessboardPoint(), chessboard);
+        return false;
     }
 
     public void swapPlayer() {
