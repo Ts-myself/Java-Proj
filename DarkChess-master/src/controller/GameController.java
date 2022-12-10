@@ -16,7 +16,7 @@ import java.util.List;
  * ChessGameFrame中组件调用本类的对象，在本类中的方法里完成逻辑运算，将运算的结果传递至chessboard中绘制
  */
 public class GameController {
-    private Chessboard chessboard;
+    public Chessboard chessboard;
 
     public GameController(Chessboard chessboard) {
         this.chessboard = chessboard;

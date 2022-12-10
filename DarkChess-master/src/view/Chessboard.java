@@ -7,6 +7,10 @@ import controller.ClickController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,7 +21,7 @@ import static model.ChessColor.RED;
  * 这个类表示棋盘组建，其包含：
  * SquareComponent[][]: 4*8个方块格子组件
  */
-public class Chessboard extends JComponent {
+public class Chessboard extends JComponent{
 
 
     private static final int ROW_SIZE = 8;
@@ -57,6 +61,9 @@ public class Chessboard extends JComponent {
         System.out.printf("chessboard [%d * %d], chess size = %d\n", width, height, CHESS_SIZE);
 
         initAllChessOnBoard(null);
+        KeyboardPanel keyboardPanel=new KeyboardPanel();
+        add(keyboardPanel);
+        keyboardPanel.setFocusable(true);
     }
 
     public SquareComponent[][] getChessComponents() {
@@ -294,4 +301,40 @@ public class Chessboard extends JComponent {
         }
         return lines;
      }
+
+
+    public class KeyboardPanel extends JPanel {
+        public KeyboardPanel() {
+            addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyPressed(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+                if (keyCode == KeyEvent.VK_SPACE) {
+                    for (SquareComponent[] squareComponent : squareComponents) {
+                        for (SquareComponent squareComponent1 : squareComponent) {
+                            squareComponent1.setReversal(true);
+                            squareComponent1.repaint();
+                        }
+                    }
+                }
+            }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+                    int keyCode = e.getKeyCode();
+                    if (keyCode == KeyEvent.VK_SPACE) {
+                        for (SquareComponent[] squareComponent : getSquareComponents()) {
+                            for (SquareComponent squareComponent1 : squareComponent) {
+                                squareComponent1.setReversal(false);
+                                squareComponent1.repaint();
+                            }
+                        }
+                    }
+                }
+            });
+
+        }
+
+    }
+
 }

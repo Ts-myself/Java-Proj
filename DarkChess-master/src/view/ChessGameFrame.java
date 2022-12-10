@@ -1,10 +1,15 @@
 package view;
 
+import chessComponent.SquareComponent;
 import controller.GameController;
 import model.ChessColor;
+import org.w3c.dom.events.Event;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.security.Key;
 
 /**
  * 这个类表示游戏窗体，窗体上包含：
@@ -35,7 +40,6 @@ public class ChessGameFrame extends JFrame {
         addChessboard();
         addLabel();
         addScore();
-        addCheatButton();
         addLoadButton();
         addRestartButton();
         addSavaButton();
@@ -94,19 +98,7 @@ public class ChessGameFrame extends JFrame {
      * 在游戏窗体中增加一个按钮，如果按下的话就会显示Hello, world!
      */
 
-    private void addCheatButton() {
-        JButton button = new JButton("Cheat");
-        button.addActionListener((e) -> JOptionPane.showMessageDialog(this, "Cheating mode is opened!\npause SPACE to sneak"));
-        button.setLocation(WIDTH * 3 / 5, HEIGHT / 10 + 120);
-        button.setSize(180, 60);
-        button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        add(button);
 
-        button.addActionListener(e -> {
-            //todo:cheat
-
-        });
-    }
 
     private void addRestartButton(){
        JButton button = new JButton("Restart");
@@ -151,6 +143,5 @@ public class ChessGameFrame extends JFrame {
 
 
         }
-
 
 }

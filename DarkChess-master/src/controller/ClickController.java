@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class ClickController {
     private final Chessboard chessboard;
     public SquareComponent first;
+
     public ClickController(Chessboard chessboard) {
         this.chessboard = chessboard;
     }
@@ -24,7 +25,7 @@ public class ClickController {
             if (chessboard.getCurrentColor() == ChessColor.NONE) {
                 chessboard.setCurrentColor(squareComponent.getChessColor());
                 squareComponent.setReversal(true);
-                ChessGameFrame.getStatusLabel().setText(String.format("%s's Turn",squareComponent.getChessColor()));
+                ChessGameFrame.getStatusLabel().setText(String.format("%s's Turn", squareComponent.getChessColor()));
                 squareComponent.repaint();
             } else if (handleFirst(squareComponent)) {
                 squareComponent.setSelected(true);
@@ -33,7 +34,9 @@ public class ClickController {
                 //get canGo
                 ArrayList<ChessboardPoint> canGo = first.whereCanGo(chessboard.getChessComponents(), chessboard);
                 System.out.print("this point can go to:");
-                for (ChessboardPoint go : canGo) {System.out.printf("(%d,%d) ", go.getX() + 1, go.getY() + 1);}
+                for (ChessboardPoint go : canGo) {
+                    System.out.printf("(%d,%d) ", go.getX() + 1, go.getY() + 1);
+                }
                 System.out.print("\n");
 
                 //paint
@@ -44,11 +47,12 @@ public class ClickController {
 
                 first.repaint();
             }
-        }
-        else {
+        } else {
             ArrayList<ChessboardPoint> canGo = first.whereCanGo(chessboard.getChessComponents(), chessboard);
             System.out.print("this point can go to:");
-            for (ChessboardPoint go : canGo) {System.out.printf("(%d,%d) ", go.getX() + 1, go.getY() + 1);}
+            for (ChessboardPoint go : canGo) {
+                System.out.printf("(%d,%d) ", go.getX() + 1, go.getY() + 1);
+            }
             System.out.print("\n");
             //paint
             for (ChessboardPoint point : canGo) {
@@ -98,14 +102,14 @@ public class ClickController {
     private boolean handleSecond(SquareComponent squareComponent) {
 
         //没翻开或空棋子，进入if
-        if (!squareComponent.isReversal() && first.type!=1) {
+        if (!squareComponent.isReversal() && first.type != 1) {
             //没翻开且非空棋子不能走
             if (!(squareComponent instanceof EmptySlotComponent)) {
                 return false;
             }
         }
 
-        return (squareComponent.getChessColor() != chessboard.getCurrentColor() || first.type==1) &&
+        return (squareComponent.getChessColor() != chessboard.getCurrentColor() || first.type == 1) &&
                 first.canMoveTo(chessboard.getChessComponents(), squareComponent.getChessboardPoint(), chessboard);
     }
 
