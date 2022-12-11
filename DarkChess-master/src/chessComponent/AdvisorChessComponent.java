@@ -11,9 +11,9 @@ public class AdvisorChessComponent extends ChessComponent {
     public AdvisorChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size, int type){
         super(chessboardPoint, location, chessColor, clickController, size, type);
         if (this.getChessColor() == ChessColor.RED){
-            name = "仕";
+            image = Toolkit.getDefaultToolkit().getImage("DarkChess-master/resources/image-chess/advisor-red.png");
         } else {
-            name = "士";
+            image = Toolkit.getDefaultToolkit().getImage("DarkChess-master/resources/image-chess/advisor-black.png");
         }
     }
 }

@@ -11,9 +11,9 @@ public class GeneralChessComponent extends ChessComponent {
     public GeneralChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size, int type){
         super(chessboardPoint, location, chessColor, clickController, size, type);
         if (this.getChessColor() == ChessColor.RED){
-            name = "帥";
+            image = Toolkit.getDefaultToolkit().getImage("DarkChess-master/resources/image-chess/general-red.png");
         } else {
-            name = "将";
+            image = Toolkit.getDefaultToolkit().getImage("DarkChess-master/resources/image-chess/general-black.png");
         }
     }
 }

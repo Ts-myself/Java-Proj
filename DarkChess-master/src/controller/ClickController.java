@@ -33,18 +33,18 @@ public class ClickController {
             else if (handleFirst(squareComponent)) {
                 squareComponent.setSelected(true);
                 first = squareComponent;
-                chessboard.paintReachable(first.whereCanGo(chessboard.getChessComponents(), chessboard));
+                chessboard.paintReachable(first.whereCanGo(chessboard.getSquareComponents(), chessboard));
                 first.repaint();
             }
         }
         else {
-            ArrayList<ChessboardPoint> canGo = first.whereCanGo(chessboard.getChessComponents(), chessboard);
+            ArrayList<ChessboardPoint> canGo = first.whereCanGo(chessboard.getSquareComponents(), chessboard);
             chessboard.paintReachable(canGo);
             // 移动或吃子
             if (handleSecond(squareComponent, canGo)) {
                 chessboard.swapChessComponents(first, squareComponent);
                 chessboard.clickController.swapPlayer();
-                ScoreChange(squareComponent);
+                chessboard.ScoreRecorder(squareComponent,true);
                 if (squareComponent instanceof EmptySlotComponent) chessboard.regretStack.add(new RegretNode(first, squareComponent.getChessboardPoint()));
                 else chessboard.regretStack.add(new RegretNode(first, squareComponent));
                 first.setSelected(false);
@@ -100,12 +100,10 @@ public class ClickController {
         ChessGameFrame.getStatusLabel().setText(String.format("%s's TURN", chessboard.getCurrentColor().getName()));
     }
 
-    public void ScoreChange(SquareComponent first) {
+    /*public void ScoreChange(SquareComponent first) {
         chessboard.ScoreRecorder(first);
         if (first.getChessColor() == ChessColor.BLACK) {
-            ChessGameFrame.getRedScore().setText(String.format("Red's Score: %d", chessboard.getRedScore()));
         } else {
-            ChessGameFrame.getBlackScore().setText(String.format("Black's Score: %d", chessboard.getBlackScore()));
-        }
-    }
+         }
+    }*/
 }

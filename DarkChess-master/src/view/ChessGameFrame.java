@@ -11,6 +11,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
+
 import java.io.File;
 import java.lang.reflect.MalformedParametersException;
 
@@ -26,10 +27,10 @@ public class ChessGameFrame extends JFrame {
     private final int HEIGHT;
     public final int CHESSBOARD_SIZE;
     private GameController gameController;
+    private final Chessboard chessboard;
     private static JLabel statusLabel = new JLabel();
     private static JLabel blackScore = new JLabel();
     private static JLabel redScore = new JLabel();
-    Chessboard chessboard;
     public ChessGameFrame(int width, int height) {
         setTitle("Dark Chess");
         this.WIDTH = width;
@@ -44,7 +45,13 @@ public class ChessGameFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
         setLayout(null);
 
-        initialUI();
+        //initialUI();
+
+        addChessboard();
+        addLabel();
+        addScore();
+        addMusic();
+        addMenuButton();
 
         /*
         Image image = Toolkit.getDefaultToolkit().getImage("resources/image-chess-1/chess-bishop-black.png").getScaledInstance(100, 100, Image.SCALE_FAST);
@@ -75,9 +82,9 @@ public class ChessGameFrame extends JFrame {
         add(classicModeButton);
         classicModeButton.addActionListener(e -> {
             System.out.println("Start Classic Mode");
-            classicMode();
             remove(gameName);remove(classicModeButton);remove(aiModeButton);
             repaint();
+            classicMode();
         });
 
         aiModeButton.setLocation(WIDTH / 3, HEIGHT * 3 / 8);
@@ -86,9 +93,10 @@ public class ChessGameFrame extends JFrame {
         add(aiModeButton);
         aiModeButton.addActionListener(e -> {
             System.out.println("Start AI Mode");
-            classicMode();
             remove(gameName);remove(classicModeButton);remove(aiModeButton);
             repaint();
+            classicMode();
+
         });
 
         gameName.setVisible(true);
@@ -110,7 +118,7 @@ public class ChessGameFrame extends JFrame {
 
 
         Container ct = this.getContentPane();
-        BackgroundPanel backGround = new BackgroundPanel(new ImageIcon("resources/pictures/background.jpg").getImage());
+        BackgroundPanel backGround = new BackgroundPanel(new ImageIcon("DarkChess-master/resources/pictures/background.jpg").getImage());
         backGround.setBounds(0,0,WIDTH,HEIGHT);
         ct.add(backGround);
     }
@@ -135,7 +143,7 @@ public class ChessGameFrame extends JFrame {
     public void addMusic() throws MalformedParametersException {
         try
         {
-            File musicPath = new File("resources/music/Gymnopedies No.1.wav");
+            File musicPath = new File("DarkChess-master/resources/music/Gymnopedies No.1.wav");
             AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
             Clip clip = AudioSystem.getClip();
             clip.open(audioInput);

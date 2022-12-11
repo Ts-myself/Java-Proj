@@ -38,6 +38,7 @@ public class Chessboard extends JComponent{
     //记录红黑双方分数
     private int blackScore;
     private int redScore;
+    public Cheat cheat;
     public int getBlackScore() {
         return blackScore;
     }
@@ -66,13 +67,9 @@ public class Chessboard extends JComponent{
         System.out.printf("chessboard [%d * %d], chess size = %d\n", width, height, CHESS_SIZE);
 
         initAllChessOnBoard(null);
-        KeyboardPanel keyboardPanel=new KeyboardPanel();
-        add(keyboardPanel);
-        keyboardPanel.setFocusable(true);
-    }
-
-    public SquareComponent[][] getChessComponents() {
-        return squareComponents;
+        Cheat cheat=new Cheat();
+        add(cheat);
+        cheat.setFocusable(true);
     }
 
     public ChessColor getCurrentColor() {
@@ -165,8 +162,12 @@ public class Chessboard extends JComponent{
                     else if (component % 10 == 0) squareComponent = new CannonChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 1);
                     else if (component % 10 == 1) squareComponent = new SoldierChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 0);
 
-                    if (component/10 == 3 || component/10 == 4)  squareComponent.setReversal(true);
+                    if (component/10 == 3 || component/10 == 4) {
+                        assert squareComponent != null;
+                        squareComponent.setReversal(true);
+                    }
 
+                    assert squareComponent != null;
                     squareComponent.setVisible(true);
                     putChessOnBoard (squareComponent);
                 }
@@ -184,6 +185,8 @@ public class Chessboard extends JComponent{
         super.paintComponent(g);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        Image chessboardImage=Toolkit.getDefaultToolkit().getImage("DarkChess-master/resources/image-chess/board.png");
+        g.drawImage(chessboardImage,0,0,getWidth(),getHeight(), this);
     }
 
     /**
@@ -266,11 +269,13 @@ public class Chessboard extends JComponent{
         return 0;
     }
 
-    public void ScoreRecorder(SquareComponent eaten) {
+    public void ScoreRecorder(SquareComponent eaten , boolean forward) {
         if (eaten.getChessColor() == ChessColor.BLACK) {
-            redScore += eatenChessValue(eaten);
+            redScore = forward ? redScore + eatenChessValue(eaten) : redScore - eatenChessValue(eaten);
+            ChessGameFrame.getRedScore().setText(String.format("Red's Score: %d", getRedScore()));
         } else {
-            blackScore += eatenChessValue(eaten);
+            blackScore = forward ? blackScore + eatenChessValue(eaten) : blackScore - eatenChessValue(eaten);
+            ChessGameFrame.getBlackScore().setText(String.format("Black's Score: %d", getBlackScore()));
         }
     }
     public int eatenChessValue(SquareComponent eaten) {
@@ -308,13 +313,13 @@ public class Chessboard extends JComponent{
      }
 
 
-    public class KeyboardPanel extends JPanel {
-        public KeyboardPanel() {
+    public class Cheat extends JPanel {
+        public Cheat() {
             addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
-                if (keyCode == KeyEvent.VK_SPACE) {
+                if (keyCode == KeyEvent.VK_C) {
                     for (SquareComponent[] squareComponent : squareComponents) {
                         for (SquareComponent squareComponent1 : squareComponent) {
                             squareComponent1.setCurrentReversal(true);
@@ -327,7 +332,7 @@ public class Chessboard extends JComponent{
                 @Override
                 public void keyReleased(KeyEvent e) {
                     int keyCode = e.getKeyCode();
-                    if (keyCode == KeyEvent.VK_SPACE) {
+                    if (keyCode == KeyEvent.VK_C) {
                         for (SquareComponent[] squareComponent : getSquareComponents()) {
                             for (SquareComponent squareComponent1 : squareComponent) {
                                 squareComponent1.setCurrentReversal(false);
@@ -342,6 +347,14 @@ public class Chessboard extends JComponent{
 
     }
     public void regret() {
+        if (regretStack.size() == 1) {
+            JLabel invalidRegret = new JLabel("You can't regret at the first step");
+            invalidRegret.setSize(getWidth(), getHeight() / 10);
+            invalidRegret.setLocation(getWidth()/10,getHeight()/10);
+            invalidRegret.setFont(new Font("Rockwell", Font.BOLD, 30));
+            add(invalidRegret);
+        }
+
         RegretNode regretNode = regretStack.peek();
         regretStack.pop();
 
@@ -349,9 +362,9 @@ public class Chessboard extends JComponent{
             this.swapChessComponents(regretNode.chessComponent, this.getSquareComponents()[regretNode.toPoint.getX()][regretNode.toPoint.getY()]);
         }
         if (regretNode.which == 2){
-            this.swapChessComponents(regretNode.chessComponent, this.getChessComponents()[regretNode.eatenComponent.getX()][regretNode.eatenComponent.getY()]);
+            this.swapChessComponents(regretNode.chessComponent, this.getSquareComponents()[regretNode.eatenComponent.getX()][regretNode.eatenComponent.getY()]);
             this.putChessOnBoard(regretNode.eatenComponent);
-            this.clickController.ScoreChange(regretNode.eatenComponent);
+            this.ScoreRecorder(regretNode.eatenComponent,false);
         }
         if (regretNode.which == 3){
             regretNode.chessComponent.setReversal(false);

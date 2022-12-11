@@ -18,10 +18,7 @@ import java.util.ArrayList;
  */
 public abstract class SquareComponent extends JComponent {
 
-    private static final Color squareColor = new Color(203, 112, 20);
     protected static int spacingLength;
-    protected static final Font CHESS_FONT = new Font("楷体", Font.BOLD, 38);
-
     /**
      * chessboardPoint: 表示8*4棋盘中，当前棋子在棋格对应的位置，如(0, 0), (1, 0)等等
      * chessColor: 表示这个棋子的颜色，有红色，黑色，无色三种
@@ -29,7 +26,7 @@ public abstract class SquareComponent extends JComponent {
      * reachable: 表示被选中棋子是否可以到达
      * selected: 表示这个棋子是否被选中
      */
-    private ChessboardPoint chessboardPoint;
+    public ChessboardPoint chessboardPoint;
     protected final ChessColor chessColor;
     protected boolean isReversal;
     protected boolean currentReversal;
@@ -141,8 +138,5 @@ public abstract class SquareComponent extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponents(g);
-        //System.out.printf("repaint chess [%d,%d]\n", chessboardPoint.getX(), chessboardPoint.getY());
-        g.setColor(squareColor);
-        g.fillRect(1, 1, this.getWidth() - 2, this.getHeight() - 2);
     }
 }
