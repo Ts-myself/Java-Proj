@@ -2,6 +2,8 @@ package view;
 
 
 import chessComponent.*;
+import controller.GameController;
+import controller.RegretNode;
 import model.*;
 import controller.ClickController;
 
@@ -12,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Stack;
 
 import static model.ChessColor.RED;
 
@@ -27,6 +30,7 @@ public class Chessboard extends JComponent{
 
     private final SquareComponent[][] squareComponents = new SquareComponent[ROW_SIZE][COL_SIZE];
     private ChessColor currentColor = ChessColor.NONE;
+    public GameController gameController;
 
     //all chessComponents in this chessboard are shared only one model controller
     public final ClickController clickController = new ClickController(this);
@@ -50,8 +54,11 @@ public class Chessboard extends JComponent{
     public SquareComponent[][] getSquareComponents() {
         return squareComponents;
     }
+    public Stack<RegretNode> regretStack = new Stack<>();
 
-    public Chessboard(int width, int height) {
+    public Chessboard(int width, int height, GameController gameController) {
+        this.gameController = gameController;
+
         setLayout(null); // Use absolute layout.
         setSize(width + 2, height);
         CHESS_SIZE = (height - 6) / 8;
@@ -242,6 +249,12 @@ public class Chessboard extends JComponent{
         }
             return chessboard;
     }
+    public void paintReachable (ArrayList<ChessboardPoint> canGo){
+        for (ChessboardPoint point : canGo) {
+            this.getSquareComponents()[point.getX()][point.getY()].setReachable(true);
+            this.getSquareComponents()[point.getX()][point.getY()].repaint();
+        }
+    }
     public static int eatenChessValue(int i) {
         if(i==0) return 6;
         if(i>=1 && i<=2) return 5;
@@ -328,5 +341,23 @@ public class Chessboard extends JComponent{
         }
 
     }
+    public void regret() {
+        RegretNode regretNode = regretStack.peek();
+        regretStack.pop();
+
+        if (regretNode.which == 1){
+            this.swapChessComponents(regretNode.chessComponent, this.getSquareComponents()[regretNode.toPoint.getX()][regretNode.toPoint.getY()]);
+        }
+        if (regretNode.which == 2){
+            this.swapChessComponents(regretNode.chessComponent, this.getChessComponents()[regretNode.eatenComponent.getX()][regretNode.eatenComponent.getY()]);
+            this.putChessOnBoard(regretNode.eatenComponent);
+            this.clickController.ScoreChange(regretNode.eatenComponent);
+        }
+        if (regretNode.which == 3){
+            regretNode.chessComponent.setReversal(false);
+        }
+        this.clickController.swapPlayer();
+    }
+
 
 }

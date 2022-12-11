@@ -19,47 +19,39 @@ public class ClickController {
     }
 
     public void onClick(SquareComponent squareComponent) {
-        //判断第一次点击
+
         if (first == null) {
-            // 初始化棋手方
+            // 第一次翻棋
             if (chessboard.getCurrentColor() == ChessColor.NONE) {
                 chessboard.setCurrentColor(squareComponent.getChessColor());
                 squareComponent.setReversal(true);
                 ChessGameFrame.getStatusLabel().setText(String.format("%s's Turn", squareComponent.getChessColor()));
                 squareComponent.repaint();
-            } else if (handleFirst(squareComponent)) {
+                chessboard.regretStack.add(new RegretNode(squareComponent));
+            }
+            // 翻棋 或 选棋
+            else if (handleFirst(squareComponent)) {
                 squareComponent.setSelected(true);
                 first = squareComponent;
-
-                //get canGo
-                ArrayList<ChessboardPoint> canGo = first.whereCanGo(chessboard.getChessComponents(), chessboard);
-
-                //paint
-                for (ChessboardPoint point : canGo) {
-                    chessboard.getSquareComponents()[point.getX()][point.getY()].setReachable(true);
-                    chessboard.getSquareComponents()[point.getX()][point.getY()].repaint();
-                }
-
+                chessboard.paintReachable(first.whereCanGo(chessboard.getChessComponents(), chessboard));
                 first.repaint();
             }
-        } else {
+        }
+        else {
             ArrayList<ChessboardPoint> canGo = first.whereCanGo(chessboard.getChessComponents(), chessboard);
-
-            //paint
-            for (ChessboardPoint point : canGo) {
-                chessboard.getSquareComponents()[point.getX()][point.getY()].setReachable(false);
-                chessboard.getSquareComponents()[point.getX()][point.getY()].repaint();
-            }
-
+            chessboard.paintReachable(canGo);
+            // 移动或吃子
             if (handleSecond(squareComponent, canGo)) {
-                //repaint in swap chess method.
                 chessboard.swapChessComponents(first, squareComponent);
                 chessboard.clickController.swapPlayer();
                 ScoreChange(squareComponent);
-
+                if (squareComponent instanceof EmptySlotComponent) chessboard.regretStack.add(new RegretNode(first, squareComponent.getChessboardPoint()));
+                else chessboard.regretStack.add(new RegretNode(first, squareComponent));
                 first.setSelected(false);
                 first = null;
-            } else {
+            }
+            // 非法操作
+            else {
                 first.setSelected(false);
                 SquareComponent recordFirst = first;
                 first = null;
@@ -77,6 +69,7 @@ public class ClickController {
     private boolean handleFirst(SquareComponent squareComponent) {
         if (!squareComponent.isReversal() && !(squareComponent instanceof EmptySlotComponent)) {
             squareComponent.setReversal(true);
+            chessboard.regretStack.add(new RegretNode(squareComponent));
             System.out.printf("onClick to reverse a chess [%d,%d]\n", squareComponent.getChessboardPoint().getX(), squareComponent.getChessboardPoint().getY());
             squareComponent.repaint();
             chessboard.clickController.swapPlayer();

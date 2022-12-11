@@ -7,11 +7,13 @@ import java.awt.*;
 
 public class MenuFrame extends JFrame {
     GameController gameController;
-    public MenuFrame(GameController gameController){
+    Chessboard chessboard;
+    public MenuFrame(GameController gameController,Chessboard chessboard){
         this.gameController = gameController;
+        this.chessboard = chessboard;
 
         setTitle("Menu");
-        setSize(300, 600);
+        setSize(310, 350);
         setLocationRelativeTo(null); // Center the window.
         setLayout(null);
 
@@ -42,6 +44,11 @@ public class MenuFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         button.setBackground(Color.GRAY);
         add(button);
+
+        button.addActionListener(e -> {
+            chessboard.regret();
+            dispose();
+        });
     }
     private void addCheatButton() {
         JButton button = new JButton("Cheat");
@@ -104,7 +111,7 @@ public class MenuFrame extends JFrame {
         add(button);
 
         button.addActionListener(e -> {
-
+            dispose();
         });
     }
 

@@ -1,6 +1,7 @@
 package view;
 
 
+import controller.ClickController;
 import controller.GameController;
 import model.ChessColor;
 
@@ -34,7 +35,8 @@ public class ChessGameFrame extends JFrame {
         this.WIDTH = width;
         this.HEIGHT = height;
         this.CHESSBOARD_SIZE = HEIGHT * 4 / 5;
-        chessboard = new Chessboard(CHESSBOARD_SIZE / 2, CHESSBOARD_SIZE);
+        chessboard = new Chessboard(CHESSBOARD_SIZE / 2, CHESSBOARD_SIZE, gameController);
+        ClickController clickController = new ClickController(chessboard);
 
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null); // Center the window.
@@ -184,7 +186,7 @@ public class ChessGameFrame extends JFrame {
         add(button);
 
         button.addActionListener(e -> {
-            MenuFrame menuFrame = new MenuFrame(gameController);
+            MenuFrame menuFrame = new MenuFrame(gameController, chessboard);
             menuFrame.setVisible(true);
         });
     }
