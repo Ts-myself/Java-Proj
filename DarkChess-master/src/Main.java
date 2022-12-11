@@ -12,8 +12,7 @@ public class Main {
         9.悔棋
         fix
         1.按按钮后 cheat 没能 focus
-        2.chessImage 没能画出
-        3.悔棋的分数
+        2.悔棋的分数
      */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
