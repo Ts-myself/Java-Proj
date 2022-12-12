@@ -57,9 +57,7 @@ public class Chessboard extends JComponent{
     }
     public Stack<RegretNode> regretStack = new Stack<>();
 
-    public Chessboard(int width, int height, GameController gameController) {
-        this.gameController = gameController;
-
+    public Chessboard(int width, int height) {
         setLayout(null); // Use absolute layout.
         setSize(width + 2, height);
         CHESS_SIZE = (height - 6) / 8;
@@ -368,6 +366,9 @@ public class Chessboard extends JComponent{
         }
         if (regretNode.which == 3){
             regretNode.chessComponent.setReversal(false);
+            this.getSquareComponents()[regretNode.chessComponent.getChessboardPoint().getX()][regretNode.chessComponent.getChessboardPoint().getY()] = null;
+            putChessOnBoard(regretNode.chessComponent);
+            this.getSquareComponents()[regretNode.chessComponent.getChessboardPoint().getX()][regretNode.chessComponent.getChessboardPoint().getY()].repaint();
         }
         this.clickController.swapPlayer();
     }

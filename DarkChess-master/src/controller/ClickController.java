@@ -11,7 +11,7 @@ import view.Chessboard;
 import java.util.ArrayList;
 
 public class ClickController {
-    private final Chessboard chessboard;
+    public Chessboard chessboard;
     public SquareComponent first;
 
     public ClickController(Chessboard chessboard) {
@@ -68,8 +68,8 @@ public class ClickController {
 
     private boolean handleFirst(SquareComponent squareComponent) {
         if (!squareComponent.isReversal() && !(squareComponent instanceof EmptySlotComponent)) {
-            squareComponent.setReversal(true);
             chessboard.regretStack.add(new RegretNode(squareComponent));
+            squareComponent.setReversal(true);
             System.out.printf("onClick to reverse a chess [%d,%d]\n", squareComponent.getChessboardPoint().getX(), squareComponent.getChessboardPoint().getY());
             squareComponent.repaint();
             chessboard.clickController.swapPlayer();
@@ -100,10 +100,4 @@ public class ClickController {
         ChessGameFrame.getStatusLabel().setText(String.format("%s's TURN", chessboard.getCurrentColor().getName()));
     }
 
-    /*public void ScoreChange(SquareComponent first) {
-        chessboard.ScoreRecorder(first);
-        if (first.getChessColor() == ChessColor.BLACK) {
-        } else {
-         }
-    }*/
 }
