@@ -36,7 +36,7 @@ public class ChessGameFrame extends JFrame {
         this.WIDTH = width;
         this.HEIGHT = height;
         this.CHESSBOARD_SIZE = HEIGHT * 4 / 5;
-        chessboard = new Chessboard(CHESSBOARD_SIZE / 2, CHESSBOARD_SIZE, gameController);
+        chessboard = new Chessboard(CHESSBOARD_SIZE / 2, CHESSBOARD_SIZE);
 
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null); // Center the window.
@@ -90,6 +90,7 @@ public class ChessGameFrame extends JFrame {
             classicMode();
 
         });
+
     }
 
 

@@ -57,9 +57,7 @@ public class Chessboard extends JComponent{
     }
     public Stack<RegretNode> regretStack = new Stack<>();
 
-    public Chessboard(int width, int height, GameController gameController) {
-        this.gameController = gameController;
-
+    public Chessboard(int width, int height) {
         setLayout(null); // Use absolute layout.
         setSize(width + 2, height);
         CHESS_SIZE = (height - 6) / 8;
