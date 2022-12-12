@@ -185,7 +185,7 @@ public class Chessboard extends JComponent{
         super.paintComponent(g);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        Image chessboardImage=Toolkit.getDefaultToolkit().getImage("DarkChess-master/resources/image-chess/board.png");
+        Image chessboardImage=Toolkit.getDefaultToolkit().getImage("resources/image-chess/board.png");
         g.drawImage(chessboardImage,0,0,getWidth(),getHeight(), this);
     }
 

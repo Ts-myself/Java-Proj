@@ -111,7 +111,7 @@ public class ChessGameFrame extends JFrame {
 
 
         Container ct = this.getContentPane();
-        BackgroundPanel backGround = new BackgroundPanel(new ImageIcon("DarkChess-master/resources/pictures/background.jpg").getImage());
+        BackgroundPanel backGround = new BackgroundPanel(new ImageIcon("resources/pictures/background.jpg").getImage());
         backGround.setBounds(0,0,WIDTH,HEIGHT);
         ct.add(backGround);
     }
@@ -136,7 +136,7 @@ public class ChessGameFrame extends JFrame {
     public void addMusic() throws MalformedParametersException {
         try
         {
-            File musicPath = new File("DarkChess-master/resources/music/Gymnopedies No.1.wav");
+            File musicPath = new File("resources/music/Gymnopedies No.1.wav");
             AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
             Clip clip = AudioSystem.getClip();
             clip.open(audioInput);
