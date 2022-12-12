@@ -37,7 +37,6 @@ public class ChessGameFrame extends JFrame {
         this.HEIGHT = height;
         this.CHESSBOARD_SIZE = HEIGHT * 4 / 5;
         chessboard = new Chessboard(CHESSBOARD_SIZE / 2, CHESSBOARD_SIZE, gameController);
-        ClickController clickController = new ClickController(chessboard);
 
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null); // Center the window.
@@ -52,7 +51,7 @@ public class ChessGameFrame extends JFrame {
         addScore();
         addMusic();
         addMenuButton();
-
+        addBackground();
     }
 
     private void initialUI() {
@@ -91,10 +90,6 @@ public class ChessGameFrame extends JFrame {
             classicMode();
 
         });
-
-        gameName.setVisible(true);
-        classicModeButton.setVisible(true);
-        aiModeButton.setVisible(true);
     }
 
 
@@ -108,17 +103,17 @@ public class ChessGameFrame extends JFrame {
         addScore();
         addMenuButton();
         addMusic();
-
-
-        Container ct = this.getContentPane();
-        BackgroundPanel backGround = new BackgroundPanel(new ImageIcon("resources/pictures/background.jpg").getImage());
-        backGround.setBounds(0,0,WIDTH,HEIGHT);
-        ct.add(backGround);
     }
     private void addChessboard() {
         gameController = new GameController(chessboard);
         chessboard.setLocation(210, HEIGHT / 10);
         add(chessboard);
+    }
+    private void addBackground(){
+        Container ct = this.getContentPane();
+        BackgroundPanel backGround = new BackgroundPanel(new ImageIcon("resources/pictures/background.jpg").getImage());
+        backGround.setBounds(0,0,WIDTH,HEIGHT);
+        ct.add(backGround);
     }
     /**
      * 在游戏窗体中添加标签

@@ -362,12 +362,17 @@ public class Chessboard extends JComponent{
             this.swapChessComponents(regretNode.chessComponent, this.getSquareComponents()[regretNode.toPoint.getX()][regretNode.toPoint.getY()]);
         }
         if (regretNode.which == 2){
-            this.swapChessComponents(regretNode.chessComponent, this.getSquareComponents()[regretNode.eatenComponent.getX()][regretNode.eatenComponent.getY()]);
+            this.swapChessComponents(regretNode.chessComponent, this.getSquareComponents()[regretNode.eatenComponent.getChessboardPoint().getX()][regretNode.eatenComponent.getChessboardPoint().getY()]);
             this.putChessOnBoard(regretNode.eatenComponent);
             this.ScoreRecorder(regretNode.eatenComponent,false);
         }
         if (regretNode.which == 3){
             regretNode.chessComponent.setReversal(false);
+            this.getSquareComponents()[regretNode.chessComponent.chessboardPoint.getX()][regretNode.chessComponent.getChessboardPoint().getY()] = null;
+            putChessOnBoard(regretNode.chessComponent);
+            this.getSquareComponents()[regretNode.chessComponent.chessboardPoint.getX()][regretNode.chessComponent.getChessboardPoint().getY()].repaint();
+
+
         }
         this.clickController.swapPlayer();
     }
