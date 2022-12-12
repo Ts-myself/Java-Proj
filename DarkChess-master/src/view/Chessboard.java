@@ -249,9 +249,9 @@ public class Chessboard extends JComponent{
         }
             return chessboard;
     }
-    public void paintReachable (ArrayList<ChessboardPoint> canGo){
+    public void paintReachable (ArrayList<ChessboardPoint> canGo,boolean turn){
         for (ChessboardPoint point : canGo) {
-            this.getSquareComponents()[point.getX()][point.getY()].setReachable(true);
+            this.getSquareComponents()[point.getX()][point.getY()].setReachable(turn);
             this.getSquareComponents()[point.getX()][point.getY()].repaint();
         }
     }

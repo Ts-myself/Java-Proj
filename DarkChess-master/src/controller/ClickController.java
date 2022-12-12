@@ -33,13 +33,13 @@ public class ClickController {
             else if (handleFirst(squareComponent)) {
                 squareComponent.setSelected(true);
                 first = squareComponent;
-                chessboard.paintReachable(first.whereCanGo(chessboard.getSquareComponents(), chessboard));
+                chessboard.paintReachable(first.whereCanGo(chessboard.getSquareComponents(), chessboard),true);
                 first.repaint();
             }
         }
         else {
             ArrayList<ChessboardPoint> canGo = first.whereCanGo(chessboard.getSquareComponents(), chessboard);
-            chessboard.paintReachable(canGo);
+            chessboard.paintReachable(canGo,false);
             // 移动或吃子
             if (handleSecond(squareComponent, canGo)) {
                 chessboard.regretStack.add(new RegretNode(first,squareComponent));
