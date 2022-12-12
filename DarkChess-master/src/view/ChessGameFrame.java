@@ -1,7 +1,5 @@
 package view;
 
-
-import controller.ClickController;
 import controller.GameController;
 import model.ChessColor;
 
@@ -35,8 +33,8 @@ public class ChessGameFrame extends JFrame {
         setTitle("Dark Chess");
         this.WIDTH = width;
         this.HEIGHT = height;
-        this.CHESSBOARD_SIZE = HEIGHT * 6 / 7;
-        chessboard = new Chessboard(CHESSBOARD_SIZE / 2, CHESSBOARD_SIZE);
+        this.CHESSBOARD_SIZE = HEIGHT * 6 / 7 -20;
+        chessboard = new Chessboard(CHESSBOARD_SIZE / 2 +30, CHESSBOARD_SIZE +60);
 
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null); // Center the window.
@@ -107,13 +105,13 @@ public class ChessGameFrame extends JFrame {
     }
     private void addChessboard() {
         gameController = new GameController(chessboard);
-        chessboard.setLocation(210, HEIGHT / 10);
+        chessboard.setLocation(185, 88);
         add(chessboard);
     }
     private void addBackground(){
         Container ct = this.getContentPane();
         BackgroundPanel backGround = new BackgroundPanel(new ImageIcon("resources/pictures/background.jpg").getImage());
-        backGround.setBounds(0,0,WIDTH,HEIGHT);
+        backGround.setBounds(0,0,WIDTH,HEIGHT - 20);
         ct.add(backGround);
     }
     /**

@@ -22,17 +22,17 @@ public class ChessComponent extends SquareComponent{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (!(isReversal || currentReversal)) {
-            g.drawImage(coverImage, spacingLength - 60, spacingLength - 28, getWidth() + 15*spacingLength, getHeight() + 5*spacingLength, this);
+            g.drawImage(coverImage, spacingLength - 70, spacingLength - 38, getWidth() + 15*spacingLength, getHeight() + 5*spacingLength, this);
         }
 
         if (isReversal || currentReversal && !isReachable()) {
-                g.drawImage(image, spacingLength -60, spacingLength - 28, getWidth() + 15*spacingLength, getHeight() + 5*spacingLength, this);
+                g.drawImage(image, spacingLength -70, spacingLength - 38, getWidth() + 15*spacingLength, getHeight() + 5*spacingLength, this);
          }
-        if (isReversal || currentReversal && isSelected() && !isReachable()) {
-            g.drawImage(image, spacingLength - 65, spacingLength - 36, getWidth() + 17*spacingLength, getHeight() + 7*spacingLength, this);
-        }
+        //if (isReversal || currentReversal && isSelected() && !isReachable()) {
+        //    g.drawImage(image, spacingLength - 65, spacingLength - 36, getWidth() + 17*spacingLength, getHeight() + 7*spacingLength, this);
+        //}
         if (isReachable()) {
-            g.drawImage(canMoveImage, spacingLength - 60, spacingLength - 28, getWidth() + 15*spacingLength, getHeight() + 5*spacingLength, this);
+            g.drawImage(canMoveImage, spacingLength - 70, spacingLength - 38, getWidth() + 15*spacingLength, getHeight() + 5*spacingLength, this);
         }
     }
 }

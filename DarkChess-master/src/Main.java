@@ -16,7 +16,7 @@ public class Main {
      */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            ChessGameFrame mainFrame = new ChessGameFrame(800, 850);
+            ChessGameFrame mainFrame = new ChessGameFrame(800, 930);
             mainFrame.setVisible(true);
         });
     }

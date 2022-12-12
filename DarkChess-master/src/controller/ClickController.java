@@ -42,11 +42,10 @@ public class ClickController {
             chessboard.paintReachable(canGo);
             // 移动或吃子
             if (handleSecond(squareComponent, canGo)) {
+                chessboard.regretStack.add(new RegretNode(first,squareComponent));
                 chessboard.swapChessComponents(first, squareComponent);
                 chessboard.clickController.swapPlayer();
                 chessboard.ScoreRecorder(squareComponent,true);
-                if (squareComponent instanceof EmptySlotComponent) chessboard.regretStack.add(new RegretNode(first, squareComponent.getChessboardPoint()));
-                else chessboard.regretStack.add(new RegretNode(first, squareComponent));
                 first.setSelected(false);
                 first = null;
             }

@@ -59,10 +59,9 @@ public class Chessboard extends JComponent{
 
     public Chessboard(int width, int height) {
         setLayout(null); // Use absolute layout.
-        setSize(width + 2, height);
-        CHESS_SIZE = (height - 6) / 8;
-        SquareComponent.setSpacingLength(CHESS_SIZE / 12);
-        System.out.printf("chessboard [%d * %d], chess size = %d\n", width, height, CHESS_SIZE);
+        setSize(width + 2, height + 6) ;
+        CHESS_SIZE = (height - 6) / 8 -8;
+        SquareComponent.setSpacingLength((CHESS_SIZE +19)/ 12 );
 
         initAllChessOnBoard(null);
         Cheat cheat=new Cheat();
@@ -86,6 +85,7 @@ public class Chessboard extends JComponent{
         if (squareComponents[row][col] != null) {
             remove(squareComponents[row][col]);
         }
+        System.out.printf("%d %d\n",row,col);
         add(squareComponents[row][col] = squareComponent);
     }
 
@@ -143,38 +143,41 @@ public class Chessboard extends JComponent{
         }
         for (int i = 0; i < ROW_SIZE; i++) {
             for (int j = 0; j < COL_SIZE; j++) {
-                SquareComponent squareComponent = null;
-                int component = board[i][j];
-                if (component / 10 == 0){
-                    squareComponent = new EmptySlotComponent(new ChessboardPoint(i, j), calculatePoint(i, j), clickController, CHESS_SIZE, 0);
-                    putChessOnBoard (squareComponent);
-                }
-                else {
-                    ChessColor color = (component/10==1||component/10==3) ? ChessColor.RED : ChessColor.BLACK;
-
-                    if (component % 10 == 6) squareComponent = new GeneralChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 6);
-                    else if (component % 10 == 5) squareComponent = new AdvisorChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 5);
-                    else if (component % 10 == 4) squareComponent = new MinisterChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 4);
-                    else if (component % 10 == 3) squareComponent = new ChariotChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 3);
-                    else if (component % 10 == 2) squareComponent = new HorseChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 2);
-                    else if (component % 10 == 0) squareComponent = new CannonChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 1);
-                    else if (component % 10 == 1) squareComponent = new SoldierChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 0);
-
-                    if (component/10 == 3 || component/10 == 4) {
-                        assert squareComponent != null;
-                        squareComponent.setReversal(true);
-                    }
-
-                    assert squareComponent != null;
-                    squareComponent.setVisible(true);
-                    putChessOnBoard (squareComponent);
-                }
+                SquareComponent squareComponent = intToComponent(board[i][j], i, j);
             }
         }
         ChessGameFrame.restartLabels(getCurrentColor(),getRedScore(),getBlackScore());
         repaint();
     }
 
+    public SquareComponent intToComponent(int component, int i, int j){
+        SquareComponent squareComponent = null;
+        if (component / 10 == 0){
+            squareComponent = new EmptySlotComponent(new ChessboardPoint(i, j), calculatePoint(i, j), clickController, CHESS_SIZE, 0);
+            putChessOnBoard (squareComponent);
+        }
+        else {
+            ChessColor color = (component/10==1||component/10==3) ? ChessColor.RED : ChessColor.BLACK;
+
+            if (component % 10 == 6) squareComponent = new GeneralChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 6);
+            else if (component % 10 == 5) squareComponent = new AdvisorChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 5);
+            else if (component % 10 == 4) squareComponent = new MinisterChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 4);
+            else if (component % 10 == 3) squareComponent = new ChariotChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 3);
+            else if (component % 10 == 2) squareComponent = new HorseChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 2);
+            else if (component % 10 == 0) squareComponent = new CannonChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 1);
+            else if (component % 10 == 1) squareComponent = new SoldierChessComponent(new ChessboardPoint(i, j), calculatePoint(i, j), color, clickController, CHESS_SIZE, 0);
+
+            if (component/10 == 3 || component/10 == 4) {
+                assert squareComponent != null;
+                squareComponent.setReversal(true);
+            }
+
+            assert squareComponent != null;
+            squareComponent.setVisible(true);
+            putChessOnBoard (squareComponent);
+        }
+        return squareComponent;
+    }
     /**
      * 绘制棋盘格子
      */
@@ -187,7 +190,7 @@ public class Chessboard extends JComponent{
      * 将棋盘上行列坐标映射成Swing组件的Point
      */
     private Point calculatePoint(int row, int col) {
-        return new Point(col * CHESS_SIZE-3, row * CHESS_SIZE);
+        return new Point(col * CHESS_SIZE-5, row * CHESS_SIZE-2);
     }
 
     public static int[][] randomIntBoard(){
@@ -305,6 +308,20 @@ public class Chessboard extends JComponent{
         }
         return lines;
      }
+     public int componentToInt (SquareComponent component){
+         int kind;
+         int type;
+         if (component instanceof EmptySlotComponent) {
+             type = 0; kind = 0;
+         }
+         else{
+             type = component.type;
+             if (component.getChessColor() == RED) kind = 1;
+             else kind = 2;
+             if (component.isReversal()) kind += 2;
+         }
+         return kind*10 + type;
+     }
 
 
     public class Cheat extends JPanel {
@@ -353,14 +370,11 @@ public class Chessboard extends JComponent{
         regretStack.pop();
 
         if (regretNode.which == 1){
-            this.swapChessComponents(regretNode.chessComponent, this.getSquareComponents()[regretNode.toPoint.getX()][regretNode.toPoint.getY()]);
-        }
-        if (regretNode.which == 2){
-            this.swapChessComponents(regretNode.chessComponent, this.getSquareComponents()[regretNode.eatenComponent.getChessboardPoint().getX()][regretNode.eatenComponent.getChessboardPoint().getY()]);
-            this.putChessOnBoard(regretNode.eatenComponent);
+            putChessOnBoard(regretNode.chessComponent);
+            putChessOnBoard(regretNode.eatenComponent);
             this.ScoreRecorder(regretNode.eatenComponent,false);
         }
-        if (regretNode.which == 3){
+        if (regretNode.which == 2){
             regretNode.chessComponent.setReversal(false);
             this.getSquareComponents()[regretNode.chessComponent.chessboardPoint.getX()][regretNode.chessComponent.getChessboardPoint().getY()] = null;
             putChessOnBoard(regretNode.chessComponent);
@@ -370,6 +384,9 @@ public class Chessboard extends JComponent{
         }
         this.clickController.swapPlayer();
     }
-
+    public void replacePoint (SquareComponent squareComponent){
+        putChessOnBoard(squareComponent);
+        this.squareComponents[squareComponent.getChessboardPoint().getX()][squareComponent.getChessboardPoint().getY()].repaint();
+    }
 
 }
