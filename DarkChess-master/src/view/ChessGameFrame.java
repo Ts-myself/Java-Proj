@@ -53,13 +53,6 @@ public class ChessGameFrame extends JFrame {
         addMusic();
         addMenuButton();
 
-        /*
-        Image image = Toolkit.getDefaultToolkit().getImage("resources/image-chess-1/chess-bishop-black.png").getScaledInstance(100, 100, Image.SCALE_FAST);
-        JComponent imageComponent = new ImageComponent(image);// create an instance of ImageComponent
-        imageComponent.setSize(100, 100);
-        imageComponent.setLocation(50, 50); // set absolute location
-        this.add(imageComponent);// add Jcomponent into Jframe
-         */
     }
 
     private void initialUI() {
