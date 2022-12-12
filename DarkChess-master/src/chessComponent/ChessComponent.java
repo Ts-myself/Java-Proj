@@ -14,6 +14,7 @@ public class ChessComponent extends SquareComponent{
     protected int type;
     protected Image image;
     protected Image coverImage=Toolkit.getDefaultToolkit().getImage("resources/image-chess/advisor-red.png");
+    protected Image canMoveImage;
     protected ChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size, int type) {
         super(chessboardPoint, location, chessColor, clickController, size, type);
     }
@@ -21,27 +22,17 @@ public class ChessComponent extends SquareComponent{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (!(isReversal || currentReversal)) {
-            g.drawImage(coverImage, spacingLength - 10, spacingLength - 10, getWidth() + spacingLength, getHeight() + spacingLength, this);
+            g.drawImage(coverImage, spacingLength - 60, spacingLength - 28, getWidth() + 15*spacingLength, getHeight() + 5*spacingLength, this);
         }
 
-        if (isReversal || currentReversal) {
-            g.drawImage(image, spacingLength - 10, spacingLength - 10, getWidth() + spacingLength, getHeight() + spacingLength, this);
-
-            //绘制棋子被选中时状态
-            if (isSelected()) {
-                g.drawImage(image, spacingLength - 10, spacingLength - 10, getWidth() + spacingLength, getHeight() + spacingLength, this);
-
-            }
-            /*else{
-
-            }*/
-
+        if (isReversal || currentReversal && !isReachable()) {
+                g.drawImage(image, spacingLength -60, spacingLength - 28, getWidth() + 15*spacingLength, getHeight() + 5*spacingLength, this);
+         }
+        if (isReversal || currentReversal && isSelected() && !isReachable()) {
+            g.drawImage(image, spacingLength - 65, spacingLength - 36, getWidth() + 17*spacingLength, getHeight() + 7*spacingLength, this);
         }
         if (isReachable()) {
-            g.setColor(Color.BLUE);
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setStroke(new BasicStroke(4f));
-            g2.drawOval(spacingLength, spacingLength, getWidth() - 2 * spacingLength, getHeight() - 2 * spacingLength);
+            g.drawImage(canMoveImage, spacingLength - 60, spacingLength - 28, getWidth() + 15*spacingLength, getHeight() + 5*spacingLength, this);
         }
     }
 }

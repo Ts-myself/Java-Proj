@@ -12,8 +12,10 @@ public class MinisterChessComponent extends ChessComponent {
         super(chessboardPoint, location, chessColor, clickController, size, type);
         if (this.getChessColor() == ChessColor.RED){
             image = Toolkit.getDefaultToolkit().getImage("resources/image-chess/minister-red.png");
+            canMoveImage = Toolkit.getDefaultToolkit().getImage("resources/image-chess/minister-red-canMove.png");
         } else {
             image = Toolkit.getDefaultToolkit().getImage("resources/image-chess/minister-black.png");
+            canMoveImage = Toolkit.getDefaultToolkit().getImage("resources/image-chess/minister-black-canMove.png");
         }
     }
 }

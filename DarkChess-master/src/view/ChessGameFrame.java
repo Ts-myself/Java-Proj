@@ -35,7 +35,7 @@ public class ChessGameFrame extends JFrame {
         setTitle("Dark Chess");
         this.WIDTH = width;
         this.HEIGHT = height;
-        this.CHESSBOARD_SIZE = HEIGHT * 4 / 5;
+        this.CHESSBOARD_SIZE = HEIGHT * 6 / 7;
         chessboard = new Chessboard(CHESSBOARD_SIZE / 2, CHESSBOARD_SIZE);
 
         setSize(WIDTH, HEIGHT);

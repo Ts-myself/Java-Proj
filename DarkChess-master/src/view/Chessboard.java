@@ -181,17 +181,13 @@ public class Chessboard extends JComponent{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        Image chessboardImage=Toolkit.getDefaultToolkit().getImage("resources/image-chess/board.png");
-        g.drawImage(chessboardImage,0,0,getWidth(),getHeight(), this);
     }
 
     /**
      * 将棋盘上行列坐标映射成Swing组件的Point
      */
     private Point calculatePoint(int row, int col) {
-        return new Point(col * CHESS_SIZE + 3, row * CHESS_SIZE + 3);
+        return new Point(col * CHESS_SIZE-3, row * CHESS_SIZE);
     }
 
     public static int[][] randomIntBoard(){

@@ -14,8 +14,10 @@ public class CannonChessComponent extends ChessComponent {
         super(chessboardPoint, location, chessColor, clickController, size, type);
         if (this.getChessColor() == ChessColor.RED){
             image = Toolkit.getDefaultToolkit().getImage("resources/image-chess/cannon-red.png");
+            canMoveImage = Toolkit.getDefaultToolkit().getImage("resources/image-chess/cannon-red-canMove.png");
         } else {
             image = Toolkit.getDefaultToolkit().getImage("resources/image-chess/cannon-black.png");
+            canMoveImage = Toolkit.getDefaultToolkit().getImage("resources/image-chess/cannon-black-canMove.png");
         }
     }
 
