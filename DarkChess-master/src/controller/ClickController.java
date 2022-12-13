@@ -5,10 +5,11 @@ import chessComponent.SquareComponent;
 import chessComponent.EmptySlotComponent;
 import model.ChessColor;
 import model.ChessboardPoint;
-import view.ChessGameFrame;
 import view.Chessboard;
 
 import java.util.ArrayList;
+
+import static view.ChessGameFrame.changeStatusLabel;
 
 public class ClickController {
     public Chessboard chessboard;
@@ -25,7 +26,7 @@ public class ClickController {
             if (chessboard.getCurrentColor() == ChessColor.NONE) {
                 chessboard.setCurrentColor(squareComponent.getChessColor());
                 squareComponent.setReversal(true);
-                ChessGameFrame.getStatusLabel().setText(String.format("%s's Turn", squareComponent.getChessColor()));
+                changeStatusLabel(chessboard.getCurrentColor());
                 squareComponent.repaint();
                 chessboard.regretStack.add(new RegretNode(squareComponent));
             }
@@ -98,7 +99,7 @@ public class ClickController {
 
     public void swapPlayer() {
         chessboard.setCurrentColor(chessboard.getCurrentColor() == ChessColor.BLACK ? ChessColor.RED : ChessColor.BLACK);
-        ChessGameFrame.getStatusLabel().setText(String.format("%s's TURN", chessboard.getCurrentColor().getName()));
+        changeStatusLabel(chessboard.getCurrentColor());
     }
 
 }

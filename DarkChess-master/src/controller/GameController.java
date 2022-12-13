@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Stack;
 
 /**
  * 这个类主要完成由窗体上组件触发的动作。

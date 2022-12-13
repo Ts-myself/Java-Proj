@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * 这个类主要用于包装Color对象，用于Chess游戏使用。
@@ -14,7 +15,7 @@ public enum ChessColor {
         this.color = color;
     }
     public String getName() {
-        return name;
+        return Objects.equals(name, "Red") ? "红" : "黑";
     }
     public Color getColor() {
         return color;

@@ -92,8 +92,6 @@ public class ChessGameFrame extends JFrame {
 
     }
 
-
-
     /**
      * 在游戏窗体中添加棋盘
      */
@@ -119,11 +117,21 @@ public class ChessGameFrame extends JFrame {
      * 在游戏窗体中添加标签
      */
     private void addLabel() {
-        statusLabel = new JLabel("The First TURN");
-        statusLabel.setLocation(290, HEIGHT / 50);
+        statusLabel = new JLabel("先手定色");
+        statusLabel.setLocation(283, HEIGHT / 50);
         statusLabel.setSize(400, 60);
-        statusLabel.setFont(new Font("Rockwell", Font.BOLD, 30));
+        statusLabel.setFont(new Font("华文行楷", Font.BOLD, 50));
         add(statusLabel);
+    }
+    static public void changeStatusLabel (ChessColor color){
+        if (color == ChessColor.NONE){
+            getStatusLabel().setForeground(Color.black);
+            getStatusLabel().setText("先手定色");
+            return;
+        }
+        if (color == ChessColor.RED)    getStatusLabel().setForeground(new Color(159, 24, 24));
+        else getStatusLabel().setForeground(Color.black);
+        getStatusLabel().setText("%s方执子");
     }
     /**
      * 在游戏窗体中播放音乐
@@ -144,17 +152,29 @@ public class ChessGameFrame extends JFrame {
         }
     }
 
+
     private void addScore() {
-        blackScore = new JLabel("Black's Score: 0");
-        blackScore.setLocation(50, HEIGHT / 40);
+        JLabel bScore = new JLabel("黑方得分");
+        bScore.setLocation(22, HEIGHT / 40);
+        bScore.setSize(250,50);
+        bScore.setFont(new Font("华文行楷", Font.BOLD, 35));
+        add(bScore);
+        JLabel rScore = new JLabel("红方得分");
+        rScore.setLocation(610, HEIGHT / 40);
+        rScore.setSize(250,50);
+        rScore.setFont(new Font("华文行楷",Font.BOLD, 35));
+        rScore.setForeground(new Color(159, 24, 24));
+        add(rScore);
+        blackScore = new JLabel("0 / 60");
+        blackScore.setLocation(40, 70);
         blackScore.setSize(250,50);
-        blackScore.setFont(new Font("Rockwell", Font.BOLD, 20));
+        blackScore.setFont(new Font("华文行楷", Font.BOLD, 40));
         add(blackScore);
-        redScore = new JLabel("Red's Score: 0");
-        redScore.setLocation(580, HEIGHT / 40);
+        redScore = new JLabel("0 / 60");
+        redScore.setLocation(635, 70);
         redScore.setSize(250,50);
-        redScore.setFont(new Font("Rockwell",Font.BOLD, 20));
-        redScore.setForeground(new Color(255,10,10));
+        redScore.setFont(new Font("华文行楷",Font.BOLD, 40));
+        redScore.setForeground(new Color(159, 24, 24));
         add(redScore);
     }
 
@@ -169,9 +189,9 @@ public class ChessGameFrame extends JFrame {
     }
 
     public static void restartLabels(ChessColor color, int R, int B) {
-        statusLabel.setText("The " +color+ " Turn");
-        blackScore.setText(("Black's Score: "+B));
-        redScore.setText("Red's Score: "+R);
+        changeStatusLabel(color);
+        blackScore.setText(B + " / 60");
+        redScore.setText(R + " / 60");
     }
     private void addMenuButton(){
         JButton button = new JButton("...");
