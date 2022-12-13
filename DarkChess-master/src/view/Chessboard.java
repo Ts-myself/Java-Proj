@@ -71,7 +71,7 @@ public class Chessboard extends JComponent{
     }
 
     public void setCurrentColor(ChessColor currentColor) {
-        this.currentColor = currentColor;
+        Chessboard.currentColor = currentColor;
     }
 
     /**
@@ -82,7 +82,6 @@ public class Chessboard extends JComponent{
         if (squareComponents[row][col] != null) {
             remove(squareComponents[row][col]);
         }
-        System.out.printf("%d %d\n",row,col);
         add(squareComponents[row][col] = squareComponent);
     }
 
@@ -174,13 +173,12 @@ public class Chessboard extends JComponent{
                 assert squareComponent != null;
                 squareComponent.setReversal(true);
             }
-
             assert squareComponent != null;
-            squareComponent.setVisible(true);
             putChessOnBoard (squareComponent);
         }
     }
-    /**
+
+     /**
      * 绘制棋盘格子
      */
     @Override
@@ -289,7 +287,7 @@ public class Chessboard extends JComponent{
     }
      public List<String> pauseToInt (){
         List<String> lines = new ArrayList<>();
-        lines.add(this.getCurrentColor()+" "+this.getRedScore()+" "+this.getBlackScore());
+        lines.add(getCurrentColor()+" "+this.getRedScore()+" "+this.getBlackScore());
         for (int i=1;i<=8;i++){
             char[] string = new char[12];
             for (int j=0;j<4;j++){
@@ -360,17 +358,16 @@ public class Chessboard extends JComponent{
         regretStack.pop();
 
         if (regretNode.which == 1){
-            putChessOnBoard(regretNode.chessComponent);
-            putChessOnBoard(regretNode.eatenComponent);
-            this.ScoreRecorder(regretNode.eatenComponent,false);
+            String[] infoC = regretNode.chessComponent.split(",");
+            String[] infoE = regretNode.eatenComponent.split(",");
+            intToComponent(Integer.parseInt(infoC[0])*10+Integer.parseInt(infoC[1]),Integer.parseInt(infoC[2]),Integer.parseInt(infoC[3]));
+            intToComponent(Integer.parseInt(infoE[0])*10+Integer.parseInt(infoE[1]),Integer.parseInt(infoE[2]),Integer.parseInt(infoE[3]));
+            this.squareComponents[Integer.parseInt(infoC[2])][Integer.parseInt(infoC[3])].repaint();
+            this.squareComponents[Integer.parseInt(infoE[2])][Integer.parseInt(infoE[3])].repaint();
         }
         if (regretNode.which == 2){
-            regretNode.chessComponent.setReversal(false);
-            this.getSquareComponents()[regretNode.chessComponent.chessboardPoint.getX()][regretNode.chessComponent.getChessboardPoint().getY()] = null;
-            putChessOnBoard(regretNode.chessComponent);
-            this.getSquareComponents()[regretNode.chessComponent.chessboardPoint.getX()][regretNode.chessComponent.getChessboardPoint().getY()].repaint();
-
-
+            this.getSquareComponents()[regretNode.x][regretNode.y].setReversal(false);
+            this.getSquareComponents()[regretNode.x][regretNode.y].repaint();
         }
         this.clickController.swapPlayer();
     }

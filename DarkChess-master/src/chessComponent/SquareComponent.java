@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import static model.ChessColor.RED;
+
 /**
  * 这个类是一个抽象类，主要表示8*4棋盘上每个格子的棋子情况。
  * 有两个子类：
@@ -33,8 +35,8 @@ public abstract class SquareComponent extends JComponent {
     protected boolean reachable;
     private boolean selected;
     protected Image canMoveImage;
-    Image redCanMoveImage = Toolkit.getDefaultToolkit().getImage("resources/image-chess/red-canMove.png");
-    Image blackCanMoveImage = Toolkit.getDefaultToolkit().getImage("resources/image-chess/black-canMove.png");
+    Image redCanMoveImage = Toolkit.getDefaultToolkit().getImage("resources/image-chess/black-canMove.png");
+    Image blackCanMoveImage = Toolkit.getDefaultToolkit().getImage("resources/image-chess/red-canMove.png");
 
 
     public int type;
@@ -107,6 +109,18 @@ public abstract class SquareComponent extends JComponent {
         setLocation(point2);
         another.setChessboardPoint(chessboardPoint1);
         another.setLocation(point1);
+    }
+
+    @Override
+    public String toString() {
+        int kind;
+        if (this instanceof EmptySlotComponent)  kind = 0;
+        else{
+            if (this.getChessColor() == RED) kind = 1;
+            else kind = 2;
+            if (this.isReversal()) kind += 2;
+        }
+        return  String.format(kind +","+ type +"," +this.chessboardPoint.toString());
     }
 
     /**

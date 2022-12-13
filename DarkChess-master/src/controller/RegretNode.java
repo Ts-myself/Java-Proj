@@ -1,20 +1,19 @@
 package controller;
 
-import chessComponent.ChessComponent;
-import chessComponent.SquareComponent;
-import model.ChessboardPoint;
 
 public class RegretNode {
-    public int which; //1:移动  2：吃子  3：翻棋
-    public SquareComponent chessComponent = null;
-    public SquareComponent eatenComponent = null;
-    public RegretNode (SquareComponent chessComponent, SquareComponent eatenComponent){
-        this.which = 1; //吃子
+    public int which; //1:移动 or 吃子  2：翻棋
+    public String chessComponent;
+    public String eatenComponent;
+    public int x , y;
+    public RegretNode (String chessComponent, String eatenComponent){
+        this.which = 1; //移动 or 吃子
         this.chessComponent = chessComponent;
         this.eatenComponent = eatenComponent;
     }
-    public RegretNode (SquareComponent chessComponent){
+    public RegretNode (int x, int y){
         this.which = 2; //翻棋
-        this.chessComponent = chessComponent;
+        this.x = x;
+        this.y = y;
     }
 }

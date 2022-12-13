@@ -23,12 +23,12 @@ public class ClickController {
 
         if (first == null) {
             // 第一次翻棋
-            if (chessboard.getCurrentColor() == ChessColor.NONE) {
-                chessboard.setCurrentColor(squareComponent.getChessColor());
+            if (Chessboard.getCurrentColor() == ChessColor.NONE) {
+                chessboard.setCurrentColor(squareComponent.getChessColor() == ChessColor.RED ? ChessColor.BLACK : ChessColor.RED);
                 squareComponent.setReversal(true);
-                changeStatusLabel(chessboard.getCurrentColor());
+                changeStatusLabel(Chessboard.getCurrentColor());
                 squareComponent.repaint();
-                chessboard.regretStack.add(new RegretNode(squareComponent));
+                chessboard.regretStack.add(new RegretNode(squareComponent.getChessboardPoint().getX(),squareComponent.getChessboardPoint().getY()));
             }
             // 翻棋 或 选棋
             else if (handleFirst(squareComponent)) {
@@ -43,7 +43,9 @@ public class ClickController {
             chessboard.paintReachable(canGo,false);
             // 移动或吃子
             if (handleSecond(squareComponent, canGo)) {
-                chessboard.regretStack.add(new RegretNode(first,squareComponent));
+
+                chessboard.regretStack.add(new RegretNode(first.toString(),squareComponent.toString()));
+
                 chessboard.swapChessComponents(first, squareComponent);
                 chessboard.clickController.swapPlayer();
                 chessboard.ScoreRecorder(squareComponent,true);
@@ -70,14 +72,14 @@ public class ClickController {
 
     private boolean handleFirst(SquareComponent squareComponent) {
         if (!squareComponent.isReversal() && !(squareComponent instanceof EmptySlotComponent)) {
-            chessboard.regretStack.add(new RegretNode(squareComponent));
+            chessboard.regretStack.add(new RegretNode(squareComponent.getChessboardPoint().getX(),squareComponent.getChessboardPoint().getY()));
             squareComponent.setReversal(true);
             System.out.printf("onClick to reverse a chess [%d,%d]\n", squareComponent.getChessboardPoint().getX(), squareComponent.getChessboardPoint().getY());
             squareComponent.repaint();
             chessboard.clickController.swapPlayer();
             return false;
         }
-        return squareComponent.getChessColor() == chessboard.getCurrentColor();
+        return squareComponent.getChessColor() == Chessboard.getCurrentColor();
     }
 
     /**
@@ -91,15 +93,15 @@ public class ClickController {
         //在canGo里能走
         for (ChessboardPoint point : canGo) {
             if (point.getX() == squareComponent.getChessboardPoint().getX() && point.getY() == squareComponent.getChessboardPoint().getY()) {
-                return (squareComponent.getChessColor() != chessboard.getCurrentColor() || first.type == 1);
+                return (squareComponent.getChessColor() != Chessboard.getCurrentColor() || first.type == 1);
             }
         }
         return false;
     }
 
     public void swapPlayer() {
-        chessboard.setCurrentColor(chessboard.getCurrentColor() == ChessColor.BLACK ? ChessColor.RED : ChessColor.BLACK);
-        changeStatusLabel(chessboard.getCurrentColor());
+        chessboard.setCurrentColor(Chessboard.getCurrentColor() == ChessColor.BLACK ? ChessColor.RED : ChessColor.BLACK);
+        changeStatusLabel(Chessboard.getCurrentColor());
     }
 
 }

@@ -13,7 +13,7 @@ public class MenuFrame extends JFrame {
         this.chessboard = chessboard;
 
         setTitle("Menu");
-        setSize(330, 350);
+        setSize(310, 350);
         setLocationRelativeTo(null); // Center the window.
         setLayout(null);
 
@@ -47,7 +47,6 @@ public class MenuFrame extends JFrame {
 
         button.addActionListener(e -> {
             chessboard.regret();
-            dispose();
         });
     }
     private void addCheatButton() {

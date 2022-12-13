@@ -14,7 +14,7 @@ public class Main {
         7.作弊模式的切换
         8.包装与联网
         9.读档报错类型
-
+        10.图像的预载入
         fix
         1.按按钮后 cheat 没能 focus
         2.restart后部分功能失效
