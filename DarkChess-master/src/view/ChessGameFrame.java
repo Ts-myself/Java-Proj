@@ -131,7 +131,7 @@ public class ChessGameFrame extends JFrame {
         }
         if (color == ChessColor.RED)    getStatusLabel().setForeground(new Color(159, 24, 24));
         else getStatusLabel().setForeground(Color.black);
-        getStatusLabel().setText("%s方执子");
+        getStatusLabel().setText(String.format("%s方执子",color.getName()));
     }
     /**
      * 在游戏窗体中播放音乐
@@ -195,10 +195,10 @@ public class ChessGameFrame extends JFrame {
     }
     private void addMenuButton(){
         JButton button = new JButton("...");
-        button.setLocation(WIDTH - 100, HEIGHT - 100);
+        button.setLocation(WIDTH - 75, HEIGHT - 100);
         button.setSize(60, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        button.setBackground(Color.RED);
+        button.setBackground(new Color(246, 245, 238));
         add(button);
 
         button.addActionListener(e -> {

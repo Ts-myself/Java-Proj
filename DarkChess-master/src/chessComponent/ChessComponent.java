@@ -13,8 +13,7 @@ public class ChessComponent extends SquareComponent{
     //炮：0 兵：1 马：2 车：3 象：4 士：5 将：6
     protected int type;
     protected Image image;
-    protected Image coverImage=Toolkit.getDefaultToolkit().getImage("resources/image-chess/coverImage.png");
-    protected Image canMoveImage;
+    protected Image coverImage=Toolkit.getDefaultToolkit().getImage("resources/image-chess/advisor-red.png");
     protected ChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size, int type) {
         super(chessboardPoint, location, chessColor, clickController, size, type);
     }

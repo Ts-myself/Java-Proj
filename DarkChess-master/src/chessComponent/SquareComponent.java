@@ -32,6 +32,10 @@ public abstract class SquareComponent extends JComponent {
     protected boolean currentReversal;
     protected boolean reachable;
     private boolean selected;
+    protected Image canMoveImage;
+    Image redCanMoveImage = Toolkit.getDefaultToolkit().getImage("resources/image-chess/red-canMove.png");
+    Image blackCanMoveImage = Toolkit.getDefaultToolkit().getImage("resources/image-chess/black-canMove.png");
+
 
     public int type;
     /**
@@ -65,8 +69,7 @@ public abstract class SquareComponent extends JComponent {
 
     public boolean isReachable() {return reachable;}
 
-    public void setReachable(boolean reachable) {
-        this.reachable = reachable;}
+    public void setReachable(boolean reachable) {this.reachable = reachable;}
 
     public static void setSpacingLength(int spacingLength) {
         SquareComponent.spacingLength = spacingLength;

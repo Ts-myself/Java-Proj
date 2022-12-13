@@ -13,7 +13,7 @@ public class MenuFrame extends JFrame {
         this.chessboard = chessboard;
 
         setTitle("Menu");
-        setSize(310, 350);
+        setSize(330, 350);
         setLocationRelativeTo(null); // Center the window.
         setLayout(null);
 

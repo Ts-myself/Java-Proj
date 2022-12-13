@@ -28,7 +28,7 @@ public class Chessboard extends JComponent{
     private static final int COL_SIZE = 4;
 
     private final SquareComponent[][] squareComponents = new SquareComponent[ROW_SIZE][COL_SIZE];
-    private ChessColor currentColor = ChessColor.NONE;
+    static private ChessColor currentColor = ChessColor.NONE;
 
     //all chessComponents in this chessboard are shared only one model controller
     public final ClickController clickController = new ClickController(this);
@@ -66,7 +66,7 @@ public class Chessboard extends JComponent{
         cheat.setFocusable(true);
     }
 
-    public ChessColor getCurrentColor() {
+    static public ChessColor getCurrentColor() {
         return currentColor;
     }
 
@@ -345,6 +345,7 @@ public class Chessboard extends JComponent{
 
     }
     public void regret() {
+        /*
         if (regretStack.size() == 1) {
             JLabel invalidRegret = new JLabel("You can't regret at the first step");
             invalidRegret.setSize(getWidth(), getHeight() / 10);
@@ -352,6 +353,8 @@ public class Chessboard extends JComponent{
             invalidRegret.setFont(new Font("Rockwell", Font.BOLD, 30));
             add(invalidRegret);
         }
+
+         */
 
         RegretNode regretNode = regretStack.peek();
         regretStack.pop();
