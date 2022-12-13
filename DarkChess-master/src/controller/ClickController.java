@@ -57,6 +57,8 @@ public class ClickController {
                 recordFirst.repaint();
             }
         }
+
+
     }
 
 

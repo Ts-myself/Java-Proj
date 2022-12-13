@@ -50,6 +50,7 @@ public class ChessGameFrame extends JFrame {
         addMusic();
         addMenuButton();
         addBackground();
+        endGame();
     }
 
     private void initialUI() {
@@ -184,6 +185,27 @@ public class ChessGameFrame extends JFrame {
             MenuFrame menuFrame = new MenuFrame(gameController, chessboard);
             menuFrame.setVisible(true);
         });
+    }
+
+    private void endGame() {
+        //todo:endGame
+        /*PropertyChangeListener end = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (gameController.chessboard.getBlackScore() >= 1 || gameController.chessboard.getRedScore() >= 1) {
+                    JButton end = new JButton(String.format("%s Win", gameController.chessboard.getBlackScore() >= 60 ? "Black" : "Red"));
+                    end.setLocation(WIDTH, HEIGHT);
+                    end.setSize(WIDTH, HEIGHT);
+                    end.setFont(new Font("Rockwell", Font.BOLD,50));
+                    end.setForeground(Color.LIGHT_GRAY);
+                    add(end);
+                    end.addActionListener(e -> {
+                        System.out.println("Restarting Game!");
+                        gameController.restartGame();
+                    });
+                }
+            }
+        };*/
     }
 
 }

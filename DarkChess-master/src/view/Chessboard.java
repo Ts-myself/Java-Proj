@@ -30,7 +30,7 @@ public class Chessboard extends JComponent{
 
     private final SquareComponent[][] squareComponents = new SquareComponent[ROW_SIZE][COL_SIZE];
     private ChessColor currentColor = ChessColor.NONE;
-    public GameController gameController;
+    public GameController gameController =new GameController(this);
 
     //all chessComponents in this chessboard are shared only one model controller
     public final ClickController clickController = new ClickController(this);
@@ -108,14 +108,20 @@ public class Chessboard extends JComponent{
         chess2.repaint();
 
         //todo:fix the method for ending
-        if (blackScore >= 1 || redScore >= 1) {
-            JLabel end = new JLabel(String.format("%s Win", blackScore >= 60 ? "Black" : "Red"));
-            end.setLocation(WIDTH / 10, HEIGHT / 10);
-            end.setSize(WIDTH / 50, HEIGHT / 50);
+        /*if (blackScore >= 1 || redScore >= 1) {
+            JButton end = new JButton(String.format("%s Win", blackScore >= 60 ? "Black" : "Red"));
+            end.setLocation(this.getX()/10, this.getY()/10);
+            end.setSize(this.getWidth(), this.getHeight());
             end.setFont(new Font("Rockwell", Font.BOLD,40));
             end.setForeground(Color.LIGHT_GRAY);
+            add(end);
+            end.setFocusable(true);
             repaint();
-        }
+            end.addActionListener(e -> {
+                System.out.println("Restarting Game!");
+                initAllChessOnBoard(null);
+            });
+        }*/
     }
 
     public void initAllChessOnBoard(List<String> chessData) {
