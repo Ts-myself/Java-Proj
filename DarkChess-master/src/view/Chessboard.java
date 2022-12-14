@@ -24,7 +24,6 @@ import static model.ChessColor.RED;
  */
 public class Chessboard extends JComponent{
 
-
     private static final int ROW_SIZE = 8;
     private static final int COL_SIZE = 4;
 
@@ -62,9 +61,7 @@ public class Chessboard extends JComponent{
         SquareComponent.setSpacingLength((CHESS_SIZE +19)/ 12 );
 
         initAllChessOnBoard(null);
-        Cheat cheat=new Cheat();
-        add(cheat);
-        cheat.setFocusable(true);
+
     }
 
     static public ChessColor getCurrentColor() {
@@ -180,6 +177,10 @@ public class Chessboard extends JComponent{
             assert squareComponent != null;
             putChessOnBoard (squareComponent);
         }
+        //load cheat
+        Cheat cheat=new Cheat();
+        add(cheat);
+        cheat.setFocusable(true);
     }
 
      /**
@@ -341,7 +342,6 @@ public class Chessboard extends JComponent{
                     }
                 }
             }
-
                 @Override
                 public void keyReleased(KeyEvent e) {
                     int keyCode = e.getKeyCode();
@@ -355,42 +355,33 @@ public class Chessboard extends JComponent{
                     }
                 }
             });
-
         }
-
     }
     public void regret() {
-        /*
-        if (regretStack.size() == 1) {
-            JLabel invalidRegret = new JLabel("You can't regret at the first step");
-            invalidRegret.setSize(getWidth(), getHeight() / 10);
-            invalidRegret.setLocation(getWidth()/10,getHeight()/10);
-            invalidRegret.setFont(new Font("Rockwell", Font.BOLD, 30));
-            add(invalidRegret);
+        if (regretStack.isEmpty()){
+            new ErrorFrame(1);
         }
+        else{
+            RegretNode regretNode = regretStack.peek();
+            regretStack.pop();
 
-         */
+            if (regretNode.which == 1){
+                String[] infoC = regretNode.chessComponent.split(",");
+                String[] infoE = regretNode.eatenComponent.split(",");
+                intToComponent(Integer.parseInt(infoC[0])*10+Integer.parseInt(infoC[1]),Integer.parseInt(infoC[2]),Integer.parseInt(infoC[3]));
+                intToComponent(Integer.parseInt(infoE[0])*10+Integer.parseInt(infoE[1]),Integer.parseInt(infoE[2]),Integer.parseInt(infoE[3]));
+                this.squareComponents[Integer.parseInt(infoC[2])][Integer.parseInt(infoC[3])].repaint();
+                this.squareComponents[Integer.parseInt(infoE[2])][Integer.parseInt(infoE[3])].repaint();
+                this.ScoreRecorder(this.squareComponents[Integer.parseInt(infoE[2])][Integer.parseInt(infoE[3])],false);
+            }
+            if (regretNode.which == 2){
+                this.getSquareComponents()[regretNode.x][regretNode.y].setReversal(false);
+                this.getSquareComponents()[regretNode.x][regretNode.y].repaint();
+            }
 
-        RegretNode regretNode = regretStack.peek();
-        regretStack.pop();
-
-        if (regretNode.which == 1){
-            String[] infoC = regretNode.chessComponent.split(",");
-            String[] infoE = regretNode.eatenComponent.split(",");
-            intToComponent(Integer.parseInt(infoC[0])*10+Integer.parseInt(infoC[1]),Integer.parseInt(infoC[2]),Integer.parseInt(infoC[3]));
-            intToComponent(Integer.parseInt(infoE[0])*10+Integer.parseInt(infoE[1]),Integer.parseInt(infoE[2]),Integer.parseInt(infoE[3]));
-            this.squareComponents[Integer.parseInt(infoC[2])][Integer.parseInt(infoC[3])].repaint();
-            this.squareComponents[Integer.parseInt(infoE[2])][Integer.parseInt(infoE[3])].repaint();
-            this.ScoreRecorder(this.squareComponents[Integer.parseInt(infoE[2])][Integer.parseInt(infoE[3])],false);
+            if (regretStack.isEmpty()) ChessGameFrame.changeStatusLabel(NONE);
+            else this.clickController.swapPlayer();
         }
-        if (regretNode.which == 2){
-            this.getSquareComponents()[regretNode.x][regretNode.y].setReversal(false);
-            this.getSquareComponents()[regretNode.x][regretNode.y].repaint();
-        }
-
-        if (regretStack.isEmpty())
-            ChessGameFrame.changeStatusLabel(NONE);
-        else this.clickController.swapPlayer();
     }
 
 }

@@ -2,6 +2,7 @@ package controller;
 
 
 import view.Chessboard;
+import view.ErrorFrame;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -25,6 +26,10 @@ public class GameController {
     public void loadGameFromFile(String path) {
         try {
             List<String> chessData = Files.readAllLines(Path.of(path));
+            if (chessData.isEmpty()){
+                new ErrorFrame(2);
+                return;
+            }
             chessboard.initAllChessOnBoard (chessData);
         } catch (IOException e) {
             e.printStackTrace();
