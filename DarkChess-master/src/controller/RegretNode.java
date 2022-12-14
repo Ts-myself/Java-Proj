@@ -16,4 +16,12 @@ public class RegretNode {
         this.x = x;
         this.y = y;
     }
+    public String toString (int tot){
+        if (this.which == 1){
+            return String.format(tot + " " + this.which+ " " + chessComponent + " " + eatenComponent);
+        }
+        else{
+            return String.format(tot + " " + this.which+ " " + this.x + " " + this.y);
+        }
+    }
 }

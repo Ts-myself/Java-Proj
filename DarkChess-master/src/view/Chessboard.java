@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
+import static model.ChessColor.NONE;
 import static model.ChessColor.RED;
 
 /**
@@ -121,6 +122,7 @@ public class Chessboard extends JComponent{
     }
 
     public void initAllChessOnBoard(List<String> chessData) {
+        while (!regretStack.isEmpty()) regretStack.pop();
         int[][] board = new int[8][4];
         if (chessData == null) {
             board = Chessboard.randomIntBoard();
@@ -131,15 +133,17 @@ public class Chessboard extends JComponent{
         else{
             for (int i=0;i<chessData.size();i++){
                 String[] info = chessData.get(i).split(" ");
-                if (i == 0){
+                if (i == 0){ //读取分数与执子方
                     setCurrentColor(ChessColor.valueOf(info[0]));
                     setRedScore(Integer.parseInt(info[1]));
                     setBlackScore(Integer.parseInt(info[2]));
+                } //读取棋盘
+                else if (i<=8){
+                    for (int j=0;j<4;j++)  board[i-1][j] = Integer.parseInt(info[j]);
                 }
-                else{
-                    for (int j=0;j<4;j++){
-                        board[i-1][j] = Integer.parseInt(info[j]);
-                    }
+                else{ //读取行棋历史
+                    if (info[1].equals("1")) regretStack.add(new RegretNode(info[2],info[3]));
+                    else regretStack.add(new RegretNode(Integer.parseInt(info[2]),Integer.parseInt(info[3])));
                 }
             }
         }
@@ -306,6 +310,19 @@ public class Chessboard extends JComponent{
             }
             lines.add(String.valueOf(string));
         }
+        //处理regretStack
+         Stack<RegretNode> clone = regretStack;
+         Stack<RegretNode> upSideDown = new Stack<>();
+        while (!clone.isEmpty()){
+            upSideDown.add(clone.peek()); clone.pop();
+        }
+        int tot = 0;
+        while (!upSideDown.isEmpty()){
+            tot ++;
+            RegretNode regretNode = upSideDown.peek(); upSideDown.pop();
+            if (regretNode.which == 1) lines.add(regretNode.toString(tot));
+            else lines.add(regretNode.toString(tot));
+        }
         return lines;
      }
 
@@ -315,7 +332,7 @@ public class Chessboard extends JComponent{
                 @Override
                 public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
-                if (keyCode == KeyEvent.VK_C) {
+                if (keyCode == KeyEvent.VK_CONTROL) {
                     for (SquareComponent[] squareComponent : squareComponents) {
                         for (SquareComponent squareComponent1 : squareComponent) {
                             squareComponent1.setCurrentReversal(true);
@@ -328,7 +345,7 @@ public class Chessboard extends JComponent{
                 @Override
                 public void keyReleased(KeyEvent e) {
                     int keyCode = e.getKeyCode();
-                    if (keyCode == KeyEvent.VK_C) {
+                    if (keyCode == KeyEvent.VK_CONTROL) {
                         for (SquareComponent[] squareComponent : getSquareComponents()) {
                             for (SquareComponent squareComponent1 : squareComponent) {
                                 squareComponent1.setCurrentReversal(false);
@@ -364,12 +381,16 @@ public class Chessboard extends JComponent{
             intToComponent(Integer.parseInt(infoE[0])*10+Integer.parseInt(infoE[1]),Integer.parseInt(infoE[2]),Integer.parseInt(infoE[3]));
             this.squareComponents[Integer.parseInt(infoC[2])][Integer.parseInt(infoC[3])].repaint();
             this.squareComponents[Integer.parseInt(infoE[2])][Integer.parseInt(infoE[3])].repaint();
+            this.ScoreRecorder(this.squareComponents[Integer.parseInt(infoE[2])][Integer.parseInt(infoE[3])],false);
         }
         if (regretNode.which == 2){
             this.getSquareComponents()[regretNode.x][regretNode.y].setReversal(false);
             this.getSquareComponents()[regretNode.x][regretNode.y].repaint();
         }
-        this.clickController.swapPlayer();
+
+        if (regretStack.isEmpty())
+            ChessGameFrame.changeStatusLabel(NONE);
+        else this.clickController.swapPlayer();
     }
 
 }
