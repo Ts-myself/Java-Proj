@@ -1,7 +1,6 @@
 package controller;
 
 
-import chessComponent.ChessComponent;
 import chessComponent.SquareComponent;
 import chessComponent.EmptySlotComponent;
 import model.ChessColor;
@@ -47,10 +46,10 @@ public class ClickController {
 
                 chessboard.regretStack.add(new RegretNode(first.toString(),squareComponent.toString()));
 
+                chessboard.ScoreRecorder(squareComponent,true);
                 chessboard.swapChessComponents(first, squareComponent);
                 changeEatenNumber(squareComponent.type,squareComponent.getChessColor(),true);
                 chessboard.clickController.swapPlayer();
-                chessboard.ScoreRecorder(squareComponent,true);
                 first.setSelected(false);
                 first = null;
             }

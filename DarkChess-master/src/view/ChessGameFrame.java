@@ -1,7 +1,6 @@
 package view;
 
 import chessComponent.*;
-import controller.ClickController;
 import controller.GameController;
 import model.ChessColor;
 import model.ChessboardPoint;
@@ -48,16 +47,9 @@ public class ChessGameFrame extends JFrame {
         setLayout(null);
         setResizable(false);
 
-        //initialUI();
-        classicMode();
+        initialUI();
+        //classicMode();
 
-        addChessboard();
-        addLabel();
-        addScore();
-        addMusic();
-        addMenuButton();
-        addBackground();
-        endGame();
 
     }
 
@@ -228,6 +220,15 @@ public class ChessGameFrame extends JFrame {
         changeStatusLabel(color);
         blackScore.setText(B + " / 60");
         redScore.setText(R + " / 60");
+        for (int i = 0; i <= 1; i++) {
+            for (int j = 0; j <= 6; j++) {
+                eatenChessNumber[i][j]=0;
+                try {
+                    eatenNumber[i][j].setText("- 0");
+                } catch (Exception ignored) {}
+            }
+        }
+
     }
     private void addMenuButton(){
         JButton button = new JButton("...");

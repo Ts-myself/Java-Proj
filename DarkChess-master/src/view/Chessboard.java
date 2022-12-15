@@ -32,6 +32,7 @@ public class Chessboard extends JComponent{
 
     //all chessComponents in this chessboard are shared only one model controller
     public final ClickController clickController = new ClickController(this);
+    public static JLayeredPane pane=new JDesktopPane();
     private final int CHESS_SIZE;
     //记录红黑双方分数
     private int blackScore;
@@ -105,21 +106,24 @@ public class Chessboard extends JComponent{
         chess1.repaint();
         chess2.repaint();
 
-        //todo:fix the method for ending
-        /*if (blackScore >= 1 || redScore >= 1) {
+
+        if (blackScore >= 1 || redScore >= 1) {
             JButton end = new JButton(String.format("%s Win", blackScore >= 60 ? "Black" : "Red"));
-            end.setLocation(this.getX()/10, this.getY()/10);
-            end.setSize(this.getWidth(), this.getHeight());
+            end.setLocation(this.getX()/10-20, this.getY()/10);
+            end.setSize(this.getWidth()/2, this.getHeight()/2);
             end.setFont(new Font("Rockwell", Font.BOLD,40));
-            end.setForeground(Color.LIGHT_GRAY);
+            end.setBorderPainted(false);
+            end.setFocusPainted(false);
+            end.setContentAreaFilled(false);
             add(end);
-            end.setFocusable(true);
             repaint();
+            end.requestFocus();
             end.addActionListener(e -> {
                 System.out.println("Restarting Game!");
                 initAllChessOnBoard(null);
+                remove(end);
             });
-        }*/
+        }
     }
 
     public void initAllChessOnBoard(List<String> chessData) {
@@ -379,7 +383,7 @@ public class Chessboard extends JComponent{
                 this.squareComponents[Integer.parseInt(infoE[2])][Integer.parseInt(infoE[3])].repaint();
                 this.ScoreRecorder(this.squareComponents[Integer.parseInt(infoE[2])][Integer.parseInt(infoE[3])],false);
                 if (!infoE[0].equals("0")) {
-                    changeEatenNumber(Integer.parseInt(infoE[1]), Integer.parseInt(infoE[0]) == 1 ? ChessColor.BLACK : ChessColor.RED, false);
+                    changeEatenNumber(Integer.parseInt(infoE[1]), Integer.parseInt(infoE[0])%2 == 1 ? ChessColor.RED : BLACK, false);
                 }}
             if (regretNode.which == 2){
                 this.getSquareComponents()[regretNode.x][regretNode.y].setReversal(false);
