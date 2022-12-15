@@ -1,6 +1,7 @@
 package controller;
 
 
+import chessComponent.ChessComponent;
 import chessComponent.SquareComponent;
 import chessComponent.EmptySlotComponent;
 import model.ChessColor;
@@ -9,7 +10,7 @@ import view.Chessboard;
 
 import java.util.ArrayList;
 
-import static view.ChessGameFrame.changeStatusLabel;
+import static view.ChessGameFrame.*;
 
 public class ClickController {
     public Chessboard chessboard;
@@ -47,6 +48,7 @@ public class ClickController {
                 chessboard.regretStack.add(new RegretNode(first.toString(),squareComponent.toString()));
 
                 chessboard.swapChessComponents(first, squareComponent);
+                changeEatenNumber(squareComponent.type,squareComponent.getChessColor(),true);
                 chessboard.clickController.swapPlayer();
                 chessboard.ScoreRecorder(squareComponent,true);
                 first.setSelected(false);
@@ -103,5 +105,6 @@ public class ClickController {
         chessboard.setCurrentColor(Chessboard.getCurrentColor() == ChessColor.BLACK ? ChessColor.RED : ChessColor.BLACK);
         changeStatusLabel(Chessboard.getCurrentColor());
     }
+
 
 }

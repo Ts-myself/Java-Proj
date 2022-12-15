@@ -1,7 +1,10 @@
 package view;
 
+import chessComponent.*;
+import controller.ClickController;
 import controller.GameController;
 import model.ChessColor;
+import model.ChessboardPoint;
 
 
 import javax.sound.sampled.AudioInputStream;
@@ -29,12 +32,15 @@ public class ChessGameFrame extends JFrame {
     private static JLabel statusLabel = new JLabel();
     private static JLabel blackScore = new JLabel();
     private static JLabel redScore = new JLabel();
+    private static final EatenComponent[][] eatenComponents=new EatenComponent[2][7];
+    private static final JLabel[][] eatenNumber = new JLabel[2][7];
+    public static final int[][] eatenChessNumber = new int[2][7];
     public ChessGameFrame(int width, int height) {
         setTitle("Dark Chess");
         this.WIDTH = width;
         this.HEIGHT = height;
         this.CHESSBOARD_SIZE = HEIGHT * 6 / 7 -20;
-        chessboard = new Chessboard(CHESSBOARD_SIZE / 2 +30, CHESSBOARD_SIZE +60);
+        chessboard = new Chessboard(CHESSBOARD_SIZE / 2 + 30, CHESSBOARD_SIZE + 60);
 
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null); // Center the window.
@@ -43,6 +49,7 @@ public class ChessGameFrame extends JFrame {
         setResizable(false);
 
         //initialUI();
+        classicMode();
 
         addChessboard();
         addLabel();
@@ -88,11 +95,9 @@ public class ChessGameFrame extends JFrame {
             remove(gameName);remove(classicModeButton);remove(aiModeButton);
             repaint();
             classicMode();
-
         });
 
     }
-
     /**
      * 在游戏窗体中添加棋盘
      */
@@ -100,8 +105,10 @@ public class ChessGameFrame extends JFrame {
         addChessboard();
         addLabel();
         addScore();
-        addMenuButton();
         addMusic();
+        addMenuButton();
+        addBackground();
+        endGame();
     }
     private void addChessboard() {
         gameController = new GameController(chessboard);
@@ -134,6 +141,15 @@ public class ChessGameFrame extends JFrame {
         else getStatusLabel().setForeground(Color.black);
         getStatusLabel().setText(String.format("%s方执子",color.getName()));
     }
+
+    public static void changeEatenNumber(int type,ChessColor color,boolean turn) {
+        if (turn) {
+            eatenChessNumber[color == ChessColor.RED ? 0 : 1][type]++;
+        } else {
+            eatenChessNumber[color == ChessColor.RED ? 0 : 1][type]--;
+        }
+        eatenNumber[color == ChessColor.RED ? 0 : 1][type].setText(String.format("- %d", eatenChessNumber[color == ChessColor.RED ? 0 : 1][type]));
+    }
     /**
      * 在游戏窗体中播放音乐
      */
@@ -155,6 +171,7 @@ public class ChessGameFrame extends JFrame {
 
 
     private void addScore() {
+        //绘制双方得分情况
         JLabel bScore = new JLabel("黑方得分");
         bScore.setLocation(22, HEIGHT / 40);
         bScore.setSize(250,50);
@@ -177,6 +194,24 @@ public class ChessGameFrame extends JFrame {
         redScore.setFont(new Font("华文行楷",Font.BOLD, 40));
         redScore.setForeground(new Color(159, 24, 24));
         add(redScore);
+
+        //绘制被吃棋子的计数
+        for (int i = 0; i <= 1; i++) {
+            for (int j = 0; j <= 6; j++) {
+                eatenComponents[i][j] = new EatenComponent(new ChessboardPoint(0, 0), new Point(0, 0), i == 0 ? ChessColor.RED : ChessColor.BLACK, chessboard.clickController, 50, j);
+                eatenComponents[i][j].setLocation(i == 0 ? 20 : 620, 100 + 90 * (j + 1));
+                eatenComponents[i][j].setSize(100,100);
+                eatenComponents[i][j].setVisible(true);
+                add(eatenComponents[i][j]);
+
+                eatenNumber[i][j] = new JLabel("- 0");
+                eatenNumber[i][j].setLocation(i == 0 ? 110 : 710, 100 + 90 * (j + 1));
+                eatenNumber[i][j].setSize(100,100);
+                eatenNumber[i][j].setFont(new Font("华文行楷", Font.BOLD, 40));
+                eatenNumber[i][j].setVisible(true);
+                add(eatenNumber[i][j]);
+            }
+        }
     }
 
     public static JLabel getStatusLabel() {

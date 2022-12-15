@@ -18,6 +18,8 @@ public class ChessComponent extends SquareComponent{
     protected ChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size, int type) {
         super(chessboardPoint, location, chessColor, clickController, size, type);
     }
+
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -38,8 +40,6 @@ public class ChessComponent extends SquareComponent{
             else
                 g.drawImage(canMoveImage, spacingLength - 70, spacingLength - 38, getWidth() + 15*spacingLength, getHeight() + 5*spacingLength, this);
         }
-        //if (isReversal || currentReversal && isSelected() && !isReachable()) {
-        //    g.drawImage(image, spacingLength - 65, spacingLength - 36, getWidth() + 17*spacingLength, getHeight() + 7*spacingLength, this);
-        //}
+
     }
 }
