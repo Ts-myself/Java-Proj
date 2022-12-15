@@ -20,11 +20,10 @@ public class GameController {
 
     public void loadGameFromFile(String path) {
         try {
+            //101：后缀名错误
+            if (!path.substring(path.lastIndexOf(".")).equals(".txt")) {new ErrorFrame("1"); return;}
+
             List<String> chessData = Files.readAllLines(Path.of(path));
-            if (chessData.isEmpty()){
-                new ErrorFrame(2);
-                return;
-            }
             chessboard.initAllChessOnBoard (chessData);
         } catch (IOException e) {
             e.printStackTrace();
