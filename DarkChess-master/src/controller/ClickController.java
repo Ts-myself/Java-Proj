@@ -43,9 +43,7 @@ public class ClickController {
             chessboard.paintReachable(canGo,false);
             // 移动或吃子
             if (handleSecond(squareComponent, canGo)) {
-
                 chessboard.regretStack.add(new RegretNode(first.toString(),squareComponent.toString()));
-
                 chessboard.ScoreRecorder(squareComponent,true);
                 chessboard.swapChessComponents(first, squareComponent);
                 changeEatenNumber(squareComponent.type,squareComponent.getChessColor(),true);

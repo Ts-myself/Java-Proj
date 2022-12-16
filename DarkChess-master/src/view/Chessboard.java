@@ -28,6 +28,7 @@ public class Chessboard extends JComponent {
     private static final int COL_SIZE = 4;
 
     private final SquareComponent[][] squareComponents = new SquareComponent[ROW_SIZE][COL_SIZE];
+
     static private ChessColor currentColor = ChessColor.NONE;
 
     //all chessComponents in this chessboard are shared only one model controller
@@ -138,13 +139,20 @@ public class Chessboard extends JComponent {
         else{
             for (int i=0;i<chessData.size();i++){
                 String[] info = chessData.get(i).split(" ");
-                if (i == 0){ //读取分数与执子方
+                if (i == 0) { //读取分数与执子方
+                    if (!info[0].equals("RED") && !info[0].equals("BLACK") && !info[0].equals("NONE"))
+                    {new ErrorFrame("4"); return;}
                     setCurrentColor(ChessColor.valueOf(info[0]));
                     setRedScore(Integer.parseInt(info[1]));
                     setBlackScore(Integer.parseInt(info[2]));
-                } //读取棋盘
-                else if (i<=8){
-                    for (int j=0;j<4;j++)  board[i-1][j] = Integer.parseInt(info[j]);
+                }
+                else if (i<=2) { //读取被吃棋子
+                    for (int j=0;j<7;j++){
+                        eatenChessNumber[i-1][j] = Integer.parseInt(info[j]);
+                    }
+                } else if (info.length != 0) { //读取棋盘
+                    if (i > 10 || info.length>3) {new ErrorFrame("2"); return;}
+                    for (int j=0;j<4;j++)  board[i-2][j] = Integer.parseInt(info[j]);
                 }
                 else{ //读取行棋历史
                     if (info[1].equals("1")) regretStack.add(new RegretNode(info[2],info[3]));
@@ -160,6 +168,20 @@ public class Chessboard extends JComponent {
         ChessGameFrame.restartLabels(getCurrentColor(),getRedScore(),getBlackScore());
         repaint();
     }
+    /*
+    public void showOnChessboard (RegretNode regretNode){
+        if (regretNode.which == 1){
+
+        }else{
+            squareComponents[regretNode.x][regretNode.y].setReversal(true);
+            squareComponents[regretNode.x][regretNode.y].repaint();
+        }
+
+        try  { Thread.sleep(500); }
+        catch (InterruptedException e) { throw new RuntimeException(e);  }
+
+    }
+     */
 
     public void intToComponent(int component, int i, int j){
         SquareComponent squareComponent = null;
@@ -183,6 +205,7 @@ public class Chessboard extends JComponent {
                 squareComponent.setReversal(true);
             }
             assert squareComponent != null;
+            //todo:  Error chess
             putChessOnBoard (squareComponent);
         }
         //load cheat
@@ -301,6 +324,8 @@ public class Chessboard extends JComponent {
     public List<String> pauseToInt (){
         List<String> lines = new ArrayList<>();
         lines.add(getCurrentColor()+" "+this.getRedScore()+" "+this.getBlackScore());
+        lines.add(eatenChessNumber[0][0]+" "+eatenChessNumber[0][1]+" "+eatenChessNumber[0][2]+" "+eatenChessNumber[0][3]+" "+eatenChessNumber[0][4]+" "+eatenChessNumber[0][5]+" "+eatenChessNumber[0][6]);
+        lines.add(eatenChessNumber[1][0]+" "+eatenChessNumber[1][1]+" "+eatenChessNumber[1][2]+" "+eatenChessNumber[1][3]+" "+eatenChessNumber[1][4]+" "+eatenChessNumber[1][5]+" "+eatenChessNumber[1][6]);
         for (int i=1;i<=8;i++){
             char[] string = new char[12];
             for (int j=0;j<4;j++){
@@ -319,6 +344,7 @@ public class Chessboard extends JComponent {
             }
             lines.add(String.valueOf(string));
         }
+        lines.add("");
         //处理regretStack
          Stack<RegretNode> clone = regretStack;
          Stack<RegretNode> upSideDown = new Stack<>();
@@ -464,7 +490,7 @@ public class Chessboard extends JComponent {
     }
     public void regret() {
         if (regretStack.isEmpty()){
-            new ErrorFrame(1);
+            new ErrorFrame("6");
         }
         else{
             RegretNode regretNode = regretStack.peek();

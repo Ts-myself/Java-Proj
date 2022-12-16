@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ErrorFrame extends JFrame {
-    public ErrorFrame(int num){
+    public ErrorFrame(String num){
         setTitle("Error");
         setLayout(null);
         setLocationRelativeTo(null);
@@ -13,10 +13,14 @@ public class ErrorFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         Label label = new Label();
-        switch (num){
-            case 1: label.setText("你tm不能第一步就悔棋啊兄弟");
-            case 2: label.setText("此为空存档");
-
+        switch (num) {
+            case "1" -> label.setText("101：wrong suffix!");
+            case "2" -> label.setText("102: wrong chessboard");
+            case "3" -> label.setText("103: wrong component");//todo:
+            case "4" -> label.setText("104: missing color");
+            case "5" -> label.setText("105: wrong move");//todo:
+            default -> {
+            }
         }
 
         label.setSize(400,60);
@@ -24,9 +28,9 @@ public class ErrorFrame extends JFrame {
         label.setLocation(30,11);
         add(label);
 
-
         this.setVisible(true);
-        try  { Thread.sleep(1000); }
+
+        try  { Thread.sleep(3000); }
         catch (InterruptedException e) { throw new RuntimeException(e);  }
         dispose();
     }

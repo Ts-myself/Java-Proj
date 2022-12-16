@@ -19,7 +19,7 @@ public class SaveAndLoadFrame extends JFrame {
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
 
-        addSaveAndLoadChoice("resources/saveFiles/save1.txt",30,10,1);
+        addSaveAndLoadChoice("resources/saveFiles/save1.json",30,10,1);
         addSaveAndLoadChoice("resources/saveFiles/save2.txt",30,50,2);
         addSaveAndLoadChoice("resources/saveFiles/save3.txt",30,90,3);
         addSaveAndLoadChoice("resources/saveFiles/save4.txt",30,130,4);
