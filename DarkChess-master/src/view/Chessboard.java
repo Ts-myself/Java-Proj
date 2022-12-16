@@ -137,6 +137,7 @@ public class Chessboard extends JComponent {
             currentColor = ChessColor.NONE;
         }
         else{
+            boolean r = false;
             for (int i=0;i<chessData.size();i++){
                 String[] info = chessData.get(i).split(" ");
                 if (i == 0) { //读取分数与执子方
@@ -150,11 +151,12 @@ public class Chessboard extends JComponent {
                     for (int j=0;j<7;j++){
                         eatenChessNumber[i-1][j] = Integer.parseInt(info[j]);
                     }
-                } else if (info.length != 0) { //读取棋盘
-                    if (i > 10 || info.length>3) {new ErrorFrame("2"); return;}
-                    for (int j=0;j<4;j++)  board[i-2][j] = Integer.parseInt(info[j]);
-                }
-                else{ //读取行棋历史
+                } else if (info.length == 1) r = true;
+                else if (!r) { //读取棋盘
+                    if (i >= 11 || info.length > 4)
+                    {new ErrorFrame("2"); return;}
+                    for (int j=0;j<4;j++)  board[i-3][j] = Integer.parseInt(info[j]);
+                } else { //读取行棋历史
                     if (info[1].equals("1")) regretStack.add(new RegretNode(info[2],info[3]));
                     else regretStack.add(new RegretNode(Integer.parseInt(info[2]),Integer.parseInt(info[3])));
                 }
@@ -162,7 +164,7 @@ public class Chessboard extends JComponent {
         }
         for (int i = 0; i < ROW_SIZE; i++) {
             for (int j = 0; j < COL_SIZE; j++) {
-                intToComponent(board[i][j], i, j);
+                if (!intToComponent(board[i][j], i, j)) {return;}
             }
         }
         ChessGameFrame.restartLabels(getCurrentColor(),getRedScore(),getBlackScore());
@@ -183,8 +185,9 @@ public class Chessboard extends JComponent {
     }
      */
 
-    public void intToComponent(int component, int i, int j){
+    public boolean intToComponent(int component, int i, int j){
         SquareComponent squareComponent = null;
+        if (component/10 > 4 || component%10 >= 7 ) {new ErrorFrame("3"); return false;}
         if (component / 10 == 0){
             squareComponent = new EmptySlotComponent(new ChessboardPoint(i, j), calculatePoint(i, j), clickController, CHESS_SIZE, 0);
             putChessOnBoard (squareComponent);
@@ -212,6 +215,7 @@ public class Chessboard extends JComponent {
         Cheat cheat=new Cheat();
         add(cheat);
         cheat.setFocusable(true);
+        return true;
     }
 
      /**

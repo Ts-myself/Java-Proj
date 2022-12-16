@@ -8,7 +8,7 @@ public class ErrorFrame extends JFrame {
         setTitle("Error");
         setLayout(null);
         setLocationRelativeTo(null);
-        setSize(300,200);
+        setSize(300,120);
         getContentPane().setBackground(Color.WHITE);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -16,21 +16,20 @@ public class ErrorFrame extends JFrame {
         switch (num) {
             case "1" -> label.setText("101：wrong suffix!");
             case "2" -> label.setText("102: wrong chessboard");
-            case "3" -> label.setText("103: wrong component");//todo:
+            case "3" -> label.setText("103: wrong component");
             case "4" -> label.setText("104: missing color");
             case "5" -> label.setText("105: wrong move");//todo:
-            default -> {
-            }
+            default  -> label.setText("unknown error");
         }
 
         label.setSize(400,60);
-        label.setFont(new Font("华文行楷", Font.BOLD, 15));
-        label.setLocation(30,11);
+        label.setFont(new Font("华文行楷", Font.BOLD, 20));
+        label.setLocation(20,11);
         add(label);
 
         this.setVisible(true);
 
-        try  { Thread.sleep(3000); }
+        try  { Thread.sleep(1500); }
         catch (InterruptedException e) { throw new RuntimeException(e);  }
         dispose();
     }

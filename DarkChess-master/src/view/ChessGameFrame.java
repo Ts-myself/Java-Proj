@@ -56,39 +56,40 @@ public class ChessGameFrame extends JFrame {
     private void initialUI() {
 
 
-        JLabel gameName= new JLabel("DARK CHESS");
         JButton aiModeButton = new JButton("AI Mode");
         JButton classicModeButton = new JButton("Classic Mode");
 
-
-        gameName.setLocation(WIDTH  / 5, HEIGHT / 8 - HEIGHT /20);
-        gameName.setSize(WIDTH* 3/ 5, HEIGHT / 6);
-        gameName.setFont(new Font("Colonna MT", Font.BOLD,70));
-        add(gameName);
-
-
-        classicModeButton.setLocation(WIDTH / 3, HEIGHT * 2 / 8 - HEIGHT / 30);
+        classicModeButton.setLocation(WIDTH / 3, HEIGHT * 2 / 8 - HEIGHT / 30 + 300);
         classicModeButton.setSize(WIDTH / 3, HEIGHT / 8);
+        classicModeButton.setBackground(new Color(180, 154, 91));
         classicModeButton.setFont(new Font("Colonna MT", Font.BOLD,30));
+
+        addMusic();
+        BackgroundPanel backGround = new BackgroundPanel(new ImageIcon("resources/pictures/start.png").getImage());
+
         add(classicModeButton);
         classicModeButton.addActionListener(e -> {
             System.out.println("Start Classic Mode");
-            remove(gameName);remove(classicModeButton);remove(aiModeButton);
+            remove(backGround);remove(classicModeButton);remove(aiModeButton);
             repaint();
             classicMode();
         });
 
-        aiModeButton.setLocation(WIDTH / 3, HEIGHT * 3 / 8);
+        aiModeButton.setLocation(WIDTH / 3, HEIGHT * 3 / 8 + 300);
         aiModeButton.setSize(WIDTH / 3, HEIGHT / 8);
+        aiModeButton.setBackground(new Color(180, 154, 91));
         aiModeButton.setFont(new Font("Colonna MT", Font.BOLD,30));
         add(aiModeButton);
         aiModeButton.addActionListener(e -> {
             System.out.println("Start AI Mode");
-            remove(gameName);remove(classicModeButton);remove(aiModeButton);
+            remove(backGround);remove(classicModeButton);remove(aiModeButton);
             repaint();
             classicMode();
         });
 
+        Container ct = this.getContentPane();
+        backGround.setBounds(0,0,WIDTH,HEIGHT - 20);
+        ct.add(backGround);
     }
     /**
      * 在游戏窗体中添加棋盘
@@ -97,7 +98,6 @@ public class ChessGameFrame extends JFrame {
         addChessboard();
         addLabel();
         addScore();
-        addMusic();
         addMenuButton();
         addBackground();
     }

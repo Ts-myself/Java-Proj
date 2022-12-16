@@ -79,6 +79,7 @@ public class MenuFrame extends JFrame {
             System.out.println("Saving game");
             SaveAndLoadFrame saveAndLoadFrame = new SaveAndLoadFrame(gameController,true);
             saveAndLoadFrame.setVisible(true);
+            dispose();
         });
     }
     private void addLoadButton() {
@@ -93,6 +94,7 @@ public class MenuFrame extends JFrame {
             System.out.println("Click load");
             SaveAndLoadFrame saveAndLoadFrame = new SaveAndLoadFrame(gameController,false);
             saveAndLoadFrame.setVisible(true);
+            dispose();
         });
     }
     private void addRestartButton(){
