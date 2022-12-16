@@ -16,6 +16,7 @@ public class ErrorFrame extends JFrame {
         switch (num){
             case 1: label.setText("你tm不能第一步就悔棋啊兄弟");
             case 2: label.setText("此为空存档");
+
         }
 
         label.setSize(400,60);

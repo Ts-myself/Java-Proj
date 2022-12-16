@@ -22,7 +22,7 @@ import static model.ChessColor.*;
  * 这个类表示棋盘组建，其包含：
  * SquareComponent[][]: 4*8个方块格子组件
  */
-public class Chessboard extends JComponent{
+public class Chessboard extends JComponent {
 
     private static final int ROW_SIZE = 8;
     private static final int COL_SIZE = 4;
@@ -32,7 +32,6 @@ public class Chessboard extends JComponent{
 
     //all chessComponents in this chessboard are shared only one model controller
     public final ClickController clickController = new ClickController(this);
-    public static JLayeredPane pane=new JDesktopPane();
     private final int CHESS_SIZE;
     //记录红黑双方分数
     private int blackScore;
@@ -60,6 +59,7 @@ public class Chessboard extends JComponent{
         setSize((width + 2)*2, (height + 6)*2);
         CHESS_SIZE = (height - 6) / 8 -8;
         SquareComponent.setSpacingLength((CHESS_SIZE +19)/ 12 );
+
 
         initAllChessOnBoard(null);
         Cheat cheat=new Cheat();
@@ -106,18 +106,18 @@ public class Chessboard extends JComponent{
         chess1.repaint();
         chess2.repaint();
 
-
         if (blackScore >= 1 || redScore >= 1) {
-            JButton end = new JButton(String.format("%s Win", blackScore >= 60 ? "Black" : "Red"));
-            end.setLocation(this.getX()/10-20, this.getY()/10);
+            JButton end = new JButton(String.format("%s方胜", blackScore >= 60 ? "黑" : "红"));
+            end.setLocation(this.getX()/10-20, this.getY()/10-80);
             end.setSize(this.getWidth()/2, this.getHeight()/2);
-            end.setFont(new Font("Rockwell", Font.BOLD,40));
+            end.setFont(new Font("华文行楷", Font.BOLD,50));
+            end.setForeground(blackScore >= 60 ? new Color(0,0,0) : new Color(159, 24, 24));
             end.setBorderPainted(false);
             end.setFocusPainted(false);
             end.setContentAreaFilled(false);
+            removeAll();
             add(end);
             repaint();
-            end.requestFocus();
             end.addActionListener(e -> {
                 System.out.println("Restarting Game!");
                 initAllChessOnBoard(null);
@@ -282,10 +282,10 @@ public class Chessboard extends JComponent{
     public void ScoreRecorder(SquareComponent eaten , boolean forward) {
         if (eaten.getChessColor() == ChessColor.BLACK) {
             redScore = forward ? redScore + eatenChessValue(eaten) : redScore - eatenChessValue(eaten);
-            ChessGameFrame.getRedScore().setText(String.format("%d / 60", getRedScore()));
+            ChessGameFrame.getRedScoreLabel().setText(String.format("%d / 60", getRedScore()));
         } else {
             blackScore = forward ? blackScore + eatenChessValue(eaten) : blackScore - eatenChessValue(eaten);
-            ChessGameFrame.getBlackScore().setText(String.format("%d / 60", getBlackScore()));
+            ChessGameFrame.getBlackScoreLabel().setText(String.format("%d / 60", getBlackScore()));
         }
     }
     public int eatenChessValue(SquareComponent eaten) {
@@ -341,16 +341,112 @@ public class Chessboard extends JComponent{
             addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
-                int keyCode = e.getKeyCode();
-                if (keyCode == KeyEvent.VK_CONTROL) {
-                    for (SquareComponent[] squareComponent : squareComponents) {
-                        for (SquareComponent squareComponent1 : squareComponent) {
-                            squareComponent1.setCurrentReversal(true);
-                            squareComponent1.repaint();
+                    boolean ctrl,ms=false;
+                    boolean r0, r1, r2, r3, r4, r5, r6, b0, b1, b2, b3, b4, b5, b6;
+                    ctrl = e.getKeyCode() == KeyEvent.VK_CONTROL;
+                    r0 = eatenComponents[0][0].mouseOn;
+                    r1 = eatenComponents[0][1].mouseOn;
+                    r2 = eatenComponents[0][2].mouseOn;
+                    r3 = eatenComponents[0][3].mouseOn;
+                    r4 = eatenComponents[0][4].mouseOn;
+                    r5 = eatenComponents[0][5].mouseOn;
+                    r6 = eatenComponents[0][6].mouseOn;
+                    b0 = eatenComponents[1][0].mouseOn;
+                    b1 = eatenComponents[1][1].mouseOn;
+                    b2 = eatenComponents[1][2].mouseOn;
+                    b3 = eatenComponents[1][3].mouseOn;
+                    b4 = eatenComponents[1][4].mouseOn;
+                    b5 = eatenComponents[1][5].mouseOn;
+                    b6 = eatenComponents[1][6].mouseOn;
+
+                    if (ctrl) {
+                        SquareComponent cheatChess = null;
+                        for (SquareComponent[] squareComponent : squareComponents) {
+                            for (SquareComponent squareComponent1 : squareComponent) {
+                                if (squareComponent1.mouseOn) {
+                                    cheatChess=squareComponent1;
+                                    ms=true;
+                                    break;
+                                }
+                            }
+                            if(ms) break;
+                        }
+                        if (ms) {
+                            cheatChess.setCurrentReversal(true);
+                            cheatChess.repaint();
+                        } else if (!(r0 | r1 | r2 | r3 | r4 | r5 | r6 | b0 | b1 | b2 | b3 | b4 | b5 | b6)) {
+                            for (SquareComponent[] squareComponent : squareComponents) {
+                                for (SquareComponent squareComponent1 : squareComponent) {
+                                    squareComponent1.setCurrentReversal(true);
+                                    squareComponent1.repaint();
+                                }
+                            }
+                        }
+                        for (SquareComponent[] squareComponent : squareComponents) {
+                            for (SquareComponent squareComponent1 : squareComponent) {
+                                if (squareComponent1.getChessColor() == RED) {
+                                    if (squareComponent1.type == 0 && r0) {
+                                        squareComponent1.setCurrentReversal(true);
+                                        squareComponent1.repaint();
+                                    }
+                                    if (squareComponent1.type == 1 && r1) {
+                                        squareComponent1.setCurrentReversal(true);
+                                        squareComponent1.repaint();
+                                    }
+                                    if (squareComponent1.type == 2 && r2) {
+                                        squareComponent1.setCurrentReversal(true);
+                                        squareComponent1.repaint();
+                                    }
+                                    if (squareComponent1.type == 3 && r3) {
+                                        squareComponent1.setCurrentReversal(true);
+                                        squareComponent1.repaint();
+                                    }
+                                    if (squareComponent1.type == 4 && r4) {
+                                        squareComponent1.setCurrentReversal(true);
+                                        squareComponent1.repaint();
+                                    }
+                                    if (squareComponent1.type == 5 && r5) {
+                                        squareComponent1.setCurrentReversal(true);
+                                        squareComponent1.repaint();
+                                    }
+                                    if (squareComponent1.type == 6 && r6) {
+                                        squareComponent1.setCurrentReversal(true);
+                                        squareComponent1.repaint();
+                                    }
+                                } else {
+                                    if (squareComponent1.type == 0 && b0) {
+                                        squareComponent1.setCurrentReversal(true);
+                                        squareComponent1.repaint();
+                                    }
+                                    if (squareComponent1.type == 1 && b1) {
+                                        squareComponent1.setCurrentReversal(true);
+                                        squareComponent1.repaint();
+                                    }
+                                    if (squareComponent1.type == 2 && b2) {
+                                        squareComponent1.setCurrentReversal(true);
+                                        squareComponent1.repaint();
+                                    }
+                                    if (squareComponent1.type == 3 && b3) {
+                                        squareComponent1.setCurrentReversal(true);
+                                        squareComponent1.repaint();
+                                    }
+                                    if (squareComponent1.type == 4 && b4) {
+                                        squareComponent1.setCurrentReversal(true);
+                                        squareComponent1.repaint();
+                                    }
+                                    if (squareComponent1.type == 5 && b5) {
+                                        squareComponent1.setCurrentReversal(true);
+                                        squareComponent1.repaint();
+                                    }
+                                    if (squareComponent1.type == 6 && b6) {
+                                        squareComponent1.setCurrentReversal(true);
+                                        squareComponent1.repaint();
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-            }
                 @Override
                 public void keyReleased(KeyEvent e) {
                     int keyCode = e.getKeyCode();
@@ -390,7 +486,7 @@ public class Chessboard extends JComponent{
                 this.getSquareComponents()[regretNode.x][regretNode.y].repaint();
             }
 
-            if (regretStack.isEmpty()) ChessGameFrame.changeStatusLabel(NONE);
+            if (regretStack.isEmpty()) ChessGameFrame.changeStatusLabel(NONE,0,0);
             else this.clickController.swapPlayer();
         }
     }

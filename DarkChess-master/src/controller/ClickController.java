@@ -26,7 +26,7 @@ public class ClickController {
             if (Chessboard.getCurrentColor() == ChessColor.NONE) {
                 chessboard.setCurrentColor(squareComponent.getChessColor() == ChessColor.RED ? ChessColor.BLACK : ChessColor.RED);
                 squareComponent.setReversal(true);
-                changeStatusLabel(Chessboard.getCurrentColor());
+                changeStatusLabel(Chessboard.getCurrentColor(),0,0);
                 squareComponent.repaint();
                 chessboard.regretStack.add(new RegretNode(squareComponent.getChessboardPoint().getX(),squareComponent.getChessboardPoint().getY()));
             }
@@ -102,7 +102,7 @@ public class ClickController {
 
     public void swapPlayer() {
         chessboard.setCurrentColor(Chessboard.getCurrentColor() == ChessColor.BLACK ? ChessColor.RED : ChessColor.BLACK);
-        changeStatusLabel(Chessboard.getCurrentColor());
+        changeStatusLabel(Chessboard.getCurrentColor(),chessboard.getBlackScore(),chessboard.getRedScore());
     }
 
 

@@ -29,9 +29,9 @@ public class ChessGameFrame extends JFrame {
     private GameController gameController;
     private final Chessboard chessboard;
     private static JLabel statusLabel = new JLabel();
-    private static JLabel blackScore = new JLabel();
-    private static JLabel redScore = new JLabel();
-    private static final EatenComponent[][] eatenComponents=new EatenComponent[2][7];
+    private static JLabel blackScoreLabel = new JLabel();
+    private static JLabel redScoreLabel = new JLabel();
+    public static final EatenComponent[][] eatenComponents=new EatenComponent[2][7];
     private static final JLabel[][] eatenNumber = new JLabel[2][7];
     public static final int[][] eatenChessNumber = new int[2][7];
     public ChessGameFrame(int width, int height) {
@@ -100,7 +100,6 @@ public class ChessGameFrame extends JFrame {
         addMusic();
         addMenuButton();
         addBackground();
-        endGame();
     }
     private void addChessboard() {
         gameController = new GameController(chessboard);
@@ -123,7 +122,12 @@ public class ChessGameFrame extends JFrame {
         statusLabel.setFont(new Font("华文行楷", Font.BOLD, 50));
         add(statusLabel);
     }
-    static public void changeStatusLabel (ChessColor color){
+    static public void changeStatusLabel (ChessColor color,int blackSorce,int redScore){
+        if (blackSorce >= 1 || redScore >= 1) {
+            getStatusLabel().setForeground(Color.black);
+            getStatusLabel().setText("胜负已定");
+            return;
+        }
         if (color == ChessColor.NONE){
             getStatusLabel().setForeground(Color.black);
             getStatusLabel().setText("先手定色");
@@ -175,17 +179,17 @@ public class ChessGameFrame extends JFrame {
         rScore.setFont(new Font("华文行楷",Font.BOLD, 35));
         rScore.setForeground(new Color(159, 24, 24));
         add(rScore);
-        blackScore = new JLabel("0 / 60");
-        blackScore.setLocation(40, 70);
-        blackScore.setSize(250,50);
-        blackScore.setFont(new Font("华文行楷", Font.BOLD, 40));
-        add(blackScore);
-        redScore = new JLabel("0 / 60");
-        redScore.setLocation(635, 70);
-        redScore.setSize(250,50);
-        redScore.setFont(new Font("华文行楷",Font.BOLD, 40));
-        redScore.setForeground(new Color(159, 24, 24));
-        add(redScore);
+        blackScoreLabel = new JLabel("0 / 60");
+        blackScoreLabel.setLocation(40, 70);
+        blackScoreLabel.setSize(250,50);
+        blackScoreLabel.setFont(new Font("华文行楷", Font.BOLD, 40));
+        add(blackScoreLabel);
+        redScoreLabel = new JLabel("0 / 60");
+        redScoreLabel.setLocation(635, 70);
+        redScoreLabel.setSize(250,50);
+        redScoreLabel.setFont(new Font("华文行楷",Font.BOLD, 40));
+        redScoreLabel.setForeground(new Color(159, 24, 24));
+        add(redScoreLabel);
 
         //绘制被吃棋子的计数
         for (int i = 0; i <= 1; i++) {
@@ -209,17 +213,17 @@ public class ChessGameFrame extends JFrame {
     public static JLabel getStatusLabel() {
         return statusLabel;
     }
-    public static JLabel getBlackScore() {
-        return blackScore;
+    public static JLabel getBlackScoreLabel() {
+        return blackScoreLabel;
     }
-    public static JLabel getRedScore() {
-        return redScore;
+    public static JLabel getRedScoreLabel() {
+        return redScoreLabel;
     }
 
     public static void restartLabels(ChessColor color, int R, int B) {
-        changeStatusLabel(color);
-        blackScore.setText(B + " / 60");
-        redScore.setText(R + " / 60");
+        changeStatusLabel(color,0,0);
+        blackScoreLabel.setText(B + " / 60");
+        redScoreLabel.setText(R + " / 60");
         for (int i = 0; i <= 1; i++) {
             for (int j = 0; j <= 6; j++) {
                 eatenChessNumber[i][j]=0;
@@ -242,27 +246,6 @@ public class ChessGameFrame extends JFrame {
             MenuFrame menuFrame = new MenuFrame(gameController, chessboard);
             menuFrame.setVisible(true);
         });
-    }
-
-    private void endGame() {
-        //todo:endGame
-        /*PropertyChangeListener end = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (gameController.chessboard.getBlackScore() >= 1 || gameController.chessboard.getRedScore() >= 1) {
-                    JButton end = new JButton(String.format("%s Win", gameController.chessboard.getBlackScore() >= 60 ? "Black" : "Red"));
-                    end.setLocation(WIDTH, HEIGHT);
-                    end.setSize(WIDTH, HEIGHT);
-                    end.setFont(new Font("Rockwell", Font.BOLD,50));
-                    end.setForeground(Color.LIGHT_GRAY);
-                    add(end);
-                    end.addActionListener(e -> {
-                        System.out.println("Restarting Game!");
-                        gameController.restartGame();
-                    });
-                }
-            }
-        };*/
     }
 
 }

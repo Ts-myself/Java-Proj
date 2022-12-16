@@ -8,6 +8,7 @@ import java.awt.*;
 public class MenuFrame extends JFrame {
     GameController gameController;
     Chessboard chessboard;
+    boolean cheatStatus = false;
     public MenuFrame(GameController gameController,Chessboard chessboard){
         this.gameController = gameController;
         this.chessboard = chessboard;
@@ -45,9 +46,7 @@ public class MenuFrame extends JFrame {
         button.setBackground(Color.GRAY);
         add(button);
 
-        button.addActionListener(e -> {
-            chessboard.regret();
-        });
+        button.addActionListener(e -> chessboard.regret());
     }
     private void addCheatButton() {
         JButton button = new JButton("Cheat");
@@ -56,6 +55,16 @@ public class MenuFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         button.setBackground(Color.GRAY);
         add(button);
+
+        button.addActionListener(e -> {
+            cheatStatus = !cheatStatus;
+            /*if (cheatStatus) {
+                chessboard.addKeyListener((KeyListener) this);
+            } else {
+                chessboard.removeKeyListener((KeyListener) this);
+            } */
+            dispose();
+        });
     }
 
     private void addSavaButton(){
@@ -109,9 +118,7 @@ public class MenuFrame extends JFrame {
         button.setBackground(Color.GRAY);
         add(button);
 
-        button.addActionListener(e -> {
-            dispose();
-        });
+        button.addActionListener(e -> dispose());
     }
 
 

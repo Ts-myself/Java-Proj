@@ -30,6 +30,7 @@ public abstract class SquareComponent extends JComponent {
      */
     public ChessboardPoint chessboardPoint;
     protected final ChessColor chessColor;
+    public boolean mouseOn = false;
     protected boolean isReversal;
     protected boolean currentReversal;
     protected boolean reachable;
@@ -131,10 +132,12 @@ public abstract class SquareComponent extends JComponent {
     @Override
     protected void processMouseEvent(MouseEvent e) {
         super.processMouseEvent(e);
-        if (e.getID() == MouseEvent.MOUSE_PRESSED) {
+        if (e.getID() == MouseEvent.MOUSE_CLICKED) {
             System.out.printf("Click [%d,%d]\n", chessboardPoint.getX(), chessboardPoint.getY());
             clickController.onClick(this);
         }
+        if(e.getID() == MouseEvent.MOUSE_PRESSED) mouseOn = true;
+        if(e.getID() == MouseEvent.MOUSE_RELEASED) mouseOn = false;
     }
 
     public ArrayList<ChessboardPoint> whereCanGo (SquareComponent[][] chessboard, Chessboard CB){
