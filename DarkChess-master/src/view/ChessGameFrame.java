@@ -123,7 +123,7 @@ public class ChessGameFrame extends JFrame {
         add(statusLabel);
     }
     static public void changeStatusLabel (ChessColor color,int blackSorce,int redScore){
-        if (blackSorce >= 1 || redScore >= 1) {
+        if (blackSorce >= 60 || redScore >= 60) {
             getStatusLabel().setForeground(Color.black);
             getStatusLabel().setText("胜负已定");
             return;
