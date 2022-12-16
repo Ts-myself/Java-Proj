@@ -1,6 +1,7 @@
 package controller;
 
 
+import chessComponent.EatenComponent;
 import chessComponent.SquareComponent;
 import chessComponent.EmptySlotComponent;
 import model.ChessColor;
@@ -20,6 +21,9 @@ public class ClickController {
     }
 
     public void onClick(SquareComponent squareComponent) {
+        if (squareComponent instanceof EatenComponent) {
+            return;
+        }
 
         if (first == null) {
             // 第一次翻棋

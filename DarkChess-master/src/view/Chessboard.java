@@ -107,7 +107,7 @@ public class Chessboard extends JComponent {
         chess1.repaint();
         chess2.repaint();
 
-        if (blackScore >= 1 || redScore >= 1) {
+        if (blackScore >= 60 || redScore >= 60) {
             JButton end = new JButton(String.format("%s方胜", blackScore >= 60 ? "黑" : "红"));
             end.setLocation(this.getX()/10-20, this.getY()/10-80);
             end.setSize(this.getWidth()/2, this.getHeight()/2);
