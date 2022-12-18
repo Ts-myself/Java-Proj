@@ -61,7 +61,7 @@ public class ChessGameFrame extends JFrame {
 
         classicModeButton.setLocation(WIDTH / 3, HEIGHT * 2 / 8 - HEIGHT / 30 + 300);
         classicModeButton.setSize(WIDTH / 3, HEIGHT / 8);
-        classicModeButton.setBackground(new Color(180, 154, 91));
+        classicModeButton.setBackground(new Color(245, 226, 178));
         classicModeButton.setFont(new Font("Colonna MT", Font.BOLD,30));
 
         addMusic();
@@ -77,7 +77,7 @@ public class ChessGameFrame extends JFrame {
 
         aiModeButton.setLocation(WIDTH / 3, HEIGHT * 3 / 8 + 300);
         aiModeButton.setSize(WIDTH / 3, HEIGHT / 8);
-        aiModeButton.setBackground(new Color(180, 154, 91));
+        aiModeButton.setBackground(new Color(245, 226, 178));
         aiModeButton.setFont(new Font("Colonna MT", Font.BOLD,30));
         add(aiModeButton);
         aiModeButton.addActionListener(e -> {

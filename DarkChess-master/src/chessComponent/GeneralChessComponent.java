@@ -12,7 +12,7 @@ public class GeneralChessComponent extends ChessComponent {
     public GeneralChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size, int type){
         super(chessboardPoint, location, chessColor, clickController, size, type);
         if (this.getChessColor() == ChessColor.RED){
-            image = ChessImage.getImage(0,0);
+            image = Toolkit.getDefaultToolkit().getImage("resources/image-chess/general-red.png");
             canMoveImage = Toolkit.getDefaultToolkit().getImage("resources/image-chess/general-red-canMove.png");
         } else {
             image = Toolkit.getDefaultToolkit().getImage("resources/image-chess/general-black.png");
