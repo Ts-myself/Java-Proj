@@ -61,13 +61,13 @@ public class Chessboard extends JComponent {
         CHESS_SIZE = (height - 6) / 8 -8;
         SquareComponent.setSpacingLength((CHESS_SIZE +19)/ 12 );
 
+        ChessImage.init();
 
         initAllChessOnBoard(null);
         Cheat cheat=new Cheat();
         add(cheat);
         cheat.setFocusable(true);
         cheat.requestFocusInWindow();
-
     }
 
     static public ChessColor getCurrentColor() {
