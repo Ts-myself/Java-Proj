@@ -32,7 +32,7 @@ public class ChessGameFrame extends JFrame {
     private static JLabel blackScoreLabel = new JLabel();
     private static JLabel redScoreLabel = new JLabel();
     public static final EatenComponent[][] eatenComponents=new EatenComponent[2][7];
-    private static final JLabel[][] eatenNumber = new JLabel[2][7];
+    public static final JLabel[][] eatenNumber = new JLabel[2][7];
     public static final int[][] eatenChessNumber = new int[2][7];
     public ChessGameFrame(int width, int height) {
         setTitle("Dark Chess");
@@ -224,15 +224,14 @@ public class ChessGameFrame extends JFrame {
         changeStatusLabel(color,0,0);
         blackScoreLabel.setText(B + " / 60");
         redScoreLabel.setText(R + " / 60");
+
         for (int i = 0; i <= 1; i++) {
             for (int j = 0; j <= 6; j++) {
-                eatenChessNumber[i][j]=0;
-                try {
-                    eatenNumber[i][j].setText("- 0");
+                try{
+                    eatenNumber[i][j].setText(String.format("- %d", eatenChessNumber[i][j]));
                 } catch (Exception ignored) {}
             }
         }
-
     }
     private void addMenuButton(){
         JButton button = new JButton("...");
