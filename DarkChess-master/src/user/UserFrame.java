@@ -60,7 +60,7 @@ public class UserFrame extends JFrame {
         logInButton.setBackground(new Color(245, 226, 178));
         add(logInButton);
         logInButton.addActionListener(e -> {
-            if (userList.users.size() == 0) {
+            if (users.size() == 0) {
                 Object[] sameName = {"确定", "取消"};
                 JOptionPane.showOptionDialog(null, "暂无注册用户", "提示", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, sameName, sameName[0]);
             } else {
@@ -81,7 +81,7 @@ public class UserFrame extends JFrame {
         userListButton.setBackground(new Color(245, 226, 178));
         add(userListButton);
         userListButton.addActionListener(e -> {
-            if (userList.users.size() == 0) {
+            if (users.size() == 0) {
                 Object[] sameName = {"确定", "取消"};
                 JOptionPane.showOptionDialog(null, "暂无注册用户", "提示", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, sameName, sameName[0]);
             } else {
@@ -177,17 +177,17 @@ public class UserFrame extends JFrame {
                 Object[] sameName = {"确定", "取消"};
                 JOptionPane.showOptionDialog(null, "输入了相同用户名", "提示", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, sameName, sameName[0]);
             } else {
-                for (int i = 0; i < userList.users.size(); i++) {
-                    if (userName1.equals(userList.users.get(i).userName)) {
-                        if (password1.equals(userList.users.get(i).password)) {
+                for (User user : users) {
+                    if (userName1.equals(user.userName)) {
+                        if (password1.equals(user.password)) {
                             valid1 = true;
-                            user1 = userList.users.get(i);
+                            user1 = user;
                         }
                     }
-                    if (userName2.equals(userList.users.get(i).userName)) {
-                        if (password2.equals(userList.users.get(i).password)) {
+                    if (userName2.equals(user.userName)) {
+                        if (password2.equals(user.password)) {
                             valid2 = true;
-                            user2 = userList.users.get(i);
+                            user2 = user;
                         }
                     }
                 }
@@ -299,16 +299,16 @@ public class UserFrame extends JFrame {
             add(userScore);
         }
     }
-    public static void gameEndUser(int black) throws IOException {
+    public static void gameEndUser(int black) {
         if (black >= 60) {
             user1.win++;
             user1.score += 5;
-            user2.lose--;
+            user2.lose++;
             user2.score -= 3;
         } else {
             user2.win++;
             user2.score += 5;
-            user1.lose--;
+            user1.lose++;
             user1.score -= 3;
         }
         toSave();
