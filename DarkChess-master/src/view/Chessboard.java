@@ -6,6 +6,7 @@ import controller.RegretNode;
 import model.*;
 import controller.ClickController;
 import static view.ChessGameFrame.*;
+import static user.UserFrame.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -124,6 +125,7 @@ public class Chessboard extends JComponent {
                 initAllChessOnBoard(null);
                 remove(end);
             });
+            gameEnd(blackScore);
         }
     }
 

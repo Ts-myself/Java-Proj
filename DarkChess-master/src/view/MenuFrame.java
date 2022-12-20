@@ -59,10 +59,12 @@ public class MenuFrame extends JFrame {
         button.addActionListener(e -> {
             cheatStatus = !cheatStatus;
             /*if (cheatStatus) {
-                chessboard.addKeyListener((KeyListener) this);
+                //chessboard.addKeyListener((KeyListener) this);
+                chessboard.requestFocusInWindow();
             } else {
-                chessboard.removeKeyListener((KeyListener) this);
-            } */
+                //chessboard.removeKeyListener((KeyListener) this);
+                chessboard.requestFocusInWindow();
+            }*/
             dispose();
         });
     }
@@ -122,6 +124,5 @@ public class MenuFrame extends JFrame {
 
         button.addActionListener(e -> dispose());
     }
-
 
 }

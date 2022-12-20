@@ -4,7 +4,8 @@ import chessComponent.*;
 import controller.GameController;
 import model.ChessColor;
 import model.ChessboardPoint;
-
+import user.UserFrame;
+import static user.UserFrame.*;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -31,9 +32,13 @@ public class ChessGameFrame extends JFrame {
     private static JLabel statusLabel = new JLabel();
     private static JLabel blackScoreLabel = new JLabel();
     private static JLabel redScoreLabel = new JLabel();
+
+    public static JButton userButton = new JButton("登录/注册");
     public static final EatenComponent[][] eatenComponents=new EatenComponent[2][7];
     public static final JLabel[][] eatenNumber = new JLabel[2][7];
     public static final int[][] eatenChessNumber = new int[2][7];
+
+    public static String userName1="",userName2="";
     public ChessGameFrame(int width, int height) {
         setTitle("Dark Chess");
         this.WIDTH = width;
@@ -48,29 +53,30 @@ public class ChessGameFrame extends JFrame {
         setResizable(false);
 
         initialUI();
-        //classicMode();
-
 
     }
 
     private void initialUI() {
 
 
-        JButton aiModeButton = new JButton("AI Mode");
-        JButton classicModeButton = new JButton("Classic Mode");
+        JButton aiModeButton = new JButton("人机模式");
+        JButton classicModeButton = new JButton("经典模式");
 
         classicModeButton.setLocation(WIDTH / 3, HEIGHT * 2 / 8 - HEIGHT / 30 + 300);
         classicModeButton.setSize(WIDTH / 3, HEIGHT / 8);
         classicModeButton.setBackground(new Color(245, 226, 178));
-        classicModeButton.setFont(new Font("Colonna MT", Font.BOLD,30));
+        classicModeButton.setFont(new Font("华文行楷", Font.BOLD,40));
+        classicModeButton.setBorderPainted(false);
 
+        addUserButton();
         addMusic();
         BackgroundPanel backGround = new BackgroundPanel(new ImageIcon("resources/pictures/start.png").getImage());
 
         add(classicModeButton);
         classicModeButton.addActionListener(e -> {
             System.out.println("Start Classic Mode");
-            remove(backGround);remove(classicModeButton);remove(aiModeButton);
+            remove(backGround);remove(classicModeButton);
+            remove(aiModeButton);remove(userButton);
             repaint();
             classicMode();
         });
@@ -78,11 +84,13 @@ public class ChessGameFrame extends JFrame {
         aiModeButton.setLocation(WIDTH / 3, HEIGHT * 3 / 8 + 300);
         aiModeButton.setSize(WIDTH / 3, HEIGHT / 8);
         aiModeButton.setBackground(new Color(245, 226, 178));
-        aiModeButton.setFont(new Font("Colonna MT", Font.BOLD,30));
+        aiModeButton.setFont(new Font("华文行楷", Font.BOLD,40));
+        aiModeButton.setBorderPainted(false);
         add(aiModeButton);
         aiModeButton.addActionListener(e -> {
             System.out.println("Start AI Mode");
-            remove(backGround);remove(classicModeButton);remove(aiModeButton);
+            remove(backGround);remove(classicModeButton);
+            remove(aiModeButton);remove(userButton);
             repaint();
             classicMode();
         });
@@ -95,6 +103,10 @@ public class ChessGameFrame extends JFrame {
      * 在游戏窗体中添加棋盘
      */
     public void classicMode() {
+        if (!(user1 == null) && !(user2 == null)) {
+            userName1 = user1.userName;
+            userName2 = user2.userName;
+        }
         addChessboard();
         addLabel();
         addScore();
@@ -179,6 +191,17 @@ public class ChessGameFrame extends JFrame {
         rScore.setFont(new Font("华文行楷",Font.BOLD, 35));
         rScore.setForeground(new Color(159, 24, 24));
         add(rScore);
+        JLabel user1 = new JLabel(userName1);
+        user1.setLocation(50, HEIGHT / 40 + 100);
+        user1.setSize(250,50);
+        user1.setFont(new Font("华文行楷", Font.BOLD, 35));
+        add(user1);
+        JLabel user2 = new JLabel(userName2);
+        user2.setLocation(640, HEIGHT / 40 + 100);
+        user2.setSize(250,50);
+        user2.setFont(new Font("华文行楷", Font.BOLD, 35));
+        user2.setForeground(new Color(159, 24, 24));
+        add(user2);
         blackScoreLabel = new JLabel("0 / 60");
         blackScoreLabel.setLocation(40, 70);
         blackScoreLabel.setSize(250,50);
@@ -247,4 +270,27 @@ public class ChessGameFrame extends JFrame {
         });
     }
 
+    private void addUserButton(){
+        userButton.setLocation(WIDTH - 160, HEIGHT - 880);
+        userButton.setSize(110, 65);
+        userButton.setBackground(new Color(245, 226, 178));
+        userButton.setFont(new Font("华文行楷", Font.BOLD,15));
+        userButton.setBorderPainted(false);
+        add(userButton);
+
+        userButton.addActionListener(e -> {
+            UserFrame userFrame=new UserFrame(chessboard);
+            userFrame.setVisible(true);
+        });
+    }
+
+    public static void changeUserLabel(char a,char b,boolean turn) {
+        if (turn) {
+            userButton.setText(a + "&" + b);
+            userButton.setFont(new Font("Rockwell", Font.BOLD, 25));
+        } else {
+            userButton.setText("登录/注册");
+            userButton.setFont(new Font("华文行楷", Font.BOLD,15));
+        }
+    }
 }
