@@ -8,6 +8,10 @@ import model.ChessColor;
 import model.ChessboardPoint;
 import view.Chessboard;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
 import java.util.ArrayList;
 
 import static view.ChessGameFrame.*;
@@ -21,9 +25,16 @@ public class ClickController {
     }
 
     public void onClick(SquareComponent squareComponent) {
-        if (squareComponent instanceof EatenComponent) {
-            return;
+        try { //点击音效
+            Clip clip = AudioSystem.getClip();
+            AudioInputStream audioInput = AudioSystem.getAudioInputStream(new File("resources/sound effect/click.wav"));
+            clip.open(audioInput);
+            clip.start();
+        } catch(Exception ex){
+            ex.printStackTrace();
         }
+
+        if (squareComponent instanceof EatenComponent) {return;}
 
         if (first == null) {
             // 第一次翻棋

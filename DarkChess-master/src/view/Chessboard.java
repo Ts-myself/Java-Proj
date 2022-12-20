@@ -137,6 +137,7 @@ public class Chessboard extends JComponent {
             blackScore = 0;
             redScore = 0;
             currentColor = ChessColor.NONE;
+            for (int i=0;i<2;i++) for (int j=0;j<7;j++) eatenChessNumber[i][j] = 0;
         }
         else{
             boolean r = false;
@@ -155,10 +156,14 @@ public class Chessboard extends JComponent {
                     }
                 } else if (info.length == 1) r = true;
                 else if (!r) { //读取棋盘
-                    if (i >= 11 || info.length > 4)
-                    {new ErrorFrame("2"); return;}
+                    if (i >= 11 || info.length > 4) {new ErrorFrame("2"); return;}
                     for (int j=0;j<4;j++)  board[i-3][j] = Integer.parseInt(info[j]);
                 } else { //读取行棋历史
+                    if (Integer.parseInt(info[1])== 2){
+                        if (Integer.parseInt(info[2])>7 || Integer.parseInt(info[3])>3) {
+                            new ErrorFrame("5"); return;
+                        }
+                    }
                     if (info[1].equals("1")) regretStack.add(new RegretNode(info[2],info[3]));
                     else regretStack.add(new RegretNode(Integer.parseInt(info[2]),Integer.parseInt(info[3])));
                 }
