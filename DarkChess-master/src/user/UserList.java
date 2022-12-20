@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 public class UserList {
-    ArrayList<User> users = new ArrayList<>();
+    static ArrayList<User> users = new ArrayList<>();
 
     public UserList() {}
 
@@ -34,12 +34,31 @@ public class UserList {
         }
         users.add(user);
         String message =String.format("%s %d %s 0 0 0 0#",name,user.userID,password);
-        saveFile(message);
+        rankFile(message);
 
         return true;
     }
 
-    public static void saveFile(String s) throws IOException {
+    public static void toSave() {
+        List<String> forWrite =new ArrayList<>();
+        for (User user : users) {
+            String w = String.format("%s %d %s %d %d %d %d#", user.userName, user.userID, user.password, user.rank, user.win, user.lose, user.score);
+            forWrite.add(w);
+        }
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("resources/userListMessage"));
+            for (String m : forWrite) {
+                writer.write(m);
+                writer.newLine();
+            }
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void rankFile(String s) throws IOException {
         List<String> messages = Files.readAllLines(Path.of("resources/userListMessage"));
         ArrayList<User> forRead = new ArrayList<>();
         for (String message : messages) {
@@ -98,7 +117,7 @@ public class UserList {
 
     public List<String> rankUsers() throws IOException {
         List<String> rankUser=new ArrayList<>();
-        saveFile("");
+        rankFile("");
         LineNumberReader reader=new LineNumberReader(new FileReader("resources/userListMessage"));
         for (int i = 0; i < users.size() && i <= 4; i++) {
             reader.setLineNumber(i + 1);

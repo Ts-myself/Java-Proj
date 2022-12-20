@@ -8,6 +8,7 @@ import view.Chessboard;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static model.ChessColor.RED;
@@ -134,7 +135,11 @@ public abstract class SquareComponent extends JComponent {
         super.processMouseEvent(e);
         if (e.getID() == MouseEvent.MOUSE_CLICKED) {
             System.out.printf("Click [%d,%d]\n", chessboardPoint.getX(), chessboardPoint.getY());
-            clickController.onClick(this);
+            try {
+                clickController.onClick(this);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
         if(e.getID() == MouseEvent.MOUSE_PRESSED) mouseOn = true;
         if(e.getID() == MouseEvent.MOUSE_RELEASED) mouseOn = false;

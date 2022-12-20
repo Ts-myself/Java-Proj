@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -93,7 +94,7 @@ public class Chessboard extends JComponent {
     /**
      * 交换chess1 chess2的位置
      */
-    public void swapChessComponents(SquareComponent chess1, SquareComponent chess2) {
+    public void swapChessComponents(SquareComponent chess1, SquareComponent chess2) throws IOException {
         if (!(chess2 instanceof EmptySlotComponent)) {
             remove(chess2);
             add(chess2 = new EmptySlotComponent(chess2.getChessboardPoint(), chess2.getLocation(), clickController, CHESS_SIZE,-1));
@@ -125,7 +126,7 @@ public class Chessboard extends JComponent {
                 initAllChessOnBoard(null);
                 remove(end);
             });
-            gameEnd(blackScore);
+            gameEndUser(blackScore);
         }
     }
 

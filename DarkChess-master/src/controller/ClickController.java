@@ -12,6 +12,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static view.ChessGameFrame.*;
@@ -24,7 +25,7 @@ public class ClickController {
         this.chessboard = chessboard;
     }
 
-    public void onClick(SquareComponent squareComponent) {
+    public void onClick(SquareComponent squareComponent) throws IOException {
         try { //点击音效
             Clip clip = AudioSystem.getClip();
             AudioInputStream audioInput = AudioSystem.getAudioInputStream(new File("resources/sound effect/click.wav"));

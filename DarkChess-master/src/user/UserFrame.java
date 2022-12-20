@@ -2,6 +2,7 @@ package user;
 
 import view.Chessboard;
 import static view.ChessGameFrame.*;
+import static user.UserList.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -298,7 +299,7 @@ public class UserFrame extends JFrame {
             add(userScore);
         }
     }
-    public static void gameEnd(int black) {
+    public static void gameEndUser(int black) throws IOException {
         if (black >= 60) {
             user1.win++;
             user1.score += 5;
@@ -310,5 +311,6 @@ public class UserFrame extends JFrame {
             user1.lose--;
             user1.score -= 3;
         }
+        toSave();
     }
 }
